@@ -4,7 +4,22 @@ import * as S from "./styles/MyblogWidgetCss";
 export default function MyblogPostCategory() {
     return (
         <S.MyblogCategoryWidgetContainer>
-            오른쪽 위젯자리입니다.
+            <S.Title>전체게시물</S.Title>
+            <S.TagBox>&gt;태그</S.TagBox>
+            <S.Tag>
+                <div>
+                    - 여행
+                </div>
+                <div>
+                    - 여행
+                </div>
+                <div>
+                    - 여행
+                </div>
+                <div>
+                    - 여행
+                </div>
+            </S.Tag>
         </S.MyblogCategoryWidgetContainer>
     )
 }
