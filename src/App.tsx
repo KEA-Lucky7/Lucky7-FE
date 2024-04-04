@@ -1,12 +1,16 @@
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import MyblogPage from "./pages/MyblogPage";
 
 function App() {
   return (
-    <>
-      행운이 만나 기적을 만든다.
-      <br />
-      Develop branch
-    </>
+    <div className="App">
+      <Routes>
+        <Route path="/" />
+        <Route path="/myblog" element={<MyblogPage />} />
+      </Routes>
+    </div>
+
   );
 }
 
