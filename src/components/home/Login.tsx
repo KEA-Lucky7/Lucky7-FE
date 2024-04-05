@@ -39,7 +39,8 @@ const Login = () => {
         console.log('Name: ' + responsePayload.name);
         // 테스트 완료 시 주석 해제
         // Cookies.set('member', 'true', { expires: 1 });
-        window.location.reload();
+        // 나중에 useEffect로 디테일 설정해야함
+        // window.location.reload();
     }
     // 카카오 소셜로그인
     const handleKakaoLogin = () => {
@@ -53,6 +54,7 @@ const Login = () => {
                 <GoogleLogin
                     onSuccess={(credentialResponse) => {
                         handleGoogleLogin(credentialResponse);
+                        console.log("로그인 성공")
                       }}
                     onError={() => {
                         console.error("로그인 실패");

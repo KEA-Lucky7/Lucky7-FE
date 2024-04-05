@@ -8,10 +8,10 @@ const HomeMemberInfo = () => {
 
     // 현재 로그인 여부를 가져오는 useEffect
     useEffect(() => {
-        var noticeCookie = Cookies.get('member')
-        console.log(noticeCookie);
+        var memberCookie = Cookies.get('member')
+        console.log("Member Cookie: ", memberCookie);
         // 
-        if (noticeCookie == 'true'){
+        if (memberCookie){
             setIsLoggedIn(true)
         }
     })
