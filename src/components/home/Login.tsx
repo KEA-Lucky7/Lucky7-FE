@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from "@react-oauth/google";
+const { Kakao } = window;
 import { jwtDecode } from "jwt-decode";
 
 // 구글 로그인 시 리턴값
@@ -30,8 +31,9 @@ interface googleCredential {
 const Login = () => {
     const googleId = import.meta.env.VITE_GOOGLE_ID;
     const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
+    const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
     // 구글 소셜로그인
-    const handleGoogleLogin = (credentialResponse: CredentialResponse) => {
+    const handleGoogleLogin = (credentialResponse) => {
         console.log(credentialResponse);
         const responsePayload: googleCredential = jwtDecode(credentialResponse.credential);
         // (임시 확인용) 정보 출력
@@ -44,8 +46,18 @@ const Login = () => {
     }
     // 카카오 소셜로그인
     const handleKakaoLogin = () => {
+        Kakao.Auth.authorize({
+            redirectUri: 'http://localhost:5173',
+            scope: "profile_nickname",
+        });
 
-        Cookies.set('member', 'true', { expires: 1 });
+        const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=http://localhost:5173&response_type=code`;
+        window.location.href = KAKAO_AUTH_URL;
+
+        // 테스트 완료 시 주석 해제
+        // Cookies.set('member', 'true', { expires: 1 });
+        // 나중에 useEffect로 디테일 설정해야함
+        // window.location.reload();
     };
 
     return (
@@ -61,7 +73,7 @@ const Login = () => {
                       }}
                 />
             </GoogleOAuthProvider>
-            <button onClick={handleKakaoLogin} className="kakao-login-button">
+            <button onClick={handleKakaoLogin} >
                 Kakao로 로그인
             </button>
         </div>
