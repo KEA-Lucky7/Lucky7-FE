@@ -22,6 +22,9 @@ export default function CreatePost() {
   return (
     <>
       <Header />
+      <S.TemporaryBox>
+        임시 저장 불러오기
+      </S.TemporaryBox>
       <S.NewPostInputContainer>
         <S.TitleInputBox>
           <S.TitleInput placeholder="제목을 입력하세요." />
@@ -56,6 +59,11 @@ export default function CreatePost() {
 
         </S.TextEditBox>
       </S.NewPostInputContainer>
+      <S.ButtonBox>
+        <S.CancelButton>취소</S.CancelButton>
+        <S.TemporaryButton>임시저장</S.TemporaryButton>
+        <S.PostButton>게시</S.PostButton>
+      </S.ButtonBox>
     </>
   )
 }
