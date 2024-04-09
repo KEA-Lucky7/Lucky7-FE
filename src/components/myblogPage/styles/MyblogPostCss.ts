@@ -56,6 +56,7 @@ export const PostName = styled.div`
     margin: 0 auto;
     border: 1px solid green;
     font-size: 12px;
+    font-weight: bold;
 `;
 
 export const PostWriter = styled.div`

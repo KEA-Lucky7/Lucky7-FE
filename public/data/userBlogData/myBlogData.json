@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "category": "여행",
+        "thumbnail": "http://localhost:5173/public/picture/1.jpg",
+        "title": "남아프리카공화국여행기",
+        "writer": "동석강",
+        "creationDate": "2024-04-01",
+        "likes": 50
+    },
+    {
+        "id": 2,
+        "category": "일상",
+        "thumbnail": "http://localhost:5173/public/picture/2.png",
+        "title": "나오늘엽떡먹었다",
+        "writer": "김조단",
+        "creationDate": "2024-03-25",
+        "likes": 75
+    },
+    {
+        "id": 3,
+        "category": "공부",
+        "thumbnail": "http://localhost:5173/public/picture/3.jpg",
+        "title": "아공부힘들다ㄹㅇ로다가",
+        "writer": "이샤인",
+        "creationDate": "2024-03-10",
+        "likes": 40
+    },
+    {
+        "id": 4,
+        "category": "음식",
+        "thumbnail": "http://localhost:5173/public/picture/4.jpg",
+        "title": "뒤지게맛잇는불고기버거",
+        "writer": "윤로딩",
+        "creationDate": "2024-03-25",   
+        "likes": 56
+    },
+    {
+        "id": 5,
+        "category": "여행",
+        "thumbnail": "http://localhost:5173/public/picture/5.jpg",
+        "title": "나는낭만고양이",
+        "writer": "정보리",
+        "creationDate": "2024-03-25",
+        "likes": 12
+    },
+    {
+        "id": 6,
+        "category": "여행",
+        "thumbnail": "http://localhost:5173/public/picture/6.jpg",
+        "title": "나는야미국아저씨",
+        "writer": "럭키이",
+        "creationDate": "2024-03-25",
+        "likes": 73
+    }
+]
