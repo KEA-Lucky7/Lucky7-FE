@@ -41,11 +41,10 @@ export const UserId = styled.div`
 
 
 export const CreateNewpostButtonContainer = styled.div`
-    width: 80%;
+    width: 70%;
     height: 40px;
     margin: 0 auto;
     border: 1px solid red;
-    vertical-align: middle;
 `;
 
 export const Title = styled.div`
