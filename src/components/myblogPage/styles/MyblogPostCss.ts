@@ -92,22 +92,6 @@ export const PaginationBox = styled.div`
 `;
 
 
-export const GridBox = styled.div`
-    width: 80%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3개의 열 */
-    grid-gap: 30px; /* 그리드 간격 설정 */
-
-    margin-top: 10px;
-`;
-
-export const GridItem = styled.div`
-    width: 80%;
-    height: 250px;
-
-`;
-
 export const PostName = styled.div`
     width: 80%;
     height: 30px;
@@ -200,6 +184,40 @@ export const ListBox = styled.div`
     flex-direction: row;
     text-align: center;
 `;
+
+export const PictureListBox = styled.div`
+    width: 100%;
+    height: 160px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    border: 1px solid red;
+`;      
+
+export const PictureList = styled.div`
+    width: 100%;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+`;     
+
+export const PictureBox = styled.div`
+    width: 30%;
+    width: 30%;
+    border: 1px solid red;
+`;     
+
+
+export const FirstLine = styled.div`
+    width: 30%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid blue;
+    text-align:left;
+`; 
+
 
 export const TitleField = styled.div`
     width: 100%;
@@ -304,6 +322,53 @@ export const CheckField = styled.div`
     align-items: center;
 `;
 
+export const PictureListCategory = styled.div`
+    width: 30%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+`;
 
+export const PictureListTag = styled.div`
+    width: 25%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
+    border-radius: 10px;
+    background-color: #EAEAEA;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #49519E;
+`;
+
+export const PictureListTitle = styled.div`
+    width: 80%;
+    height: 25px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid green;
+    text-align: left;
+`;
+
+export const PictureListContent = styled.div`
+    width: 90%;
+    height: 40px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid green;
+    text-align: left;
+`;
