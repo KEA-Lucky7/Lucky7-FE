@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "category": "Technology",
+        "thumbnail": "path/to/thumbnail1.jpg",
+        "title": "Introduction to React Hooks",
+        "writer": "John Doe",
+        "creationDate": "2024-04-01",
+        "likes": 50
+    },
+    {
+        "id": 2,
+        "category": "Travel",
+        "thumbnail": "path/to/thumbnail2.jpg",
+        "title": "Exploring the Beauty of Italy",
+        "writer": "Jane Smith",
+        "creationDate": "2024-03-25",
+        "likes": 75
+    },
+    {
+        "id": 3,
+        "category": "Food",
+        "thumbnail": "path/to/thumbnail3.jpg",
+        "title": "Delicious Pasta Recipes",
+        "writer": "Alice Johnson",
+        "creationDate": "2024-03-10",
+        "likes": 40
+    },
+    {
+        "id": 4,
+        "category": "Travel",
+        "thumbnail": "path/to/thumbnail2.jpg",
+        "title": "Exploring the Beauty of Italy",
+        "writer": "Jane Smith",
+        "creationDate": "2024-03-25",
+        "likes": 56
+    },
+    {
+        "id": 5,
+        "category": "Travel",
+        "thumbnail": "path/to/thumbnail2.jpg",
+        "title": "Exploring the Beauty of Italy",
+        "writer": "Jane Smith",
+        "creationDate": "2024-03-25",
+        "likes": 12
+    },
+    {
+        "id": 6,
+        "category": "Travel",
+        "thumbnail": "path/to/thumbnail2.jpg",
+        "title": "Exploring the Beauty of Italy",
+        "writer": "Jane Smith",
+        "creationDate": "2024-03-25",
+        "likes": 73
+    }
+]
