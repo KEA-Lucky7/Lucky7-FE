@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import * as S from "../homePage/styles/NoticePopupStyle";
 
 // Login.tsx에서 가져온 showPopup useState
 interface Props {
@@ -23,7 +24,7 @@ const NoticePopup = ({ setShowPopup }: Props) => {
     }
 
     return (
-        <div>
+        <S.NoticePopupContainer>
             <button onClick={closePopup}>닫기</button>
             <p>공지 제목</p>
             <p>공지 내용</p>
@@ -33,7 +34,7 @@ const NoticePopup = ({ setShowPopup }: Props) => {
                     onChange={handleCheckboxChange} />
                         일주일동안 보지 않기
             </label>
-        </div>
+        </S.NoticePopupContainer>
     );
 }
 

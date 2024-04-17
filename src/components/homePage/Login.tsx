@@ -1,6 +1,4 @@
-import Cookies from "js-cookie";
 const { Kakao } = window;
-import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
     const googleId = import.meta.env.VITE_GOOGLE_ID;

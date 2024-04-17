@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const HomeQuiz = () => {
+const MainTitle = () => {
 
     return (
         <div>
-            HomeQuiz
+            MainTitle
         </div>
     );
 }
 
-export default HomeQuiz;
+export default MainTitle;

@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-
-import NoticePopup from "../components/home/NoticePopup";
-import HomeMemberInfo from "../components/home/HomeMemberInfo";
-import HomePostList from "../components/home/HomePostList";
-import HomeQuiz from "../components/home/HomeQuiz";
-import HomeFortune from "../components/home/HomeFortune";
-import HomeQA from "../components/home/HomeQA";
+import NoticePopup from "../components/homePage/NoticePopup";
+import Home from "../components/homePage/Home";
 
 const HomePage = () => {
     // 공지사항 팝업 띄우기 여부 useState
@@ -27,11 +22,7 @@ const HomePage = () => {
             {showPopup && (
                 <NoticePopup setShowPopup={setShowPopup} />
             )}
-            <HomeMemberInfo />
-            <HomePostList />
-            <HomeQuiz />
-            <HomeFortune />
-            <HomeQA />
+            <Home />
         </div>
     );
 }

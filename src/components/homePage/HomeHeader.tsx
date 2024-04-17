@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const HomeFortune = () => {
+const HomeHeader = () => {
 
     return (
         <div>
-            HomeFortune
+            HomeHeader
         </div>
     );
 }
 
-export default HomeFortune;
+export default HomeHeader;

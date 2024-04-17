@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const HomeQA = () => {
+const FollowTitle = () => {
 
     return (
         <div>
-            HomeQA
+            FollowTitle
         </div>
     );
 }
 
-export default HomeQA;
+export default FollowTitle;
