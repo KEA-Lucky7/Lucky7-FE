@@ -16,6 +16,33 @@ export const Picturecontainer = styled.div`
     position: relative;
 `;
 
+export const PostContainer = styled.div`
+    width: 75%;
+    height: 800px;
+    border: 1px solid black;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+`;
+
+export const LeftSection = styled.div`
+    width: 30%;
+    height: 90%;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+`;
+
+export const RightSection = styled.div`
+    width: 70%;
+    height: 100%;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+`;
+
+
 export const TitleBox = styled.div`
   padding: 10px 20px;
   font-size: 28px;
