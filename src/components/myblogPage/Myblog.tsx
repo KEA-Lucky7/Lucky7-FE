@@ -4,7 +4,7 @@ import * as S from "../myblogPage/styles/MyblogPostCss";
 import Titlebackground from "../../assets/myblog/Titlebackground.png";
 import Editbutton from "../../assets/myblog/Editbutton.png";
 import MyblogWidget from './MyblogWidget';
-/*  import MyblogPostList from './MyblogPostList';*/
+import MyblogPostList from './MyblogPostList';
 import MyblogCategoryWidget from './MyblogCategoryWidget'; 
 export default function myblog() {
   return (
@@ -24,7 +24,7 @@ export default function myblog() {
           <MyblogCategoryWidget />
         </S.LeftSection>
         <S.RightSection>
-
+          <MyblogPostList />
         </S.RightSection>
       </S.PostContainer>
     </>
