@@ -12,7 +12,7 @@ export const LogoBox = styled.div`
     width: 180px;
     height: 40px;
     border: 1px solid red;
-    margin: 20px 20px 20px 80px;
+    margin: 20px 20px 20px 300px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,7 +21,7 @@ export const LogoBox = styled.div`
 
 
 export const IconBox = styled.div`
-    width: 43%;
+    width: 37%;
     height: 40px;
     border: 1px solid red;
     display: flex;

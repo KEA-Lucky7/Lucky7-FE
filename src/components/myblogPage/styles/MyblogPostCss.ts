@@ -8,12 +8,32 @@ export const MyblogPostContainer = styled.div`
 `;
 
 export const Picturecontainer = styled.div`
-    width: 80%;
-    height: 120px;
+    width: 75%;
+    height: 400px;
     border: 1px solid black;
     margin: 0 auto;
     margin-top: 10px;
+    position: relative;
 `;
+
+export const TitleBox = styled.div`
+  padding: 10px 20px;
+  font-size: 28px;
+  background-color: none;
+  color: white;
+  position: absolute;
+  top: 80%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+`;
+
+export const SubTitleBox = styled(TitleBox)`
+  font-size: 14px;
+  top: 90%;
+  left: 8%;
+`;
+
+
 
 export const FixandDelete = styled.div`
     width: 25%;
