@@ -6,17 +6,11 @@ export const MyblogWidgetContainer = styled.div`
     border: 1px solid blue;
     display: flex;
     flex-direction: row;
-    display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
 `;
 
-export const MyblogCategoryWidgetContainer = styled.div`
-    width: 15%;
-    height: 300px;
-    border: 1px solid green;
-`;
 
 export const Picturecontainer = styled.div`
     width: 92px;
@@ -54,19 +48,27 @@ export const CreateNewpostButtonContainer = styled.div`
 
 `;
 
-export const Title = styled.div`
+
+//===========================카테고리 위젯 css===========================
+
+
+export const MyblogCategoryWidgetContainer = styled.div`
     width: 80%;
+    height: 300px;
+    border: 1px solid green;
+    margin: 0 auto;
+`;
+
+export const Title = styled.div`
+    width: 100%;
     height: 40px;
     margin: 0 auto;
-    margin-top: 10px;
     border: 1px solid red;
-
-    vertical-align: middle;
 `;
 
 
 export const TagBox = styled.div`
-    width: 80%;
+    width: 100%;
     height: 20px;
     margin: 0 auto;
     border: 1px solid red;
