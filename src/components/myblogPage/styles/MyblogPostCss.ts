@@ -366,7 +366,7 @@ export const PictureListTitle = styled.div`
 export const PictureListContent = styled.div`
     width: 90%;
     height: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
     border: 1px solid green;
