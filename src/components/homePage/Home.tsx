@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import HomeHeader from "./HomeHeader";
 import MainTitle from "./MainTitle";
 import HomePostList from "./HomePostList";
-import Login from "./Login";
+import Header from "../myblogPage/myblogItems/Header";
+import HomeSideMenu from "./HomeSideMenu";
 
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 1px solid #ccc;
-`;
-
-const HomeHeaderContainer = styled(HomeHeader)`
-  height: 270px;
-  border: 1px solid #ccc;
+  height: 100%;
 `;
 
 const MainTitleContainer = styled(MainTitle)`
@@ -28,11 +24,17 @@ const HomePostListContainer = styled(HomePostList)`
 `;
 
 const Home = () => {
+    // 공지사항 팝업 띄우기 여부 useState
+    const [showSideMenu, setShowSideMenu] = useState(false);
+
     return (
         <HomeContainer>
-            <HomeHeaderContainer />
+            <Header setShowSideMenu={setShowSideMenu} />
             <MainTitleContainer />
             <HomePostListContainer />
+            {showSideMenu && (
+                <HomeSideMenu />
+            )}
         </HomeContainer>
     );
 }

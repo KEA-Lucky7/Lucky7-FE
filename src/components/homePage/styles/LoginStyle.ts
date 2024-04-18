@@ -7,7 +7,7 @@ export const Overlay = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0); 
-    z-index: 1000; 
+    z-index: 2; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,7 +24,7 @@ export const LoginContainer = styled.div`
     background-color: #ffffff;
     padding: 20px;
     border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     display: flex;
     flex-direction: column;
     justify-content: center;

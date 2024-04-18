@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import * as S from "../homePage/styles/NoticePopupStyle";
 
-// Login.tsx에서 가져온 showPopup useState
+// HomePage.tsx에서 가져온 showPopup useState
 interface Props {
     setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
 }

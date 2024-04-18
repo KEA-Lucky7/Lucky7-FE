@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import Login from "./Login";
 
-const HomeMemberInfo = () => {
+interface Props {
+    isLoggedIn: boolean;
+}
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    // 현재 로그인 여부를 가져오는 useEffect
-    useEffect(() => {
-        var memberCookie = Cookies.get('member')
-        console.log("Member Cookie: ", memberCookie);
-        // 
-        if (memberCookie){
-            setIsLoggedIn(true)
-        }
-    })
+const HomeMemberInfo = ({ isLoggedIn}: Props) => {
 
     return (
         <div>
@@ -25,7 +16,6 @@ const HomeMemberInfo = () => {
             ) : (
                 <div>
                     로그인안도이
-                    <Login />
                 </div>
             )}
         </div>
