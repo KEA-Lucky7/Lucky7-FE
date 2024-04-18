@@ -5,8 +5,7 @@ export const ListContainer = styled.div`
     grid-template-columns: repeat(3, 1fr); 
     gap: 20px; 
 `
-
-export const ListItem = styled.div`
+export const ListItemBox = styled.div`
     height: 307px;
     border: 1px solid #ccc;
     background-color: #DEDEDE;
@@ -14,4 +13,7 @@ export const ListItem = styled.div`
     &: hover {
         background-color: #777777;
     }
+`;
+
+export const ListItemContainer = styled.div`
 `;
