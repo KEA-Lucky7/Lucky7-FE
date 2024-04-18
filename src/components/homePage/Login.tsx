@@ -1,7 +1,11 @@
 const { Kakao } = window;
 import * as S from "../homePage/styles/LoginStyle";
 
-const Login = () => {
+interface Props {
+    setShowLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login = ({ setShowLoginModal }: Props) => {
     const googleId = import.meta.env.VITE_GOOGLE_ID;
     const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
     const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
@@ -32,9 +36,13 @@ const Login = () => {
         // window.location.reload();
     };
 
+    const hideLoginModal = () =>{
+        setShowLoginModal(false);
+    }
+
     return (
-        <S.Overlay>
-            <S.LoginContainer>
+        <S.Overlay onClick={hideLoginModal}>
+            <S.LoginContainer onClick={(e) => e.stopPropagation()}>
                 <S.LoginTitleContainer>
                     Moaboa
                 </S.LoginTitleContainer>

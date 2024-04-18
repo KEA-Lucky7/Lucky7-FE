@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import * as S from "../homePage/styles/HomeSideMenuStyle";
 import HomeMemberInfo from "./HomeMemberInfo";
 import Cookies from "js-cookie";
+import Login from "./Login";
 
 const HomeSideMenu = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
     // 현재 로그인 여부를 가져오는 useEffect
     useEffect(() => {
         var memberCookie = Cookies.get('member')
@@ -25,7 +27,8 @@ const HomeSideMenu = () => {
                     </div>
                 ) : (
                     <div>
-                        로그인/회원가입
+                        <div onClick={() => setShowLoginModal(true)}>로그인/회원가입</div> 
+                        {showLoginModal && <Login setShowLoginModal={setShowLoginModal} />}
                     </div>
                 )}
                 <HomeMemberInfo isLoggedIn={isLoggedIn} />
