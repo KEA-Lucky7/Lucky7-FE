@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+export const MenuOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); 
+    z-index: 2; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // backdrop-filter: blur(0.5px); 
+`;
+
 export const HomeSideContainer = styled.div`
     position: fixed;
     top: 0;
@@ -12,4 +26,5 @@ export const HomeSideContainer = styled.div`
 `;
 
 export const HomeSideMenuContents = styled.div`
+    padding: 50px;
 `;

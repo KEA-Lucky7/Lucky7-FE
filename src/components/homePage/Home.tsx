@@ -18,7 +18,7 @@ const Home = () => {
                 <HomePostList />
             </S.MainContainer>
             {showSideMenu && (
-                <HomeSideMenu />
+                <HomeSideMenu setShowSideMenu={setShowSideMenu} />
             )}
         </S.HomeContainer>
     );
