@@ -112,14 +112,14 @@ const MyblogPostList: React.FC = () => {
                     <img
                         src={articleList}
                         alt='글리스트'
-                        onClick={() => toggleTab('article')} // Toggle to 'article' tab when clicked
-                        style={{ cursor: 'pointer', marginRight: '10px', opacity: selectedTab === 'article' ? 1 : 0.5 }}
+                        onClick={() => toggleTab('picture')} // Toggle to 'article' tab when clicked
+                        style={{ cursor: 'pointer', marginRight: '10px', opacity: selectedTab === 'picture' ? 1 : 0.5 }}
                     />
                     <img
                         src={pictureList}
                         alt='사진리스트'
-                        onClick={() => toggleTab('picture')} // Toggle to 'picture' tab when clicked
-                        style={{ cursor: 'pointer', opacity: selectedTab === 'picture' ? 1 : 0.5 }}
+                        onClick={() => toggleTab('article')} // Toggle to 'article' tab when clicked
+                        style={{ cursor: 'pointer', opacity: selectedTab === 'article' ? 1 : 0.5 }}
                     />
                     <S.DropDownMenu>
                     </S.DropDownMenu>
