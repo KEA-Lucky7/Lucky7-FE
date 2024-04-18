@@ -3,7 +3,7 @@
         "id": 1,
         "title": "배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -12,7 +12,7 @@
         "id": 2,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2019/08/01/12/36/illustration-4377408_1280.png",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -21,7 +21,7 @@
         "id": 3,
         "title": "영화보는 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/02/04/21/42/nature-3130965_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -30,7 +30,7 @@
         "id": 4,
         "title": "영화는 배부른 사람?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -39,7 +39,7 @@
         "id": 5,
         "title": "영화보는 사람?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -48,7 +48,7 @@
         "id": 6,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -57,7 +57,7 @@
         "id": 7,
         "title": "사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -66,7 +66,7 @@
         "id": 8,
         "title": "되게 긴 영화 보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -75,7 +75,7 @@
         "id": 9,
         "title": "영화를 열심히 보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -84,7 +84,7 @@
         "id": 10,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -93,7 +93,7 @@
         "id": 11,
         "title": "엄청나게 길고길고길고길고긴 영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -102,7 +102,7 @@
         "id": 12,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -111,7 +111,7 @@
         "id": 13,
         "title": "영화 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -120,7 +120,7 @@
         "id": 14,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/02/04/21/42/nature-3130965_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -129,7 +129,7 @@
         "id": 15,
         "title": "사람?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -138,7 +138,7 @@
         "id": 16,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/02/04/21/42/nature-3130965_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -147,7 +147,7 @@
         "id": 17,
         "title": "긴 영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -156,7 +156,7 @@
         "id": 18,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -165,7 +165,7 @@
         "id": 19,
         "title": "배불러요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -173,7 +173,7 @@
         "id": 20,
         "title": "배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -182,7 +182,7 @@
         "id": 21,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -191,7 +191,7 @@
         "id": 22,
         "title": "영화보는 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -200,7 +200,7 @@
         "id": 23,
         "title": "영화는 배부른 사람?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2019/08/01/12/36/illustration-4377408_1280.png",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -209,7 +209,7 @@
         "id": 24,
         "title": "영화보는 사람?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2019/08/01/12/36/illustration-4377408_1280.png",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -218,7 +218,7 @@
         "id": 25,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/02/04/21/42/nature-3130965_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -227,7 +227,7 @@
         "id": 26,
         "title": "사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -236,7 +236,7 @@
         "id": 27,
         "title": "되게 긴 영화 보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -245,7 +245,7 @@
         "id": 28,
         "title": "영화를 열심히 보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/02/04/21/42/nature-3130965_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -254,7 +254,7 @@
         "id": 29,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -263,7 +263,7 @@
         "id": 30,
         "title": "엄청나게 길고길고길고길고긴 영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -272,7 +272,7 @@
         "id": 31,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -281,7 +281,7 @@
         "id": 32,
         "title": "영화 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -290,7 +290,7 @@
         "id": 33,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2019/08/01/12/36/illustration-4377408_1280.png",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -299,7 +299,7 @@
         "id": 34,
         "title": "사람?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2018/05/19/02/24/autumn-3412598_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -308,7 +308,7 @@
         "id": 35,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/03/19/18/00/the-traffic-light-2157162_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -317,7 +317,7 @@
         "id": 36,
         "title": "긴 영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2019/08/01/12/36/illustration-4377408_1280.png",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
@@ -326,7 +326,7 @@
         "id": 37,
         "title": "영화보면 배부른 사람 있나요?",
         "content": "저는 푸짐하고 배고프지 않은 영화를 좋아합니다.",
-        "thumbnail": "example",
+        "thumbnail": "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg",
         "writer": "김말이",
         "tag": "행복",
         "date": "2024-04-11"
