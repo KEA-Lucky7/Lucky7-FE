@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Kakao OAuth -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script>
+      Kakao.init("%VITE_KAKAO_KEY%");
+      console.log(Kakao.isInitialized());
+    </script>
     <title>Vite + React + TS</title>
   </head>
   <body>
