@@ -66,6 +66,30 @@ export const Title = styled.div`
     border: 1px solid red;
 `;
 
+export const ContentTitle = styled.div`
+    width: 100%;
+    height: 40px;
+    margin: 0 auto;
+    border: 1px solid red;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+`;
+
+export const Circle = styled.div`
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    background-color: #D9D9D9;
+`;
+
+
+export const SubCircle = styled.div`
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    background-color: #D9D9D9;
+`;
 
 export const TagBox = styled.div`
     width: 100%;

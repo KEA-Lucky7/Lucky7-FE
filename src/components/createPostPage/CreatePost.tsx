@@ -1,30 +1,25 @@
-import Header from "../myblogPage/myblogItems/Header";
 import * as S from "./styles/CreatepostCss";
-import React, { useState } from 'react';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import styled from 'styled-components';
-import { EditorState } from 'draft-js';
-
-
+import React, { useState } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import styled from "styled-components";
+import { EditorState } from "draft-js";
 
 export default function CreatePost() {
   // useState로 상태관리하기 초기값은 EditorState.createEmpty()
   // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
-  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.createEmpty()
+  );
 
   const onEditorStateChange = (editorState: EditorState) => {
     // editorState에 값 설정
     setEditorState(editorState);
   };
 
-
   return (
     <>
-      <Header />
-      <S.TemporaryBox>
-        임시 저장 불러오기
-      </S.TemporaryBox>
+      <S.TemporaryBox>임시 저장 불러오기</S.TemporaryBox>
       <S.NewPostInputContainer>
         <S.TitleInputBox>
           <S.TitleInput placeholder="제목을 입력하세요." />
@@ -48,15 +43,13 @@ export default function CreatePost() {
             placeholder="내용을 작성해주세요."
             // 한국어 설정
             localization={{
-              locale: 'ko',
+              locale: "ko",
             }}
             // 초기값 설정
             editorState={editorState}
             // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
             onEditorStateChange={onEditorStateChange}
           />
-
-
         </S.TextEditBox>
       </S.NewPostInputContainer>
       <S.ButtonBox>
@@ -65,5 +58,5 @@ export default function CreatePost() {
         <S.PostButton>게시</S.PostButton>
       </S.ButtonBox>
     </>
-  )
+  );
 }
