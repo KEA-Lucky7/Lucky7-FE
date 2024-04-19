@@ -4,6 +4,7 @@ import HomePostList from "./HomePostList";
 import Header from "../myblogPage/myblogItems/Header";
 import HomeSideMenu from "./HomeSideMenu";
 import * as S from "../homePage/styles/MainStyle";
+import Quiz from "./quiz/Quiz"; 
 
 const Home = () => {
     // 공지사항 팝업 띄우기 여부 useState
@@ -12,6 +13,7 @@ const Home = () => {
     return (
         <S.HomeContainer>
             <Header setShowSideMenu={setShowSideMenu} />
+            <Quiz />
             <S.MainContainer>
                 <MainTitle />
                 <div>BEST</div>
