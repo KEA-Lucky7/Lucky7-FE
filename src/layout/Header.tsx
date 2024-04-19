@@ -1,4 +1,4 @@
-import * as S from "./HeaderStyled.ts";
+import * as S from "./style/HeaderStyled.ts";
 import moaboa from "../../src/assets/header/moaboa.png";
 import Menu from "../../src/assets/header/Menu.png";
 import Bell from "../../src/assets/header/Bell.png";

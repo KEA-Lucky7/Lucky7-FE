@@ -1,5 +1,5 @@
 const { Kakao } = window;
-import * as S from "./LoginStyle";
+import * as S from "./style/LoginStyle";
 
 interface Props {
   setShowLoginModal: React.Dispatch<React.SetStateAction<boolean>>;

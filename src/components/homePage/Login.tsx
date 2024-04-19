@@ -41,7 +41,7 @@ const Login = ({ setShowLoginModal }: Props) => {
     }
 
     return (
-        <S.Overlay onClick={hideLoginModal}>
+        <S.LoginOverlay onClick={hideLoginModal}>
             <S.LoginContainer onClick={(e) => e.stopPropagation()}>
                 <S.LoginTitleContainer>
                     Moaboa
@@ -56,7 +56,7 @@ const Login = ({ setShowLoginModal }: Props) => {
                     Google로 로그인
                 </S.LoginButtonContainer>
             </S.LoginContainer>
-        </S.Overlay>
+        </S.LoginOverlay>
     );
 }
 

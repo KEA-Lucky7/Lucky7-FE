@@ -12,7 +12,7 @@ export default function MainLayout({ children }: Props) {
     <>
       <Header setShowSideMenu={setShowSideMenu} />
       <main>{children}</main>
-      {showSideMenu && <SideMenu />}
+      {showSideMenu && <SideMenu setShowSideMenu={setShowSideMenu} />}
     </>
   );
 }
