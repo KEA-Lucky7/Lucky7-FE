@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 
 interface Props {
     isLoggedIn: boolean;
 }
 
-const HomeMemberInfo = ({ isLoggedIn}: Props) => {
+const SideMenuMemberInfo = ({ isLoggedIn}: Props) => {
 
     return (
         <div>
             { isLoggedIn ? (
                 <div>
-                    로그인도이
+                    유저 정보
                 </div>
             ) : (
                 <div>
-                    로그인안도이
+                    로그인 하라는 화면 
                 </div>
             )}
         </div>
     );
 }
 
-export default HomeMemberInfo;
+export default SideMenuMemberInfo;
