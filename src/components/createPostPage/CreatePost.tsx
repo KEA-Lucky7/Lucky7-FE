@@ -1,4 +1,3 @@
-import Header from "../myblogPage/myblogItems/Header";
 import * as S from "./styles/CreatepostCss";
 import React, { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
