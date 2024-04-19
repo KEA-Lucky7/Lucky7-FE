@@ -7,8 +7,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 260px;
-  height: 310px;
+  width: 280px;
+  height: 340px;
   border: solid 1px grey;
   border-radius: 8px;
   padding: 20px;
@@ -27,6 +27,10 @@ const Title = styled.div`
 
 const InputForm = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 `;
 
 const Input = styled.input`
@@ -34,18 +38,7 @@ const Input = styled.input`
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-
-  margin-right: 3px;
-`;
-
-const Button = styled.button<{ userGender: boolean }>`
-  padding: 10px 15px;
-  border-radius: 5px;
-  border: none;
-  background-color: ${(props) => (props.userGender ? "#007bff" : "#dc3545")};
-  color: white;
-  cursor: pointer;
-  margin-left: 3px;
+  margin-bottom: 10px;
 `;
 
 const SubmitButton = styled.button`
@@ -80,8 +73,8 @@ const InputContainer = styled.div`
 
 function FinancialLuck() {
   const [userDate, setUserDate] = useState<string>("");
-  const [userGender, setUserGender] = useState<boolean>(true);
-  const [resultData, setResultData] = useState<any>(null);
+  const [userGender, setUserGender] = useState<'male'|'female'>('male');
+  const [resultData, setResultData] = useState<string>("");
   const [showResult, setShowResult] = useState<boolean>(false);
 
   const userDateHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -89,11 +82,6 @@ function FinancialLuck() {
     if (!isNaN(Number(value)) && value.length <= 8) {
       setUserDate(value);
     }
-  };
-
-  const userGenderHandler = () => {
-    setUserGender(!userGender);
-    console.log(userGender);
   };
 
   const showResultHandler = () => {
@@ -104,12 +92,11 @@ function FinancialLuck() {
   const fetchData = async () => {
     try {
       const currentDate = new Date().toISOString().split("T")[0];
-      const response = await axios.post("http://localhost:8000/api/lucky", {
+      const response = await axios.post("https://asia-northeast3-moaboa77.cloudfunctions.net/get-lucky-functions", {
         birthDate: userDate.toString(),
-        sex: userGender ? "male" : "female",
+        gender: userGender,
         today: currentDate.toString(),
       });
-      console.log(response);
       setResultData(response.data);
       setShowResult(true);
     } catch (error) {
@@ -119,24 +106,41 @@ function FinancialLuck() {
 
   return (
     <Container>
-      <Img src="/Image/Icons/coin.png" alt="FinancialLuck Img" />
+      <Img src="/picture/img_coin.png" alt="FinancialLuck Img" />
       {showResult ? (
         <ResultContainer>
-          <Title>{resultData.result.content}</Title>
+          <Title>{resultData}</Title>
           <SubmitButton onClick={showResultHandler}>{"아싸!🎊"}</SubmitButton>
         </ResultContainer>
       ) : (
         <InputContainer>
-          <Title>오늘의 금전운을 확인해보쇼!</Title>
+          <Title>오늘의 운세를 확인해 보세요!</Title>
           <InputForm>
             <Input
-              placeholder="주민번호 앞 8자리"
+              placeholder="생년월일 6자리를 입력하세요"
               value={userDate}
               onChange={userDateHandler}
             ></Input>
-            <Button userGender={userGender} onClick={userGenderHandler}>
-              {userGender ? "남자" : "여자"}
-            </Button>
+            <div>
+            <label>
+              <Input
+                type="radio"
+                id="male"
+                name="gender"
+                onChange={() => setUserGender('male')}
+              />
+              {"남자"}
+            </label>
+            <label>
+              <Input
+                type="radio"
+                id="female"
+                name="gender"
+                onChange={() => setUserGender('female')}
+              />
+              {"여자"}
+            </label>
+            </div>
           </InputForm>
           <SubmitButton onClick={fetchData}>확인하기</SubmitButton>
         </InputContainer>
