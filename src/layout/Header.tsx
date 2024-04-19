@@ -3,6 +3,7 @@ import moaboa from "../../src/assets/header/moaboa.png";
 import Menu from "../../src/assets/header/Menu.png";
 import Bell from "../../src/assets/header/Bell.png";
 import Search from "../../src/assets/header/search.png";
+import { BorderAll } from "@mui/icons-material";
 
 // HomePage.tsx에서 가져온 showPopup useState
 interface Props {
@@ -16,20 +17,18 @@ export default function Header({ setShowSideMenu }: Props) {
 
   return (
     <S.Header>
-      <S.LogoBox>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+      <S.LeftContainer>
+        <img
+          src={Menu}
           onClick={changeSideMenuState}
-        >
-          <img src={Menu} alt="메뉴" width={"25px"} height={"15px"} />
-        </div>
+          alt="메뉴"
+          width={"25px"}
+          height={"15px"}
+        />
+
         <img src={moaboa} alt="로고" width={"130px"} height={"27px"} />
-      </S.LogoBox>
-      <S.IconBox>
+      </S.LeftContainer>
+      <S.RightContainer>
         <S.SearchContainer>
           <S.SearchInput
             type="text"
@@ -46,7 +45,7 @@ export default function Header({ setShowSideMenu }: Props) {
         >
           <img src={Bell} alt="Bell" width={"20px"} height={"25px"} />
         </div>
-      </S.IconBox>
+      </S.RightContainer>
     </S.Header>
   );
 }
