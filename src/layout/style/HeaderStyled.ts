@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Header = styled.div`
   width: 100%;
   height: 80px;
-  border: 1px solid red;
+  // border: 1px solid red;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,7 +15,7 @@ export const Header = styled.div`
 export const LeftContainer = styled.div`
   width: 180px;
   height: 40px;
-  border: 1px solid blue;
+  // border: 1px solid blue;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -26,7 +26,7 @@ export const LeftContainer = styled.div`
 export const RightContainer = styled.div`
   width: 400px;
   height: 40px;
-  border: 1px solid red;
+  // border: 1px solid red;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

@@ -3,7 +3,7 @@ import moaboa from "../../src/assets/header/moaboa.png";
 import Menu from "../../src/assets/header/Menu.png";
 import Bell from "../../src/assets/header/Bell.png";
 import Search from "../../src/assets/header/search.png";
-import { BorderAll } from "@mui/icons-material";
+import { BorderAll, Margin } from "@mui/icons-material";
 
 // HomePage.tsx에서 가져온 showPopup useState
 interface Props {
@@ -26,7 +26,13 @@ export default function Header({ setShowSideMenu }: Props) {
           height={"15px"}
         />
 
-        <img src={moaboa} alt="로고" width={"130px"} height={"27px"} />
+        <img
+          src={moaboa}
+          alt="로고"
+          width={"130px"}
+          height={"27px"}
+          style={{ marginBottom: "10px", marginLeft: "10px" }}
+        />
       </S.LeftContainer>
       <S.RightContainer>
         <S.SearchContainer>
