@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MainTitleContainer = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 100%;
   height: 350px;
   border-radius: 5px;
@@ -12,7 +12,7 @@ export const MainTitleContainer = styled.div`
 `;
 
 export const TextContainer = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   font-size: 25px;
   position: absolute;
   right: 30px; /* 우측 여백 */
