@@ -10,6 +10,7 @@ export const Header = styled.div`
   position: sticky;
   top: 0px;
   background: white;
+  z-index: 1;
 `;
 
 export const LeftContainer = styled.div`
