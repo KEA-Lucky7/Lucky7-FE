@@ -3,7 +3,6 @@ import moaboa from "../../src/assets/header/moaboa.png";
 import Menu from "../../src/assets/header/Menu.png";
 import Bell from "../../src/assets/header/Bell.png";
 import Search from "../../src/assets/header/search.png";
-import { BorderAll, Margin } from "@mui/icons-material";
 
 // HomePage.tsx에서 가져온 showPopup useState
 interface Props {
