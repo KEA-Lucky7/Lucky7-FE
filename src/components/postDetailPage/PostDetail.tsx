@@ -52,7 +52,7 @@ export default function PostDetail() {
           <img src={seeMore} alt='더보기' style={{ width: '3px', height: '19px' }} onClick={toggleDropdown} />
           {/* 드롭다운 메뉴 내용 */}
           {isDropdownVisible && (
-            <div style={{ position: 'absolute', top: '520px', right: '285px', backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
+            <div style={{ position: 'absolute', top: '520px', right: '670px', backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
               <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
                 신고하기
                 <img src={report} alt='신고' style={{ width: '24px', height: '24px' }} />
