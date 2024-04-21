@@ -55,7 +55,6 @@ export const PostContainer = styled.div`
 export const LeftSection = styled.div`
   width: 30%;
   height: 90%;
-
   display: flex;
   flex-direction: column;
 `;
