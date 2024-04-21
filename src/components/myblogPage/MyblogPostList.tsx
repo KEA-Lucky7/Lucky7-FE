@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import * as S from "./styles/MyblogPostCss";
 import articleList from "../../assets/myblog/articleList.png";
 import pictureList from "../../assets/myblog/pictureList.png";
@@ -20,8 +21,9 @@ const MyblogPostList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedTab, setSelectedTab] = useState<"article" | "picture">(
     "article"
-  ); // Default selected tab is 'article'
-  const postsPerPage: number = 15; // Number of posts per page
+  ); // 사진포함 x 글리스트가 기본 셋팅값
+
+  const postsPerPage: number = 15; // 페이지하나당 나타낼 게시글 수
 
   // 페이지계산로직
   const indexOfLastPost: number = currentPage * postsPerPage;
@@ -42,50 +44,56 @@ const MyblogPostList: React.FC = () => {
   // 사진 포함 글 정렬 방식
   const renderPictureList = () => (
     <S.PostListContainer>
-      {currentPosts.map((post) => (
-        <S.PictureListBox key={post.id}>
-          <S.PictureList>
-            <S.FirstLine>
-              <S.PictureListCategory>{post.category}</S.PictureListCategory>
-              <S.PictureListTag>#{post.tag}</S.PictureListTag>
-            </S.FirstLine>
-            <S.PictureListTitle>{post.title}</S.PictureListTitle>
-            <S.PictureListContent>{post.content}</S.PictureListContent>
-            <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-              <div>{post.date}</div>
-              <div>조회 {post.views}</div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "5px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src={comment}
-                  alt="댓글"
-                  style={{ width: "21px", height: "21px" }}
-                />
-                <div>2</div>
-                <img
-                  src={heart}
-                  alt="좋아요"
-                  style={{ width: "18px", height: "18px" }}
-                />
-                <div>2</div>
+      {currentPosts.map((post, index) => (
+        <Link
+          to={`/myblog/${index + 1}`} // post 인덱스를 넘김
+          key={index}
+          style={{ textDecoration: "none" }}
+        >
+          <S.PictureListBox key={post.id}>
+            <S.PictureList>
+              <S.FirstLine>
+                <S.PictureListCategory>{post.category}</S.PictureListCategory>
+                <S.PictureListTag>#{post.tag}</S.PictureListTag>
+              </S.FirstLine>
+              <S.PictureListTitle>{post.title}</S.PictureListTitle>
+              <S.PictureListContent>{post.content}</S.PictureListContent>
+              <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+                <div>{post.date}</div>
+                <div>조회 {post.views}</div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "5px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={comment}
+                    alt="댓글"
+                    style={{ width: "21px", height: "21px" }}
+                  />
+                  <div>2</div>
+                  <img
+                    src={heart}
+                    alt="좋아요"
+                    style={{ width: "18px", height: "18px" }}
+                  />
+                  <div>2</div>
+                </div>
               </div>
-            </div>
-          </S.PictureList>
-          <S.PictureBox>
-            <img
-              src={Titlebackground}
-              alt={post.title}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </S.PictureBox>
-        </S.PictureListBox>
+            </S.PictureList>
+            <S.PictureBox>
+              <img
+                src={Titlebackground}
+                alt={post.title}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </S.PictureBox>
+          </S.PictureListBox>
+        </Link>
       ))}
       {/* 페이지네이션 */}
       <S.PaginationBox>
@@ -111,14 +119,20 @@ const MyblogPostList: React.FC = () => {
         <S.DateField>작성일</S.DateField>
         <S.CheckField>조회</S.CheckField>
       </S.FieldBox>
-      {currentPosts.map((post) => (
-        <S.ListBox key={post.id}>
-          <S.ListCategory>{post.category}</S.ListCategory>
-          <S.ListTag>#{post.tag}</S.ListTag>
-          <S.ListTitle>{post.title}</S.ListTitle>
-          <S.DateField>{post.date}</S.DateField>
-          <S.CheckField>{post.views}</S.CheckField>
-        </S.ListBox>
+      {currentPosts.map((post, index) => (
+        <Link
+          to={`/myblog/${index + 1}`} // post 인덱스를 넘김
+          key={index}
+          style={{ textDecoration: "none" }}
+        >
+          <S.ListBox key={post.id}>
+            <S.ListCategory>{post.category}</S.ListCategory>
+            <S.ListTag>#{post.tag}</S.ListTag>
+            <S.ListTitle>{post.title}</S.ListTitle>
+            <S.DateField>{post.date}</S.DateField>
+            <S.CheckField>{post.views}</S.CheckField>
+          </S.ListBox>
+        </Link>
       ))}
       {/* 페이지네이션 */}
       <S.PaginationBox>
