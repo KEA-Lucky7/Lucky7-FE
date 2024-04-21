@@ -71,3 +71,15 @@ export const ThirdLine = styled(FirstLine)`
 
 
 
+export const PostBox = styled.div`
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    text-align: right;
+    justify-content: right;
+    padding-top: 10px;
+`;
