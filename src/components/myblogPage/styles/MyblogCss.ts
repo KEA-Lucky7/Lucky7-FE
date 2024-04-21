@@ -1,29 +1,40 @@
 import styled from "styled-components";
 
-export const BlogContainer = styled.div`
-  border: 1px solid blue;
+interface PictureContainerProps {
+  imageUrl: string;
+}
+
+export const MyBlogContainer = styled.div`
+  border: solid 1px blue;
   width: 100%;
-  height: 1000px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 `;
 
-export const Picturecontainer = styled.div`
-  width: 75%;
+export const Picturecontainer = styled.div<PictureContainerProps>`
+  width: 70%;
   height: 400px;
-  border: 1px solid black;
-  margin: 0 auto;
   margin-top: 10px;
   position: relative;
+  background: ${({ imageUrl }) =>
+    `black url(${imageUrl}) no-repeat center center`};
+  background-size: cover;
+  border-radius: 4px;
+`;
+
+export const TitleContainer = styled.div`
+  width: 450px;
+  position: absolute;
+  text-align: left;
+  bottom: 40px;
+  left: 40px;
 `;
 
 export const TitleBox = styled.div`
-  padding: 10px 20px;
   font-size: 28px;
   background-color: none;
   color: white;
-  position: absolute;
-  top: 80%;
-  left: 15%;
-  transform: translate(-50%, -50%);
 `;
 
 export const SubTitleBox = styled(TitleBox)`
@@ -33,10 +44,9 @@ export const SubTitleBox = styled(TitleBox)`
 `;
 
 export const PostContainer = styled.div`
-  width: 75%;
+  width: 70%;
   height: 800px;
   border: 1px solid black;
-  margin: 0 auto;
   margin-top: 10px;
   display: flex;
   flex-direction: row;
