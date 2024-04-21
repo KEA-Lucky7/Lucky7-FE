@@ -55,8 +55,8 @@ export const CreateNewpostButtonContainer = styled.div`
 
 export const MyblogCategoryWidgetContainer = styled.div`
   width: 80%;
-  height: 300px;
-  border: 1px solid green;
+  // height: 300px;
+  // border: 1px solid green;
   margin: 0 auto;
 `;
 
@@ -64,17 +64,24 @@ export const Title = styled.div`
   width: 100%;
   height: 40px;
   margin: 0 auto;
-  border: 1px solid red;
+  // border: 1px solid red;
 `;
 
 export const ContentTitle = styled.div`
   width: 100%;
   height: 40px;
   margin: 0 auto;
-  border: 1px solid red;
+  // border: 1px solid red;
   font-size: 20px;
   display: flex;
   flex-direction: row;
+`;
+
+export const Section = styled.div`
+  width: 100%;
+  // border: solid 1px red;
+  margin-left: -60px;
+  padding-left: -60px;
 `;
 
 export const Circle = styled.div`
@@ -95,7 +102,7 @@ export const TagBox = styled.div`
   width: 100%;
   height: 20px;
   margin: 0 auto;
-  border: 1px solid red;
+  // border: 1px solid red;
   vertical-align: middle;
 `;
 
@@ -106,6 +113,6 @@ export const Tag = styled.div`
   height: 100px;
   margin: 0px 0px 0px 25px;
   gap: 5px;
-  border: 1px solid red;
+  // border: 1px solid red;
   vertical-align: middle;
 `;

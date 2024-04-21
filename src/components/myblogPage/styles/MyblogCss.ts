@@ -5,7 +5,7 @@ interface PictureContainerProps {
 }
 
 export const MyBlogContainer = styled.div`
-  border: solid 1px blue;
+  // border: solid 1px blue;
   width: 100%;
   display: flex;
   flex-flow: column;
@@ -46,7 +46,7 @@ export const SubTitleBox = styled(TitleBox)`
 export const PostContainer = styled.div`
   width: 70%;
   height: 800px;
-  border: 1px solid black;
+  // border: 1px solid black;
   margin-top: 10px;
   display: flex;
   flex-direction: row;
