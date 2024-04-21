@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import * as S from "../homePage/styles/HomePostListStyle";
 import bestContents from "../../data/home/bestContents.json";
 

@@ -9,6 +9,7 @@ export const PostListContainer = styled.div`
 
 export const Title = styled.div`
   //   border: solid 1px red;
+  margin-top: 15px;
   width: 100%;
   font-size: 20px;
 `;
@@ -54,7 +55,8 @@ export const ListItemContainer = styled.div`
 
 export const ItemInfoContainer = styled.div`
   //   border: solid 1px red;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
 `;
@@ -64,6 +66,7 @@ export const ItemInfoLeft = styled.div`
 
 export const ItemTitle = styled.div`
   display: flex;
+  margin-bottom: 6px;
 `;
 
 export const Writer = styled.div`
@@ -80,7 +83,7 @@ export const ItemInfoRight = styled.div``;
 export const Tag = styled.span`
   background-color: #eaeaea;
   border-radius: 7px;
-  padding: 3px;
+  padding: 0px 3px 0px 3px;
   color: #49519e;
 `;
 
