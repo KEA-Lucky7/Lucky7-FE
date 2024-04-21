@@ -1,24 +1,25 @@
-import { useEffect, useState } from "react";
+import * as S from "./style/SideMenuMemberInfoStyle";
+import Profile from "../../src/assets/profile/profile.png";
+import userImg from "../../src/assets/profile/userImg.png";
 
 interface Props {
-    isLoggedIn: boolean;
+  isLoggedIn: boolean;
 }
 
-const SideMenuMemberInfo = ({ isLoggedIn}: Props) => {
+const MemberInfo = ({ isLoggedIn }: Props) => {
+  return (
+    <S.MemberInfoContainer>
+      <S.ProfileImg src={isLoggedIn ? userImg : Profile} alt="Profile IMG" />
+      {isLoggedIn ? (
+        <S.DiscContainer>
+          <S.Name>최정환</S.Name>
+          <S.Disc>작고 소듕한 소비일기</S.Disc>
+        </S.DiscContainer>
+      ) : (
+        <S.DiscContainer>로그인 후 이용해주세요</S.DiscContainer>
+      )}
+    </S.MemberInfoContainer>
+  );
+};
 
-    return (
-        <div>
-            { isLoggedIn ? (
-                <div>
-                    유저 정보
-                </div>
-            ) : (
-                <div>
-                    로그인 하라는 화면 
-                </div>
-            )}
-        </div>
-    );
-}
-
-export default SideMenuMemberInfo;
+export default MemberInfo;

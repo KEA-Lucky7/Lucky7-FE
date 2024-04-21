@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import * as S from "./styles/MyblogWidgetCss";
 import nameEditbutton from "../../assets/myblog/nameEditbutton.png"

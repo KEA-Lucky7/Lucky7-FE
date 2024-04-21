@@ -16,20 +16,24 @@ export default function Header({ setShowSideMenu }: Props) {
 
   return (
     <S.Header>
-      <S.LogoBox>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+      <S.LeftContainer>
+        <img
+          src={Menu}
           onClick={changeSideMenuState}
-        >
-          <img src={Menu} alt="메뉴" width={"25px"} height={"15px"} />
-        </div>
-        <img src={moaboa} alt="로고" width={"130px"} height={"27px"} />
-      </S.LogoBox>
-      <S.IconBox>
+          alt="메뉴"
+          width={"25px"}
+          height={"15px"}
+        />
+
+        <img
+          src={moaboa}
+          alt="로고"
+          width={"130px"}
+          height={"27px"}
+          style={{ marginBottom: "10px", marginLeft: "10px" }}
+        />
+      </S.LeftContainer>
+      <S.RightContainer>
         <S.SearchContainer>
           <S.SearchInput
             type="text"
@@ -46,7 +50,7 @@ export default function Header({ setShowSideMenu }: Props) {
         >
           <img src={Bell} alt="Bell" width={"20px"} height={"25px"} />
         </div>
-      </S.IconBox>
+      </S.RightContainer>
     </S.Header>
   );
 }
