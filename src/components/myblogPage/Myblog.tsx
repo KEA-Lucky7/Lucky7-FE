@@ -1,20 +1,20 @@
-import React from 'react';
-import * as S from "../myblogPage/styles/MyblogPostCss";
-import Titlebackground from "../../assets/myblog/Titlebackground.png";
-import Editbutton from "../../assets/myblog/Editbutton.png";
-import MyblogWidget from './MyblogWidget';
-import MyblogPostList from './MyblogPostList';
-import MyblogCategoryWidget from './MyblogCategoryWidget'; 
+import { useState } from "react";
+
+import * as S from "../myblogPage/styles/MyblogCss";
+import BackGroundImg from "../../assets/myblog/TitleBackGround.png";
+import MyblogWidget from "./MyblogWidget";
+import MyblogPostList from "./MyblogPostList";
+import MyblogCategoryWidget from "./MyblogCategoryWidget";
 export default function myblog() {
+  let [backgroundImageUrl, setBackgroundImageUrl] =
+    useState<string>(BackGroundImg);
   return (
-    <>
-      <S.Picturecontainer>
-        <S.TitleBox>
-          나의 일상을 담은 일기장
-          <img src={Editbutton} alt='수정버튼' style={{ width: "20px", height: "20px%" }} />
-        </S.TitleBox>
-        <S.SubTitleBox>my happy life</S.SubTitleBox>
-        <img src={Titlebackground} alt='블로그배경사진' style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    <S.MyBlogContainer>
+      <S.Picturecontainer imageUrl={backgroundImageUrl}>
+        <S.TitleContainer>
+          <S.TitleBox>나의 일상을 담은 일기장</S.TitleBox>
+          <S.SubTitleBox>my happy life</S.SubTitleBox>
+        </S.TitleContainer>
       </S.Picturecontainer>
       <S.PostContainer>
         <S.LeftSection>
@@ -25,6 +25,6 @@ export default function myblog() {
           <MyblogPostList />
         </S.RightSection>
       </S.PostContainer>
-    </>
-  )
+    </S.MyBlogContainer>
+  );
 }
