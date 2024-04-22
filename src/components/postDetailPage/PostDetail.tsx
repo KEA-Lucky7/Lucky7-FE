@@ -5,6 +5,10 @@ import seeMore from "../../assets/postDetail/seeMore.png";
 import report from "../../assets/postDetail/report.png";
 import postPicture from "../../assets/postDetail/postPicture.png";
 import { postContentData } from "../../data/userBlog/postContentData";
+import postComment from "../../assets/postDetail/postComment.png";
+import postHeart from "../../assets/postDetail/postHeart.png";
+import seeMoreComment from "../../assets/postDetail/seeMoreComment.png";
+import profileImage from "../../assets/postDetail/profileImage.png";
 
 export default function PostDetail() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -60,7 +64,7 @@ export default function PostDetail() {
             </div>
           )}
         </S.PostIntro>
-        
+
         {/* 본문 내용 */}
         <S.PostBox>
           <img src={postPicture} alt='본문사진' style={{ width: '100%', height: '600px' }} />
@@ -84,8 +88,35 @@ export default function PostDetail() {
             </S.SecondTag>
           </div>
         </S.TagBox>
+
+        {/* 댓글 내용 */}
+        <S.CommentBox>
+          <S.Commment>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
+              <img src={postComment} alt='댓글' style={{ width: '25px', height: '25px' }} />
+              <div>댓글 2</div>
+              <img src={seeMoreComment} alt='더보기' style={{ width: '16px', height: '7px' }} />
+            </div>
+          </S.Commment>
+          <S.HeartBox>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
+              <img src={postHeart} alt='하트' style={{ width: '25px', height: '22px' }} />
+              <div>2</div>
+            </div>
+          </S.HeartBox>
+        </S.CommentBox>
       </div>
 
+      {/* 마이프로필 내용 */}
+      <S.CommentBox>
+        <S.PictureBox>
+          <img src={ profileImage } alt='배경사진' style={{width:'123px', height: '123px'}}/>
+        </S.PictureBox>
+        <S.ContentBox>
+            <div style={{fontWeight:'bold'}}>정환's Blog</div>
+            <div>안녕 내 이름은 최정환이야</div>
+        </S.ContentBox>
+      </S.CommentBox>
     </>
   )
 }

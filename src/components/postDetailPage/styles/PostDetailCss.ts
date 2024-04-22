@@ -95,12 +95,18 @@ export const TagBox = styled(PostIntro)`
 `;
 
 
+export const PictureBox = styled.div`
+    display: flex;
+    width: 20%;
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+`;
 
 
 export const ContentBox = styled.div`
     width: 30%;
-    height: 100%;
-    margin: 0 auto;
+    height: 50%;
     border: 1px solid blue;
     display: flex;
     flex-direction: column;
@@ -133,4 +139,28 @@ export const SecondTag = styled(FirstTag)`
 
 `;
 
+export const CommentBox = styled.div`
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 50px;
+`;
 
+
+export const Commment = styled.div`
+    width: 20%;
+    height: 100%;
+    border: 1px solid blue;
+    gap: 20px;
+`;
+
+
+export const HeartBox = styled.div`
+    width: 10%;
+    height: 20%;
+    border: 1px solid red;
+`;
