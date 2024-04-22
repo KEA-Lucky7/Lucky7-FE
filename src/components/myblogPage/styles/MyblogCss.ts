@@ -5,7 +5,7 @@ interface PictureContainerProps {
 }
 
 export const MyBlogContainer = styled.div`
-  border: solid 1px blue;
+  // border: solid 1px blue;
   width: 100%;
   display: flex;
   flex-flow: column;
@@ -46,7 +46,7 @@ export const SubTitleBox = styled(TitleBox)`
 export const PostContainer = styled.div`
   width: 70%;
   height: 800px;
-  border: 1px solid black;
+  // border: 1px solid black;
   margin-top: 10px;
   display: flex;
   flex-direction: row;
@@ -55,15 +55,14 @@ export const PostContainer = styled.div`
 export const LeftSection = styled.div`
   width: 30%;
   height: 90%;
-
   display: flex;
   flex-direction: column;
 `;
 
 export const RightSection = styled.div`
   width: 70%;
-  height: 100%;
-  border: 1px solid blue;
+  // height: 100%;
+  // border: 1px solid blue;
   display: flex;
   flex-direction: row;
 `;

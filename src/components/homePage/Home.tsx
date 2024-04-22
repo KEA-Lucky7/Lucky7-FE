@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import MainTitle from "./MainTitle";
 import HomePostList from "./HomePostList";
 import * as S from "../homePage/styles/MainStyle";
