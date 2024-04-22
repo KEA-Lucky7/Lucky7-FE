@@ -10,6 +10,7 @@ const Container = styled.div`
   width: 280px;
   height: 340px;
   border: solid 1px grey;
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 20px;
   font-family: "Roboto", sans-serif;
@@ -71,7 +72,25 @@ const InputContainer = styled.div`
   justify-content: space-evenly;
 `;
 
-function FinancialLuck() {
+export const FortuneOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); 
+    z-index: 2; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(0px); 
+`;
+
+interface Props {
+  setShowFortuneModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function FinancialLuck({ setShowFortuneModal }: Props) {
   const [userDate, setUserDate] = useState<string>("");
   const [userGender, setUserGender] = useState<'male'|'female'>('male');
   const [resultData, setResultData] = useState<string>("");
@@ -104,8 +123,13 @@ function FinancialLuck() {
     }
   };
 
+  const hideFortuneModal = () =>{
+    setShowFortuneModal(false);
+  } 
+
   return (
-    <Container>
+    <FortuneOverlay onClick={hideFortuneModal}>
+    <Container onClick={(e) => e.stopPropagation()}>
       <Img src="/picture/img_coin.png" alt="FinancialLuck Img" />
       {showResult ? (
         <ResultContainer>
@@ -146,6 +170,7 @@ function FinancialLuck() {
         </InputContainer>
       )}
     </Container>
+    </FortuneOverlay>
   );
 }
 
