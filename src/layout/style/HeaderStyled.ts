@@ -21,8 +21,7 @@ export const LeftContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-left: 16.5vw;
-  margin-left: calc(16.5vw - 37px);
+  margin-left: calc(16.5vw - 50px);
 `;
 
 export const RightContainer = styled.div`
