@@ -25,7 +25,7 @@ export const ListContainer = styled.div`
 `;
 
 export const ListItemBox = styled.div`
-    height: 270px;
+    height: 170px;
     border: 1px solid #ccc;
     background-color: #dedede;
     padding: 20px;
