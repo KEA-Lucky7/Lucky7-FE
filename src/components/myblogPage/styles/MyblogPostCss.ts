@@ -160,7 +160,7 @@ export const DropDownMenu = styled.div`
 
 export const PostListContainer = styled.div`
   width: 100%;
-  height: 100%px;
+  height: 100%;
 `;
 
 export const FieldBox = styled.div`
@@ -292,6 +292,7 @@ export const DateField = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const CheckField = styled.div`
   width: 10%;
   height: 30px;
@@ -310,7 +311,7 @@ export const PictureListCategory = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   vertical-align: middle;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   display: flex;
   justify-content: center;

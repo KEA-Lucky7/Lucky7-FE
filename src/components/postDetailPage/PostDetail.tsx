@@ -9,9 +9,35 @@ import postComment from "../../assets/postDetail/postComment.png";
 import postHeart from "../../assets/postDetail/postHeart.png";
 import seeMoreComment from "../../assets/postDetail/seeMoreComment.png";
 import profileImage from "../../assets/postDetail/profileImage.png";
+import blogPosts from "../../data/userBlog/articleListData.json";
+import { Link } from "react-router-dom";
+import Top from "../../assets/postDetail/Top.png";
+
+interface Post {
+  id: number;
+  content: string;
+  category: string;
+  tag: string;
+  title: string;
+  date: string;
+  views: number;
+}
 
 export default function PostDetail() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const postsPerPage: number = 5; // 페이지하나당 나타낼 게시글 수
+
+  const indexOfLastPost: number = currentPage * postsPerPage;
+  const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
+  const currentPosts: Post[] = blogPosts.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
+
+  //페이지변환
+  const paginate = (pageNumber: number): void => setCurrentPage(pageNumber);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -26,6 +52,13 @@ export default function PostDetail() {
       .catch((err) => {
         console.error('URL 복사에 실패했습니다:', err);
       });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // 부드럽게 스크롤
+    });
   };
   return (
     <>
@@ -110,13 +143,51 @@ export default function PostDetail() {
       {/* 마이프로필 내용 */}
       <S.CommentBox>
         <S.PictureBox>
-          <img src={ profileImage } alt='배경사진' style={{width:'123px', height: '123px'}}/>
+          <img src={profileImage} alt='배경사진' style={{ width: '123px', height: '123px' }} />
         </S.PictureBox>
         <S.ContentBox>
-            <div style={{fontWeight:'bold'}}>정환's Blog</div>
-            <div>안녕 내 이름은 최정환이야</div>
+          <div style={{ fontWeight: 'bold' }}>정환's Blog</div>
+          <div>안녕 내 이름은 최정환이야</div>
         </S.ContentBox>
       </S.CommentBox>
+
+      {/* 글리스트 내용 */}
+      <S.postDetailList>
+        <S.postDetailListTitle>전체글</S.postDetailListTitle>
+        <S.postDetailListBox>
+          {currentPosts.map((post, index) => (
+            <Link
+              to={`/myblog/${index + 1}`} // post 인덱스를 넘김
+              key={index}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <S.ListBox key={post.id}>
+                <S.ListTitle>{post.title}</S.ListTitle>
+                <S.CheckField>{post.date}</S.CheckField>
+              </S.ListBox>
+            </Link>
+          ))}
+          {/* 페이지네이션 */}
+          <S.PaginationBox>
+            {[...Array(Math.ceil(blogPosts.length / postsPerPage)).keys()].map(
+              (pageNumber) => (
+                <S.PageNumber
+                  key={pageNumber}
+                  onClick={() => paginate(pageNumber + 1)}
+                >
+                  {pageNumber + 1}
+                </S.PageNumber>
+              )
+            )}
+          </S.PaginationBox>
+        </S.postDetailListBox>
+      </S.postDetailList>
+
+      {/* 위로 가기 */}
+      <S.TopBox onClick={scrollToTop}>
+        <img src={Top} alt='위로가기' style={{ width: '16px', height: '12px' }} />
+        <div>Top</div>
+      </S.TopBox>
     </>
   )
 }
