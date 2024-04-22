@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
 export const BlogContainer = styled.div`
-  border: 1px solid blue;
+  // border: 1px solid blue;
   width: 100%;
   height: 1000px;
 `;
 
 export const MyblogPostContainer = styled.div`
   width: 100%;
-  height: 1000px;
+  // border: solid 1px red;
+  margin-bottom: 20px;
+  // height: 1000px;
 `;
 
 export const Picturecontainer = styled.div`
@@ -41,7 +43,7 @@ export const LeftSection = styled.div`
 export const RightSection = styled.div`
   width: 70%;
   height: 100%;
-  border: 1px solid blue;
+
   display: flex;
   flex-direction: row;
 `;
@@ -76,9 +78,8 @@ export const Title = styled.div`
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-
   vertical-align: middle;
-  font-size: 32px;
+  font-size: 25px;
   font-weight: bold;
 `;
 
@@ -136,10 +137,9 @@ export const SubTitle = styled.div`
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-
+  color: #292929;
   vertical-align: middle;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 15px;
 `;
 
 export const IconBox = styled.div`
@@ -150,14 +150,12 @@ export const IconBox = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
-  border: 1px solid black;
 `;
 
 export const DropDownMenu = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 10px;
-  border: 1px solid blue;
 `;
 
 export const PostListContainer = styled.div`
@@ -178,8 +176,8 @@ export const ListBox = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
-  flex-direction: row;
-  text-align: center;
+  align-items: center;
+  text-decoration: none;
 `;
 
 export const PictureListBox = styled.div`
@@ -196,7 +194,7 @@ export const PictureList = styled.div`
   height: 160px;
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
+  // border: 1px solid red;
 `;
 
 export const PictureBox = styled.div`
@@ -210,7 +208,7 @@ export const FirstLine = styled.div`
   height: 50px;
   display: flex;
   flex-direction: row;
-  border: 1px solid blue;
+  // border: 1px solid blue;
   text-align: left;
 `;
 
@@ -230,10 +228,9 @@ export const ListCategory = styled.div`
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-
   vertical-align: middle;
   font-size: 18px;
-  font-weight: bold;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -262,10 +259,8 @@ export const ListTitle = styled.div`
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-
   text-align: left;
   font-size: 18px;
-  font-weight: bold;
   display: flex;
   align-items: center;
   margin-left: 40px;
@@ -273,15 +268,13 @@ export const ListTitle = styled.div`
 
 export const ListTag = styled.div`
   width: 10%;
-  height: 30px;
+  height: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
-
-  border-radius: 10px;
+  border-radius: 7px;
   background-color: #eaeaea;
   text-align: left;
   font-size: 18px;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -293,10 +286,8 @@ export const DateField = styled.div`
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-
   vertical-align: middle;
   font-size: 18px;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -306,10 +297,8 @@ export const CheckField = styled.div`
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-
   vertical-align: middle;
   font-size: 18px;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;

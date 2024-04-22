@@ -61,8 +61,8 @@ export const LeftSection = styled.div`
 
 export const RightSection = styled.div`
   width: 70%;
-  height: 100%;
-  border: 1px solid blue;
+  // height: 100%;
+  // border: 1px solid blue;
   display: flex;
   flex-direction: row;
 `;

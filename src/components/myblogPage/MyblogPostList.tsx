@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import * as S from "./styles/MyblogPostCss";
 import articleList from "../../assets/myblog/articleList.png";
 import pictureList from "../../assets/myblog/pictureList.png";
@@ -7,6 +7,7 @@ import blogPosts from "../../data/userBlog/articleListData.json";
 import comment from "../../assets/myblog/comment.png";
 import heart from "../../assets/myblog/heart.png";
 import Titlebackground from "../../assets/myblog/Titlebackground.png";
+
 interface Post {
   id: number;
   content: string;
@@ -58,7 +59,9 @@ const MyblogPostList: React.FC = () => {
               </S.FirstLine>
               <S.PictureListTitle>{post.title}</S.PictureListTitle>
               <S.PictureListContent>{post.content}</S.PictureListContent>
-              <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+              <div
+                style={{ display: "flex", flexDirection: "row", gap: "20px" }}
+              >
                 <div>{post.date}</div>
                 <div>조회 {post.views}</div>
                 <div
@@ -123,7 +126,7 @@ const MyblogPostList: React.FC = () => {
         <Link
           to={`/myblog/${index + 1}`} // post 인덱스를 넘김
           key={index}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "black" }}
         >
           <S.ListBox key={post.id}>
             <S.ListCategory>{post.category}</S.ListCategory>
@@ -163,6 +166,8 @@ const MyblogPostList: React.FC = () => {
             alt="글리스트"
             onClick={() => toggleTab("picture")} // Toggle to 'article' tab when clicked
             style={{
+              width: "20px",
+              height: "20px",
               cursor: "pointer",
               marginRight: "10px",
               opacity: selectedTab === "picture" ? 1 : 0.5,
@@ -173,6 +178,8 @@ const MyblogPostList: React.FC = () => {
             alt="사진리스트"
             onClick={() => toggleTab("article")} // Toggle to 'article' tab when clicked
             style={{
+              width: "20px",
+              height: "20px",
               cursor: "pointer",
               opacity: selectedTab === "article" ? 1 : 0.5,
             }}
