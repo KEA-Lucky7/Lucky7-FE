@@ -33,7 +33,7 @@ export default function Quiz() {
             {isHovered && (
                 <div style={{
                     position: 'absolute',
-                    top: '35%',
+                    top: '20%',
                     left: '91%',
                     transform: 'translate(-50%, -50%)',
                     backgroundColor: '#fff',
@@ -41,7 +41,8 @@ export default function Quiz() {
                     borderRadius: '5px',
                     boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
                     width: '15%',
-                    height: '20%'
+                    height: '20%',
+                    zIndex: '999'
                 }}>
                     <div style={{ position: 'relative' }}>
                         <S.Title>금융경제퀴즈</S.Title>

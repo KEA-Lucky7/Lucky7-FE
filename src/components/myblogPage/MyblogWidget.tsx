@@ -8,7 +8,7 @@ export default function MyblogWidget() {
       </S.Picturecontainer>
       <div style={{display:'flex', flexDirection: 'column', textAlign: 'left'}}>
         <S.UserNickname>
-          김성섭
+          최정환
           <img src={nameEditbutton} alt='수정' style={{width:'12px', height:'12px'}}/>
         </S.UserNickname>
         <S.UserId>

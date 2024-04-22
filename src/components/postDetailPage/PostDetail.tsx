@@ -44,7 +44,7 @@ export default function PostDetail() {
         </S.Picturecontainer>
       </S.Container>
 
-
+      {/* 본문 시작*/}
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 본문 맨 위 내용 */}
         <S.PostIntro>
@@ -60,6 +60,7 @@ export default function PostDetail() {
             </div>
           )}
         </S.PostIntro>
+        
         {/* 본문 내용 */}
         <S.PostBox>
           <img src={postPicture} alt='본문사진' style={{ width: '100%', height: '600px' }} />

@@ -12,8 +12,8 @@ export const QuizContainer = styled.div`
     background-color: #000;
     color: white;
     position: fixed;
-    top: 50%;
-    left: 83%;
+    top: 35%;
+    right: 12%;
     font-weight: bold;
 `;
 
