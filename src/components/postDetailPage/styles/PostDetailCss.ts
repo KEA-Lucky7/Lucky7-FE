@@ -145,22 +145,24 @@ export const CommentBox = styled.div`
     margin: 0 auto;
     border: 1px solid blue;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     padding-top: 50px;
 `;
 
 
 export const Commment = styled.div`
-    width: 20%;
+    width: 100%;
     height: 100%;
     border: 1px solid blue;
     gap: 20px;
+    display: flex;
+    flex-direction: row;
 `;
 
 
 export const HeartBox = styled.div`
-    width: 10%;
+    width: 100%;
     height: 20%;
     border: 1px solid blue;
 `;

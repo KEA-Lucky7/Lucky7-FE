@@ -12,6 +12,7 @@ import profileImage from "../../assets/postDetail/profileImage.png";
 import blogPosts from "../../data/userBlog/articleListData.json";
 import { Link } from "react-router-dom";
 import Top from "../../assets/postDetail/Top.png";
+import InputComment from "./comment/InputComment";
 
 interface Post {
   id: number;
@@ -26,6 +27,7 @@ interface Post {
 export default function PostDetail() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isCommentVisible, setIsCommentVisible] = useState(false);
 
   const postsPerPage: number = 5; // 페이지하나당 나타낼 게시글 수
 
@@ -35,6 +37,10 @@ export default function PostDetail() {
     indexOfFirstPost,
     indexOfLastPost
   );
+
+  const toggleCommentVisibility = () => {
+    setIsCommentVisible(!isCommentVisible); // 상태를 반전시켜 댓글 보이기 여부를 토글합니다.
+  };
 
   //페이지변환
   const paginate = (pageNumber: number): void => setCurrentPage(pageNumber);
@@ -60,6 +66,13 @@ export default function PostDetail() {
       behavior: "smooth" // 부드럽게 스크롤
     });
   };
+
+  const handleCommentSubmit = () => {
+
+  };
+
+
+
   return (
     <>
       <S.Container>
@@ -128,15 +141,20 @@ export default function PostDetail() {
             <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
               <img src={postComment} alt='댓글' style={{ width: '25px', height: '25px' }} />
               <div>댓글 2</div>
-              <img src={seeMoreComment} alt='더보기' style={{ width: '16px', height: '7px' }} />
+              <img src={seeMoreComment} alt='더보기' style={{ width: '16px', height: '7px' }} onClick={toggleCommentVisibility} />
             </div>
-          </S.Commment>
-          <S.HeartBox>
             <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
               <img src={postHeart} alt='하트' style={{ width: '25px', height: '22px' }} />
               <div>2</div>
             </div>
-          </S.HeartBox>
+          </S.Commment>
+          {
+            isCommentVisible && <InputComment
+              className="custom-input"
+              placeholder="댓글을 입력하세요..."
+              onClick={handleCommentSubmit}
+            />
+          }
         </S.CommentBox>
       </div>
 
