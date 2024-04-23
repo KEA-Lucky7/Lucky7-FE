@@ -2,10 +2,15 @@ import * as S from "./styles/CreatepostCss";
 import React, { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import styled from "styled-components";
 import { EditorState } from "draft-js";
+import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
+import selectPost from "../../assets/createPost/selectPost.png";
 
 export default function CreatePost() {
+
+  const [backgroundImageUrl, setBackgroundImageUrl] =
+    useState<string>(postDetailbackground);
+
   // useState로 상태관리하기 초기값은 EditorState.createEmpty()
   // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
   const [editorState, setEditorState] = useState<EditorState>(
@@ -19,11 +24,16 @@ export default function CreatePost() {
 
   return (
     <>
-      <S.TemporaryBox>임시 저장 불러오기</S.TemporaryBox>
+      <S.Picturecontainer imageUrl={backgroundImageUrl}>
+        <S.TitleContainer>
+          <S.SubTitleBox>
+            게시판을 선택해주세요
+            <img src={selectPost} alt='선택' style={{width: '14px', height:'6px', marginLeft: '5px'}}/>
+          </S.SubTitleBox>
+          <S.TitleInput placeholder="제목을 입력하세요." style={{ fontSize: '24px' }} />
+        </S.TitleContainer>
+      </S.Picturecontainer>
       <S.NewPostInputContainer>
-        <S.TitleInputBox>
-          <S.TitleInput placeholder="제목을 입력하세요." />
-        </S.TitleInputBox>
         <S.TextEditBox>
           <Editor
             // 에디터와 툴바 모두에 적용되는 클래스
