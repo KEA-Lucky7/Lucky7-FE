@@ -5,6 +5,7 @@ import data from "../../data/report/MonthlyAmountSpent.json";
 import * as S from "./styles/ReportMonthlyStyle";
 import leftBtn from "../../assets/button/left.png";
 import rightBtn from "../../assets/button/right.png";
+import { TableHead } from "@mui/material";
 
 Chart.register(...registerables);
 
@@ -79,7 +80,7 @@ const ReportMonthly = () => {
                     display: false,
                 },
                 ticks: {
-                    callback: (value, index, values) => {
+                    callback: (value, index) => {
                         return monthLabels[index];
                     }
                 }
@@ -100,29 +101,28 @@ const ReportMonthly = () => {
         />
         </S.ReportMonthlyContainer>
         <S.TableContainer>
-            <table style={{ width: "100%" , border: "1px solid #ddd" }}>
             <thead>
-                <tr>
-                <th>전체</th>
-                {chartData.labels.map((label, index) => (
-                    <th key={index} style={{ width: `${100 / 13}%` , border: "1px solid #ddd" }}>{monthLabels[index]}</th>
+                <tr style={{ backgroundColor: "#ededed" }}>
+                <S.TableHeader>전체</S.TableHeader>
+                {chartData.labels.map((value, index) => (
+                    <S.TableHeader key={index} >{monthLabels[index]}</S.TableHeader>
                 ))}
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                <td>지출</td>
+                <S.TableData>지출</S.TableData>
                 {chartData.datasets[0].data.map((data, index) => (
-                    <td key={index} style={{ width: `${100 / 13}%` , border: "1px solid #ddd" }}>{data}</td>
+                    <S.TableData key={index} >{data}</S.TableData>
                 ))}
                 </tr>
             </tbody>
-            </table>
         </S.TableContainer>
         <S.YearlyContainer>
-        {currentYear}년 총 지출액
-        {totalSpent}
-        원
+            <div style={{ fontWeight: "bold" }}>{currentYear}</div>
+            년 총 지출액
+            <S.YearlySum>{totalSpent}</S.YearlySum>
+            원
         </S.YearlyContainer>
         </div>
     );
