@@ -6,6 +6,8 @@ import CreatePostPage from "./pages/CreatePostPage";
 import MainLayout from "./layout/MainLayout";
 import PostDetailPage from "./pages/PostDetailPage";
 import FinancialLuckPage from "./pages/FinancialLuckPage";
+import ReportPage from "./pages/ReportPage";
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
         <Route path="/myblog/:id" element={<PostDetailPage />} />
         <Route path="/write" element={<CreatePostPage />} />
         <Route path="/fortune" element={<FinancialLuckPage />} />
+        <Route path="/report/*" element={<ReportPage />} />
       </Routes>
     </MainLayout>
   );

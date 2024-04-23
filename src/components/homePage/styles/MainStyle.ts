@@ -10,6 +10,6 @@ export const HomeContainer = styled.div`
 
 export const MainContainer = styled.div`
   //   border: 1px solid blue;
-  width: 70%;
+  width: 67%;
   margin: 20px 300px;
 `;

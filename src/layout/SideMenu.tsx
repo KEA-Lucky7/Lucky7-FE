@@ -37,10 +37,12 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
   function goWritePage() {
     // 그 전에 로그인 처리 됐는지 확인해야 함
     navigate("/write");
+    setShowSideMenu(false);
   }
 
   function goMyblogPage() {
     navigate("/myblog");
+    setShowSideMenu(false);
   }
 
   return (
@@ -48,9 +50,7 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
         <S.Title>My Profile</S.Title>
 
-        {isLoggedIn ? (
-          <S.LoginOut>로그아웃</S.LoginOut>
-        ) : (
+        {!isLoggedIn && (
           <div>
             <S.LoginOut onClick={() => setShowLoginModal(true)}>
               로그인/회원가입
@@ -64,11 +64,9 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
           <div onClick={goMyblogPage}>내블로그</div>
           <div>내 팔로우</div>
           <div>좋아요한 글</div>
-          {
-            showFortuneModal && (
-              <FinancialLuck setShowFortuneModal={setShowFortuneModal} />
-            )
-          }
+          {showFortuneModal && (
+            <FinancialLuck setShowFortuneModal={setShowFortuneModal} />
+          )}
           <div onClick={changeFortuneModalState}>내 금전운</div>
         </S.MenuList>
         {isLoggedIn ? (
