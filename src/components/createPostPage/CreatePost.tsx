@@ -1,5 +1,5 @@
 import * as S from "./styles/CreatepostCss";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
@@ -159,7 +159,7 @@ export default function CreatePost() {
           </S.RepresentativeTagInputBox>
         </S.RepresentativeTagBox>
       </S.TagBox>
-
+  
       {/* 서브태그 input 자리 */}
       <S.TagBox>
         <S.RepresentativeSubTagBox>

@@ -100,18 +100,17 @@ export const RepresentativeTagInputBox = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-
 `;
 
 export const TagItem = styled.div`
-  width: 18%;
+  width: 15%;
   height: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 7px;
   background-color: #eaeaea;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   flex-direction: row;
 
