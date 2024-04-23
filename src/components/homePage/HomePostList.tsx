@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as S from "../homePage/styles/HomePostListStyle";
-import bestContents from "../../data/home/bestContents.json";
 
+import bestContents from "../../data/home/bestContents.json";
 // HomePostList 컴포넌트 정의
 const HomePostList = () => {
   // 마우스 오버된 아이템의 ID를 추적하는 상태

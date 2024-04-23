@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const Header = styled.div`
+export const Header = styled.header`
   width: 100%;
   height: 80px;
-  // border: 1px solid red;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,9 +19,9 @@ export const LeftContainer = styled.div`
   // border: 1px solid blue;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  margin-left: 30px;
+  margin-left: calc(16.5vw - 50px);
 `;
 
 export const RightContainer = styled.div`
@@ -32,7 +32,7 @@ export const RightContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 16.5vw;
 `;
 
 export const SearchContainer = styled.div`
