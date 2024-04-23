@@ -49,7 +49,7 @@ const MyblogPostList: React.FC = () => {
         <Link
           to={`/myblog/${index + 1}`} // post 인덱스를 넘김
           key={index}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none" , color: 'black'}}
         >
           <S.PictureListBox key={post.id}>
             <S.PictureList>
