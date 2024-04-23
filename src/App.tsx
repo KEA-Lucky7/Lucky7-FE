@@ -16,7 +16,7 @@ function App() {
         <Route path="/myblog" element={<MyblogPage />} />
         <Route path="/myblog/:id" element={<PostDetalPage />} />
         <Route path="/write" element={<CreatePostPage />} />
-        <Route path="/report" element={<ReportPage />} />
+        <Route path="/report/*" element={<ReportPage />} />
       </Routes>
     </MainLayout>
   );

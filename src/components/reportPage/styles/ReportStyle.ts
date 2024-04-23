@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 interface PictureContainerProps {
@@ -63,6 +64,37 @@ export const RightSection = styled.div`
   width: 70%;
   // height: 100%;
   // border: 1px solid blue;
+  padding: 20px;
+`;
+
+// 레포트섹션용
+
+export const ReportTitle = styled.div`
+  font-size: 28px;
+  margin: 10px 0px 0px 0px;
+`;
+
+export const ReportMenuContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  margin: 30px 0px 0px 0px;
+`;
+
+export const ReportMenu = styled(Link)<{ selected: boolean }>`
+  font-size: 18px;
+  text-decoration: none;
+  color: ${({ selected }) => (selected ? "black" : "#aaa")};
+
+  &:hover {
+    color: ${({ selected }) => (selected ? "black" : "gray")};
+  }
+`;
+
+export const ReportMenuSep = styled.div`
+  font-size: 13px;
+  font-color: #ccc;
+  margin: 2px 10px 2px 10px;
+`;
+
+export const ReportContent = styled.div`
+  margin: 30px 0px 0px 0px;
 `;
