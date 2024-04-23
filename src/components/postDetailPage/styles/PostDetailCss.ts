@@ -95,12 +95,18 @@ export const TagBox = styled(PostIntro)`
 `;
 
 
+export const PictureBox = styled.div`
+    display: flex;
+    width: 20%;
+    height: 100%;
+    margin-left: 40px;
+    margin-right: 20px;
+`;
 
 
 export const ContentBox = styled.div`
     width: 30%;
-    height: 100%;
-    margin: 0 auto;
+    height: 50%;
     border: 1px solid blue;
     display: flex;
     flex-direction: column;
@@ -133,4 +139,141 @@ export const SecondTag = styled(FirstTag)`
 
 `;
 
+export const CommentBox = styled.div`
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+`;
 
+export const profileBox = styled.div`
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 50px;
+`;
+
+export const Commment = styled.div`
+    width: 100%;
+    height: 100%;
+    border: 1px solid blue;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+`;
+
+
+export const HeartBox = styled.div`
+    width: 100%;
+    height: 20%;
+    border: 1px solid blue;
+`;
+
+export const postDetailList = styled.div`
+    width: 30%;
+    height: 30%;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding-top: 50px;  
+`;
+
+export const postDetailListTitle = styled.div`
+    width: 30%;
+    border: 1px solid blue;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 40px;
+`;
+
+export const postDetailListBox = styled.div`
+    width: 100%;
+    height: 100%;
+    border: 1px solid blue;
+
+`;
+
+export const PaginationBox = styled.div`
+  width: 100%;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PageNumber = styled.li`
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 5px;
+  width: 25px;
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #263a6c;
+  }
+  &:focus::after {
+    color: white;
+    background-color: #263a6c;
+  }
+`;
+
+export const ListBox = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  text-decoration: none;
+  text-align: left;
+  justify-content: left;
+  border: 1px solid blue;
+  
+`;
+
+export const ListTitle = styled.div`
+  width: 70%;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+`;
+
+export const CheckField = styled.div`
+  width: 20%;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TopBox = styled.div`
+    width: 30%;
+    height: 100%;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    margin: 0 auto;
+    gap: 10px;
+    text-align: center;
+`;

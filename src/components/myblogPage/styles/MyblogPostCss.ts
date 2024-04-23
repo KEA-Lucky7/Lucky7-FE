@@ -160,7 +160,10 @@ export const DropDownMenu = styled.div`
 
 export const PostListContainer = styled.div`
   width: 100%;
-  height: 100%px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 `;
 
 export const FieldBox = styled.div`
@@ -186,7 +189,7 @@ export const PictureListBox = styled.div`
   display: flex;
   flex-direction: row;
   text-align: center;
-  border: 1px solid red;
+
 `;
 
 export const PictureList = styled.div`
@@ -200,7 +203,6 @@ export const PictureList = styled.div`
 export const PictureBox = styled.div`
   width: 30%;
   width: 30%;
-  border: 1px solid red;
 `;
 
 export const FirstLine = styled.div`
@@ -292,6 +294,7 @@ export const DateField = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const CheckField = styled.div`
   width: 10%;
   height: 30px;
@@ -310,7 +313,7 @@ export const PictureListCategory = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   vertical-align: middle;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -340,7 +343,6 @@ export const PictureListTitle = styled.div`
   margin-bottom: 10px;
   font-size: 18px;
   font-weight: bold;
-  border: 1px solid green;
   text-align: left;
 `;
 
@@ -349,7 +351,6 @@ export const PictureListContent = styled.div`
   height: 40px;
   margin-bottom: 20px;
   font-size: 18px;
-  font-weight: bold;
-  border: 1px solid green;
   text-align: left;
+  line-height: 20px;
 `;

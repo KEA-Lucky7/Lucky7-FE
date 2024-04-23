@@ -13,7 +13,7 @@ export const MyBlogContainer = styled.div`
 `;
 
 export const Picturecontainer = styled.div<PictureContainerProps>`
-  width: 70%;
+  width: 67vw;
   height: 400px;
   margin-top: 10px;
   position: relative;
@@ -44,7 +44,7 @@ export const SubTitleBox = styled(TitleBox)`
 `;
 
 export const PostContainer = styled.div`
-  width: 70%;
+  width: 67vw;
   height: 800px;
   // border: 1px solid black;
   margin-top: 10px;
