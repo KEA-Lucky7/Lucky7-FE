@@ -159,7 +159,7 @@ export default function PostDetail() {
       </div>
 
       {/* 마이프로필 내용 */}
-      <S.CommentBox>
+      <S.profileBox>
         <S.PictureBox>
           <img src={profileImage} alt='배경사진' style={{ width: '123px', height: '123px' }} />
         </S.PictureBox>
@@ -167,7 +167,7 @@ export default function PostDetail() {
           <div style={{ fontWeight: 'bold' }}>정환's Blog</div>
           <div>안녕 내 이름은 최정환이야</div>
         </S.ContentBox>
-      </S.CommentBox>
+      </S.profileBox>
 
       {/* 글리스트 내용 */}
       <S.postDetailList>

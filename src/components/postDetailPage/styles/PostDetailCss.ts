@@ -150,6 +150,16 @@ export const CommentBox = styled.div`
     padding-top: 50px;
 `;
 
+export const profileBox = styled.div`
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 50px;
+`;
 
 export const Commment = styled.div`
     width: 100%;
