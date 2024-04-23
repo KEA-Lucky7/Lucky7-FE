@@ -37,10 +37,12 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
   function goWritePage() {
     // 그 전에 로그인 처리 됐는지 확인해야 함
     navigate("/write");
+    setShowSideMenu(false);
   }
 
   function goMyblogPage() {
     navigate("/myblog");
+    setShowSideMenu(false);
   }
 
   return (
