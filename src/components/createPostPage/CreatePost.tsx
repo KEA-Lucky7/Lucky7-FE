@@ -28,8 +28,8 @@ export default function CreatePost() {
     setTagInput(e.target.value);
   };
 
-  const handleTagInputKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim() !== "") {
+  const handleAddTag = () => {
+    if (tagInput.trim() !== "" && tags.length < 5) {
       const newTag: Tag = {
         id: tags.length + 1,
         name: tagInput.trim(),
@@ -37,6 +37,11 @@ export default function CreatePost() {
       setTags([...tags, newTag]);
       setTagInput("");
     }
+  }
+
+  const handleDeleteTag = (id: number) => {
+    const updatedTags = tags.filter((tag) => tag.id !== id);
+    setTags(updatedTags);
   };
 
   return (
@@ -85,16 +90,21 @@ export default function CreatePost() {
             대표태그
           </S.RepresentativeTagTitle>
           <S.RepresentativeTagInputBox>
-            <S.TagInput
-              type="text"
-              placeholder="#대표 태그를 입력해주세요"
-              value={tagInput}
-              onChange={handleTagInputChange}
-              onKeyPress={handleTagInputKeyPress}
-            />
-            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
+              <S.TagInput
+                type="text"
+                placeholder="대표 태그를 입력해주세요(최대 5개)" //최대 5개 희망함
+                value={tagInput}
+                onChange={handleTagInputChange}
+              />
+              <S.CreateTag onClick={handleAddTag}>추가</S.CreateTag>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
               {tags.map((tag) => (
-                <S.TagItem key={tag.id}>{tag.name}</S.TagItem>
+                <S.TagItem key={tag.id}>
+                  #{tag.name}
+                  <S.DeleteTagButton onClick={() => handleDeleteTag(tag.id)}>X</S.DeleteTagButton>
+                </S.TagItem>
               ))}
             </div>
           </S.RepresentativeTagInputBox>

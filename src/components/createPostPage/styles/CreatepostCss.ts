@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface PictureContainerProps {
-    imageUrl: string;
+  imageUrl: string;
 }
 
 
@@ -97,16 +97,23 @@ export const RepresentativeTagInputBox = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    overflow: auto;
 `;
 
 export const TagItem = styled.div`
-    width: 100px;
-    height: 20px;
-    border: 1px solid blue;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+  width: 15%;
+  height: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 7px;
+  background-color: #eaeaea;
+  text-align: left;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-around;
+  align-items: center;
+  color: #49519e;
 `;
 
 export const TagInput = styled.input`
@@ -179,7 +186,7 @@ export const Picturecontainer = styled.div<PictureContainerProps>`
   margin-top: 10px;
   position: relative;
   background: ${({ imageUrl }) =>
-        `black url(${imageUrl}) no-repeat center center`};
+    `black url(${imageUrl}) no-repeat center center`};
   background-size: cover;
   border-radius: 4px;
   margin: 0 auto;
@@ -204,3 +211,26 @@ export const SubTitleBox = styled(TitleBox)`
   top: 90%;
   left: 8%;
 `;
+
+export const CreateTag = styled.div`
+  width: 92px;
+  height: 36px;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #D7D7D7;
+  margin-top: 10px;
+`;
+
+export const DeleteTagButton = styled.div`
+  font-size: 12px;
+  color: black;
+  font-weight: bold;
+  text-align: right;
+  align-items: right;
+
+`;
+
+
