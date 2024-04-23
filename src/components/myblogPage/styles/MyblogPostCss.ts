@@ -351,6 +351,6 @@ export const PictureListContent = styled.div`
   height: 40px;
   margin-bottom: 20px;
   font-size: 18px;
-  font-weight: bold;
   text-align: left;
+  line-height: 20px;
 `;
