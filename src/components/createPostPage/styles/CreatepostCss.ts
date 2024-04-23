@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface PictureContainerProps {
-    imageUrl: string;
+  imageUrl: string;
 }
 
 
@@ -16,7 +16,6 @@ export const NewPostInputContainer = styled.div`
 export const TemporaryBox = styled.div`
     width: 11%;
     height: 50px;
-    border: 1px solid red;
     float: right;
     margin: 30px 100px 0px 50px;
     line-height : 50px;
@@ -29,7 +28,7 @@ export const TextEditBox = styled.div`
     width: 100%;
     height: 100px;
     margin: 0 auto;
-    border: 1px solid blue;
+
 `;
 
 export const TitleInputBox = styled.div`
@@ -55,7 +54,6 @@ export const MainTextInput = styled.div`
     width: 50%;
     height: 50px;
     margin: 0 auto;
-    border: 1px solid grey;
 `;
 
 export const TagBox = styled.div`
@@ -64,7 +62,6 @@ export const TagBox = styled.div`
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    border: 1px solid grey;
     gap: 10px;
     margin-top: 20px;
 `;
@@ -72,7 +69,14 @@ export const TagBox = styled.div`
 export const RepresentativeTagBox = styled.div`
     width: 100%;
     height: 100px;
-    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+`;
+
+export const RepresentativeSubTagBox = styled.div`
+    width: 100%;
+    height: 200px;
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -81,7 +85,6 @@ export const RepresentativeTagBox = styled.div`
 export const RepresentativeTagTitle = styled.div`
     width: 20%;
     height: 50px;
-    border: 1px solid red;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,28 +95,40 @@ export const RepresentativeTagTitle = styled.div`
 
 export const RepresentativeTagInputBox = styled.div`
     width: 500px;
-    height: 100px;
-    border: 1px solid blue;
+    height: 200px;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
-    overflow: auto;
+
 `;
 
 export const TagItem = styled.div`
-    width: 100px;
-    height: 20px;
-    border: 1px solid blue;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+  width: 18%;
+  height: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 7px;
+  background-color: #eaeaea;
+  text-align: left;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-around;
+  align-items: center;
+  color: #49519e;
 `;
 
 export const TagInput = styled.input`
     width: 100%;
     height: 50px;
     border: 1px solid black;
-
+    font-size: 20px;
+    &::placeholder { 
+        font-size: 20px;
+        color: grey;
+    }
 `;
 
 
@@ -129,7 +144,6 @@ export const Header = styled.div`
   top: 0px;
   background: white;
   z-index: 1;
-  border: 1px solid red;
   margin: 0 auto;
 `;
 
@@ -153,7 +167,6 @@ export const RightContainer = styled.div`
   align-items: right;
   text-align: right;
   margin-right: 30px;
-  border: 1px solid red;
 `;
 
 export const TemporaryButton = styled.div`
@@ -179,7 +192,7 @@ export const Picturecontainer = styled.div<PictureContainerProps>`
   margin-top: 10px;
   position: relative;
   background: ${({ imageUrl }) =>
-        `black url(${imageUrl}) no-repeat center center`};
+    `black url(${imageUrl}) no-repeat center center`};
   background-size: cover;
   border-radius: 4px;
   margin: 0 auto;
@@ -204,3 +217,26 @@ export const SubTitleBox = styled(TitleBox)`
   top: 90%;
   left: 8%;
 `;
+
+export const CreateTag = styled.div`
+  width: 92px;
+  height: 36px;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #D7D7D7;
+  margin-top: 10px;
+`;
+
+export const DeleteTagButton = styled.div`
+  font-size: 12px;
+  color: black;
+  font-weight: bold;
+  text-align: right;
+  align-items: right;
+
+`;
+
+
