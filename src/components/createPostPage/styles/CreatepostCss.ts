@@ -2,14 +2,15 @@ import styled from "styled-components";
 
 interface PictureContainerProps {
     imageUrl: string;
-  }
-  
+}
+
 
 export const NewPostInputContainer = styled.div`
     width: 40%;
     height: 800px;
     margin: 0 auto;
-    border: 1px solid red;
+    border-bottom: 1px solid grey;
+    
 `;
 
 export const TemporaryBox = styled.div`
@@ -57,29 +58,65 @@ export const MainTextInput = styled.div`
     border: 1px solid grey;
 `;
 
-export const ButtonBox = styled.div`
-    width: 50%;
-    height: 50px;
+export const TagBox = styled.div`
+    width: 40%;
+    height: 100%;
     margin: 0 auto;
     display: flex;
-    flex-direction: row;
-    justify-content: end;
+    flex-direction: column;
     border: 1px solid grey;
     gap: 10px;
-
+    margin-top: 20px;
 `;
 
-export const CancelButton = styled.div`
-    width: 15%;
+export const RepresentativeTagBox = styled.div`
+    width: 100%;
+    height: 100px;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+`;
+
+export const RepresentativeTagTitle = styled.div`
+    width: 20%;
     height: 50px;
-    background-color: #D9D9D9;
-    color: black;
-    border: 1px solid blue;
-    text-align: center;
-    line-height : 50px;
-
-    
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+  
 `;
+
+export const RepresentativeTagInputBox = styled.div`
+    width: 500px;
+    height: 100px;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+`;
+
+export const TagItem = styled.div`
+    width: 100px;
+    height: 20px;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+`;
+
+export const TagInput = styled.input`
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+
+`;
+
+
 
 export const Header = styled.div`
   width: 67vw;
@@ -142,7 +179,7 @@ export const Picturecontainer = styled.div<PictureContainerProps>`
   margin-top: 10px;
   position: relative;
   background: ${({ imageUrl }) =>
-    `black url(${imageUrl}) no-repeat center center`};
+        `black url(${imageUrl}) no-repeat center center`};
   background-size: cover;
   border-radius: 4px;
   margin: 0 auto;

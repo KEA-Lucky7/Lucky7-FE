@@ -1,25 +1,42 @@
 import * as S from "./styles/CreatepostCss";
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
 import selectPost from "../../assets/createPost/selectPost.png";
 
-export default function CreatePost() {
+interface Tag {
+  id: number;
+  name: string;
+}
 
+export default function CreatePost() {
   const [backgroundImageUrl, setBackgroundImageUrl] =
     useState<string>(postDetailbackground);
-
-  // useState로 상태관리하기 초기값은 EditorState.createEmpty()
-  // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [tagInput, setTagInput] = useState<string>("");
 
   const onEditorStateChange = (editorState: EditorState) => {
-    // editorState에 값 설정
     setEditorState(editorState);
+  };
+
+  const handleTagInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTagInput(e.target.value);
+  };
+
+  const handleTagInputKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && tagInput.trim() !== "") {
+      const newTag: Tag = {
+        id: tags.length + 1,
+        name: tagInput.trim(),
+      };
+      setTags([...tags, newTag]);
+      setTagInput("");
+    }
   };
 
   return (
@@ -28,7 +45,7 @@ export default function CreatePost() {
         <S.TitleContainer>
           <S.SubTitleBox>
             게시판을 선택해주세요
-            <img src={selectPost} alt='선택' style={{width: '14px', height:'6px', marginLeft: '5px'}}/>
+            <img src={selectPost} alt='선택' style={{ width: '14px', height: '6px', marginLeft: '5px' }} />
           </S.SubTitleBox>
           <S.TitleInput placeholder="제목을 입력하세요." style={{ fontSize: '24px' }} />
         </S.TitleContainer>
@@ -62,11 +79,27 @@ export default function CreatePost() {
           />
         </S.TextEditBox>
       </S.NewPostInputContainer>
-      <S.ButtonBox>
-        <S.CancelButton>취소</S.CancelButton>
-        <S.TemporaryButton>임시저장</S.TemporaryButton>
-        <S.PostButton>게시</S.PostButton>
-      </S.ButtonBox>
+      <S.TagBox>
+        <S.RepresentativeTagBox>
+          <S.RepresentativeTagTitle>
+            대표태그
+          </S.RepresentativeTagTitle>
+          <S.RepresentativeTagInputBox>
+            <S.TagInput
+              type="text"
+              placeholder="#대표 태그를 입력해주세요"
+              value={tagInput}
+              onChange={handleTagInputChange}
+              onKeyPress={handleTagInputKeyPress}
+            />
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              {tags.map((tag) => (
+                <S.TagItem key={tag.id}>{tag.name}</S.TagItem>
+              ))}
+            </div>
+          </S.RepresentativeTagInputBox>
+        </S.RepresentativeTagBox>
+      </S.TagBox>
     </>
   );
 }
