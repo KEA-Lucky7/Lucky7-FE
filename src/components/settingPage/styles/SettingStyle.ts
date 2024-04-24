@@ -51,14 +51,19 @@ export const profileBox = styled(AccountBox)`
 export const BannerBox = styled(AccountBox)`
   width: 90%;
   margin-top: 100px;
-  border: 1px solid blue;
 `;
 
 export const AlertBox = styled(AccountBox)`
   width: 90%;
   margin-top: 100px;
-  border: 1px solid blue;
 `;
+
+export const SecedeBox = styled(AccountBox)`
+  width: 8%;
+  margin-top: 50px;
+`;
+
+
 
 
 export const profileContentBox = styled.div`
@@ -91,7 +96,6 @@ export const InputBox = styled.div`
   height: 100%; 
   display: flex;
   flex-direction: column;
-  border: 1px solid blue;
 `;
 
 export const BannerInputBox = styled.div`
@@ -99,7 +103,6 @@ export const BannerInputBox = styled.div`
   height: 100%; 
   display: flex;
   flex-direction: column;
-  border: 1px solid blue;
   margin-left: auto;
 `;
 
@@ -223,7 +226,6 @@ export const ButtonBox = styled.div`
   height: 100%; 
   display: flex;
   flex-direction: row;
-  border: 1px solid blue;
   margin-left: auto;
   gap: 20px;
 `;
@@ -248,3 +250,10 @@ export const SubTitleBox = styled(TitleBox)`
   left: 8%;
 `;
 
+export const Secede = styled.div`
+  width: 100%;
+  font-size: 16px;
+  color: #616161;
+  border-bottom: 1px solid #616161;
+
+`;

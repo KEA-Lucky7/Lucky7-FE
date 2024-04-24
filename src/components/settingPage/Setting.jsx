@@ -102,6 +102,12 @@ export default function Setting() {
       <S.AlertBox>
         <Alert />
       </S.AlertBox>
+
+      <S.SecedeBox>
+        <S.Secede>
+          탈퇴하기
+        </S.Secede>
+      </S.SecedeBox>
     </S.TotalContainer>
   )
 }
