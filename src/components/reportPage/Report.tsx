@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
 import * as S from "./styles/ReportStyle";
-import Titlebackground from "../../assets/myblog/Titlebackground.png";
 import ReportAge from "./ReportAge";
 import ReportCategory from "./ReportCategory";
 import ReportMonthly from "./ReportMonthly";
@@ -15,7 +13,7 @@ export default function Report() {
   };
 
   return (
-    <div>
+    <S.Container>
       <S.ReportTitle>레포트 보기</S.ReportTitle>
       <S.ReportMenuContainer>
         <S.ReportMenu
@@ -49,6 +47,6 @@ export default function Report() {
           <Route path="/age" element={<ReportAge />} />
         </Routes> */}
       </S.ReportContent>
-    </div>
+    </S.Container>
   );
 }

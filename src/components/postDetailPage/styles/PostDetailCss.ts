@@ -10,7 +10,7 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
-    border: 1px solid red;
+    //border: 1px solid red;
     display: flex;
     flex-direction: column;
 
@@ -34,7 +34,7 @@ export const Picturecontainer = styled.div<PictureContainerProps>`
 export const TextBox = styled.div`
     width: 100%;
     height: 0%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,7 +43,7 @@ export const TextBox = styled.div`
 
 export const FirstLine = styled.div`
     width: 50%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -70,7 +70,7 @@ export const PostIntro = styled.div`
     width: 30%;
     height: 100%;
     margin: 0 auto;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -107,7 +107,7 @@ export const PictureBox = styled.div`
 export const ContentBox = styled.div`
     width: 30%;
     height: 50%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -143,7 +143,7 @@ export const CommentBox = styled.div`
     width: 30%;
     height: 100%;
     margin: 0 auto;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,7 +154,7 @@ export const profileBox = styled.div`
     width: 30%;
     height: 100%;
     margin: 0 auto;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -164,7 +164,7 @@ export const profileBox = styled.div`
 export const Commment = styled.div`
     width: 100%;
     height: 100%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     gap: 20px;
     display: flex;
     flex-direction: row;
@@ -174,13 +174,13 @@ export const Commment = styled.div`
 export const HeartBox = styled.div`
     width: 100%;
     height: 20%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
 `;
 
 export const postDetailList = styled.div`
     width: 30%;
     height: 30%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -189,7 +189,7 @@ export const postDetailList = styled.div`
 
 export const postDetailListTitle = styled.div`
     width: 30%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     font-size: 24px;
     font-weight: bold;
     margin-left: 40px;
@@ -198,7 +198,7 @@ export const postDetailListTitle = styled.div`
 export const postDetailListBox = styled.div`
     width: 100%;
     height: 100%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
 
 `;
 
@@ -237,7 +237,7 @@ export const ListBox = styled.div`
   text-decoration: none;
   text-align: left;
   justify-content: left;
-  border: 1px solid blue;
+  //border: 1px solid blue;
   
 `;
 
@@ -268,7 +268,7 @@ export const CheckField = styled.div`
 export const TopBox = styled.div`
     width: 30%;
     height: 100%;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     display: flex;
     flex-direction: row;
     align-items: center;
