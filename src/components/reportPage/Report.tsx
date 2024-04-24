@@ -9,7 +9,8 @@ import ReportCategory from "./ReportCategory";
 import ReportMonthly from "./ReportMonthly";
 
 export default function Report() {
-  let [backgroundImageUrl, setBackgroundImageUrl] = useState<string>(Titlebackground);
+  let [backgroundImageUrl, setBackgroundImageUrl] =
+    useState<string>(Titlebackground);
   let [selectedMenu, setSelectedMenu] = useState<string>("monthly");
 
   const handleMenuClick = (menu: string) => {
@@ -30,21 +31,37 @@ export default function Report() {
           <MyblogPostCategory />
         </S.LeftSection>
         <S.RightSection>
-          <S.ReportTitle>
-            레포트 보기
-          </S.ReportTitle>
+          <S.ReportTitle>레포트 보기</S.ReportTitle>
           <S.ReportMenuContainer>
-            <S.ReportMenu to="/report/monthly" selected={selectedMenu === "monthly"} onClick={() => handleMenuClick("monthly")}>월별 총 지출액 분석</S.ReportMenu>
+            <S.ReportMenu
+              to="/report/monthly"
+              selected={selectedMenu === "monthly"}
+              onClick={() => handleMenuClick("monthly")}
+            >
+              월별 총 지출액 분석
+            </S.ReportMenu>
             <S.ReportMenuSep>|</S.ReportMenuSep>
-            <S.ReportMenu to="/report/category" selected={selectedMenu === "category"} onClick={() => handleMenuClick("category")}>카테고리별 내역</S.ReportMenu>
+            <S.ReportMenu
+              to="/report/category"
+              selected={selectedMenu === "category"}
+              onClick={() => handleMenuClick("category")}
+            >
+              카테고리별 내역
+            </S.ReportMenu>
             <S.ReportMenuSep>|</S.ReportMenuSep>
-            <S.ReportMenu to="/report/age" selected={selectedMenu === "age"} onClick={() => handleMenuClick("age")}>비슷한 나이대 비교 분석</S.ReportMenu>
+            <S.ReportMenu
+              to="/report/age"
+              selected={selectedMenu === "age"}
+              onClick={() => handleMenuClick("age")}
+            >
+              비슷한 나이대 비교 분석
+            </S.ReportMenu>
           </S.ReportMenuContainer>
           <S.ReportContent>
             <Routes>
-            <Route path="/monthly" element={<ReportMonthly />} />
-            <Route path="/category" element={<ReportCategory />} />
-            <Route path="/age" element={<ReportAge />} />
+              <Route path="/monthly" element={<ReportMonthly />} />
+              <Route path="/category" element={<ReportCategory />} />
+              <Route path="/age" element={<ReportAge />} />
             </Routes>
           </S.ReportContent>
         </S.RightSection>
