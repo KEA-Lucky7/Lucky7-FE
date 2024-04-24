@@ -45,6 +45,11 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
     setShowSideMenu(false);
   }
 
+  function goSettingPage() {
+    navigate("/setting");
+    setShowSideMenu(false);
+  }
+
   return (
     <S.MenuOverlay onClick={changeSideMenuState}>
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
@@ -71,7 +76,7 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
         </S.MenuList>
         {isLoggedIn ? (
           <S.Settings>
-            <div>설정</div>
+            <div onClick={goSettingPage}>설정</div>
             <div>로그아웃</div>
           </S.Settings>
         ) : (

@@ -7,7 +7,7 @@ import MainLayout from "./layout/MainLayout";
 import PostDetailPage from "./pages/PostDetailPage";
 import FinancialLuckPage from "./pages/FinancialLuckPage";
 import ReportPage from "./pages/ReportPage";
-
+import SettingPage from "./pages/SettingPage";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Route path="/write" element={<CreatePostPage />} />
         <Route path="/fortune" element={<FinancialLuckPage />} />
         <Route path="/report/*" element={<ReportPage />} />
+        <Route path="/setting" element={<SettingPage />} />
       </Routes>
     </MainLayout>
   );
