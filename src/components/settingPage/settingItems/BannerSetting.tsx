@@ -30,7 +30,7 @@ export default function BannerSetting() {
 
     const handleSave = () => {
         // 저장하기 버튼 클릭 시 처리하는 로직 작성
-        console.log('저장되었습니다.');
+        alert('저장되었습니다.');
         setIsModified(false); // 저장 후 수정 여부 상태를 false로 변경하여 버튼 비활성화
     };
     return (
