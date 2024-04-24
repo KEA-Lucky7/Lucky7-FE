@@ -79,7 +79,7 @@ export const ReportMenuContainer = styled.div`
   margin: 30px 0px 0px 0px;
 `;
 
-export const ReportMenu = styled(Link)<{ selected: boolean }>`
+export const ReportMenu = styled.div<{ selected: boolean }>`
   font-size: 18px;
   text-decoration: none;
   color: ${({ selected }) => (selected ? "black" : "#aaa")};

@@ -8,8 +8,16 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import * as S from "./styles/MyblogWidgetCss";
+import { Dispatch } from "react";
 
-export default function MyblogPostCategory() {
+interface MyblogCategoryWidgetProps {
+  setContents: Dispatch<React.SetStateAction<string>>;
+  // ... 기타 props
+}
+
+export default function MyblogPostCategory({
+  setContents,
+}: MyblogCategoryWidgetProps) {
   const [reportCategory, setReportCategory] = React.useState(true);
   const [accountbookCategory, setAccountbookCategory] = React.useState(true); //가계부 카테고리
   const [freetextCategory, setFreetextCategory] = React.useState(true); //자유글 카테고리
@@ -28,6 +36,16 @@ export default function MyblogPostCategory() {
     setFreetextCategory(!freetextCategory);
   };
 
+  const setContentsPostList = () => {
+    setContents("postList");
+  };
+  const setContentsAccountBook = () => {
+    setContents("accountBook");
+  };
+  const setContentsReport = () => {
+    setContents("report");
+  };
+
   return (
     <S.MyblogCategoryWidgetContainer>
       <S.Title>Category</S.Title>
@@ -41,7 +59,7 @@ export default function MyblogPostCategory() {
         aria-labelledby="nested-list-subheader"
       >
         {/* 첫 번째 메뉴 */}
-        <S.Section>
+        <S.Section onClick={setContentsPostList}>
           <ListItemButton onClick={freetextCategoryClick}>
             <ListItemIcon></ListItemIcon>
             <S.SubCircle />
@@ -67,7 +85,7 @@ export default function MyblogPostCategory() {
         </S.Section>
 
         {/* 두 번째 메뉴 */}
-        <S.Section>
+        <S.Section onClick={setContentsAccountBook}>
           <ListItemButton onClick={accountbookCategoryClick}>
             <ListItemIcon></ListItemIcon>
             <S.SubCircle />
@@ -91,7 +109,7 @@ export default function MyblogPostCategory() {
         </S.Section>
 
         {/* 세 번째 메뉴 */}
-        <S.Section>
+        <S.Section onClick={setContentsReport}>
           <ListItemButton onClick={reportCategoryClick}>
             <ListItemIcon></ListItemIcon>
             <S.SubCircle />
