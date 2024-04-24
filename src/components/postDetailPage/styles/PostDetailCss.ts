@@ -265,7 +265,7 @@ export const ListTitle = styled.div`
   //   width: 70%;
   height: 30px;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   //   margin-left: 40px;
@@ -279,7 +279,7 @@ export const CheckField = styled.div`
   font-weight: 300;
 
   vertical-align: middle;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   justify-content: center;
   align-items: center;

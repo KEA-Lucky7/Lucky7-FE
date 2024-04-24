@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
-import styled from 'styled-components';
+import React, { ReactNode } from "react";
+import styled from "styled-components";
 
-import CommonButton from './CommomButton';
+import CommonButton from "./CommomButton";
 
 type InputProps = {
   className: string;
@@ -10,7 +10,12 @@ type InputProps = {
   children?: ReactNode;
 };
 
-const InputComment = ({ className, placeholder, onClick, children }: InputProps) => {
+const InputComment = ({
+  className,
+  placeholder,
+  onClick,
+  children,
+}: InputProps) => {
   return (
     <InputWrapper className={className}>
       {children}
@@ -35,7 +40,8 @@ const InputWrapper = styled.div`
   border-radius: 8px;
   position: relative;
   box-sizing: border-box;
-  border: 1px solid red;
+  border: 1px solid black;
+  margin-top: 10px;
 `;
 
 const InputArea = styled.textarea`
