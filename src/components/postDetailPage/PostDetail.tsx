@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import * as S from "./styles/PostDetailCss";
-import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
+import postDetailbackground from "../../assets/postDetail/bread.png";
 import seeMore from "../../assets/postDetail/seeMore.png";
 import report from "../../assets/postDetail/report.png";
 import postPicture from "../../assets/postDetail/postPicture.png";
@@ -51,27 +51,24 @@ export default function PostDetail() {
 
   const handleCopyURL = () => {
     // 페이지 URL을 클립보드에 복사하는 코드
-    navigator.clipboard.writeText(window.location.href)
+    navigator.clipboard
+      .writeText(window.location.href)
       .then(() => {
-        alert('URL이 클립보드에 복사되었습니다.');
+        alert("URL이 클립보드에 복사되었습니다.");
       })
       .catch((err) => {
-        console.error('URL 복사에 실패했습니다:', err);
+        console.error("URL 복사에 실패했습니다:", err);
       });
   };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth" // 부드럽게 스크롤
+      behavior: "smooth", // 부드럽게 스크롤
     });
   };
 
-  const handleCommentSubmit = () => {
-
-  };
-
-
+  const handleCommentSubmit = () => {};
 
   return (
     <>
@@ -87,7 +84,7 @@ export default function PostDetail() {
               <div>내가 좋아하는 베이글 뿌시고 옴</div>
             </S.SecondLine>
             <S.ThirdLine>
-              <div>by name</div>
+              <div>by HOAN.C</div>
               <div>2024.04.14</div>
             </S.ThirdLine>
           </S.TextBox>
@@ -95,17 +92,46 @@ export default function PostDetail() {
       </S.Container>
 
       {/* 본문 시작*/}
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <S.PostContainer>
         {/* 본문 맨 위 내용 */}
         <S.PostIntro>
-          <div onClick={handleCopyURL}>URL 복사</div>
-          <img src={seeMore} alt='더보기' style={{ width: '3px', height: '19px' }} onClick={toggleDropdown} />
+          <S.FuncContainer>
+            <div onClick={handleCopyURL}>URL 복사</div>
+            <img
+              src={seeMore}
+              alt="더보기"
+              style={{ width: "3px", height: "15px" }}
+              onClick={toggleDropdown}
+            />
+          </S.FuncContainer>
           {/* 드롭다운 메뉴 내용 */}
           {isDropdownVisible && (
-            <div style={{ position: 'absolute', top: '520px', right: '670px', backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+            <div
+              style={{
+                position: "absolute",
+                top: "520px",
+                right: "670px",
+                backgroundColor: "#fff",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                padding: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "10px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 신고하기
-                <img src={report} alt='신고' style={{ width: '24px', height: '24px' }} />
+                <img
+                  src={report}
+                  alt="신고"
+                  style={{ width: "24px", height: "24px" }}
+                />
               </div>
             </div>
           )}
@@ -113,7 +139,11 @@ export default function PostDetail() {
 
         {/* 본문 내용 */}
         <S.PostBox>
-          <img src={postPicture} alt='본문사진' style={{ width: '100%', height: '600px' }} />
+          <img
+            src={postPicture}
+            alt="본문사진"
+            style={{ width: "100%", height: "600px" }}
+          />
           {postContentData.map((line, index) => (
             <div key={index}>{line}</div>
           ))}
@@ -122,49 +152,74 @@ export default function PostDetail() {
         {/* 태그 내용 */}
         <S.TagBox>
           <S.FirstTag>#대표태그</S.FirstTag>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-            <S.SecondTag>
-              #서브태그
-            </S.SecondTag>
-            <S.SecondTag>
-              #서브태그
-            </S.SecondTag>
-            <S.SecondTag>
-              #서브태그
-            </S.SecondTag>
+          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+            <S.SecondTag>#서브태그</S.SecondTag>
+            <S.SecondTag>#서브태그</S.SecondTag>
+            <S.SecondTag>#서브태그</S.SecondTag>
           </div>
         </S.TagBox>
 
         {/* 댓글 내용 */}
         <S.CommentBox>
           <S.Commment>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
-              <img src={postComment} alt='댓글' style={{ width: '25px', height: '25px' }} />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "5px",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={postComment}
+                alt="댓글"
+                style={{ width: "25px", height: "25px" }}
+              />
               <div>댓글 2</div>
-              <img src={seeMoreComment} alt='더보기' style={{ width: '16px', height: '7px' }} onClick={toggleCommentVisibility} />
+              <img
+                src={seeMoreComment}
+                alt="더보기"
+                style={{ width: "16px", height: "7px" }}
+                onClick={toggleCommentVisibility}
+              />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}>
-              <img src={postHeart} alt='하트' style={{ width: '25px', height: '22px' }} />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "5px",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={postHeart}
+                alt="하트"
+                style={{ width: "25px", height: "22px" }}
+              />
               <div>2</div>
             </div>
           </S.Commment>
-          {
-            isCommentVisible && <InputComment
+          {isCommentVisible && (
+            <InputComment
               className="custom-input"
               placeholder="댓글을 입력하세요..."
               onClick={handleCommentSubmit}
             />
-          }
+          )}
         </S.CommentBox>
-      </div>
+      </S.PostContainer>
 
       {/* 마이프로필 내용 */}
       <S.profileBox>
         <S.PictureBox>
-          <img src={profileImage} alt='배경사진' style={{ width: '123px', height: '123px' }} />
+          <img
+            src={profileImage}
+            alt="배경사진"
+            style={{ width: "123px", height: "123px" }}
+          />
         </S.PictureBox>
         <S.ContentBox>
-          <div style={{ fontWeight: 'bold' }}>정환's Blog</div>
+          <div style={{ fontWeight: "bold" }}>정환's Blog</div>
           <div>안녕 내 이름은 최정환이야</div>
         </S.ContentBox>
       </S.profileBox>
@@ -177,7 +232,11 @@ export default function PostDetail() {
             <Link
               to={`/myblog/${index + 1}`} // post 인덱스를 넘김
               key={index}
-              style={{ textDecoration: "none", color: "black" }}
+              style={{
+                textDecoration: "none",
+                color: "black",
+                width: "33vw",
+              }}
             >
               <S.ListBox key={post.id}>
                 <S.ListTitle>{post.title}</S.ListTitle>
@@ -203,9 +262,13 @@ export default function PostDetail() {
 
       {/* 위로 가기 */}
       <S.TopBox onClick={scrollToTop}>
-        <img src={Top} alt='위로가기' style={{ width: '16px', height: '12px' }} />
+        <img
+          src={Top}
+          alt="위로가기"
+          style={{ width: "16px", height: "12px" }}
+        />
         <div>Top</div>
       </S.TopBox>
     </>
-  )
+  );
 }
