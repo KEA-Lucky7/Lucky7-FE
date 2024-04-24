@@ -60,7 +60,7 @@ const ReportMonthly = () => {
     }, 0);
 
     return (
-        <div>
+        <S.Container>
         <S.TitleContainer>
             <S.TitleYear>{currentYear}</S.TitleYear>
             <S.TitleYearBtn src={leftBtn} />
@@ -124,7 +124,7 @@ const ReportMonthly = () => {
             <S.YearlySum>{totalSpent}</S.YearlySum>
             원
         </S.YearlyContainer>
-        </div>
+        </S.Container>
     );
 };
 
