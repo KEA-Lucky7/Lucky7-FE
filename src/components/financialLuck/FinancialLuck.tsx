@@ -83,7 +83,7 @@ export const FortuneOverlay = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(0px); 
+    backdrop-filter: blur(5px); 
 `;
 
 interface Props {
