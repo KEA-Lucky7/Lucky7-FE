@@ -1,8 +1,6 @@
-import * as S from "./style/HeaderStyled.ts";
-import moaboa from "../../src/assets/header/moaboa.png";
-import Menu from "../../src/assets/header/Menu.png";
-import Bell from "../../src/assets/header/Bell.png";
-import Search from "../../src/assets/header/search.png";
+import * as S from "../../createPostPage/styles/CreatepostCss";
+import moaboa from "../../../assets/header/moaboa.png";
+import Menu from "../../../assets/header/Menu.png";
 import { useNavigate } from "react-router-dom";
 
 // HomePage.tsx에서 가져온 showPopup useState
@@ -10,7 +8,7 @@ interface Props {
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Header({ setShowSideMenu }: Props) {
+export default function SettingHeader({ setShowSideMenu }: Props) {
   const navigate = useNavigate();
   const changeSideMenuState = () => {
     setShowSideMenu((prevState) => !prevState);
@@ -43,22 +41,6 @@ export default function Header({ setShowSideMenu }: Props) {
         />
       </S.LeftContainer>
       <S.RightContainer>
-        <S.SearchContainer>
-          <S.SearchInput
-            type="text"
-            placeholder="키워드를 검색하세요(내 블로그 내 검색)"
-          />
-          <S.Img src={Search} alt="Search" width={"20px"} height={"20px"} />
-        </S.SearchContainer>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <img src={Bell} alt="Bell" width={"20px"} height={"25px"} />
-        </div>
       </S.RightContainer>
     </S.Header>
   );
