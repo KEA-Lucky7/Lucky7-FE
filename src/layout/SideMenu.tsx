@@ -55,7 +55,7 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
         <S.Title>My Profile</S.Title>
 
-        {!isLoggedIn && (
+        {isLoggedIn && (
           <div>
             <S.LoginOut onClick={() => setShowLoginModal(true)}>
               로그인/회원가입
