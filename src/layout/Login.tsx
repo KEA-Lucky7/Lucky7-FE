@@ -7,7 +7,7 @@ interface Props {
 
 const Login = ({ setShowLoginModal }: Props) => {
   const googleId = import.meta.env.VITE_GOOGLE_ID;
-  const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
+  // const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
   const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
   // 구글 소셜로그인
   const handleGoogleLogin = () => {

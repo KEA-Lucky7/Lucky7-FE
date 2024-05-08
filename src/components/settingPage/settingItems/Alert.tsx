@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Check from '../../../assets/setting/Check.png';
 import NonCheck from '../../../assets/setting/nonCheck.png';
 import * as S from '../styles/SettingStyle';
