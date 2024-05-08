@@ -5,6 +5,12 @@ interface Props {
   setShowLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+
 const Login = ({ setShowLoginModal }: Props) => {
   const googleId = import.meta.env.VITE_GOOGLE_ID;
   // const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
