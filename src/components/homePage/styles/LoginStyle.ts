@@ -11,7 +11,6 @@ export const LoginOverlay = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    // backdrop-filter: blur(0px); 
 `;
 
 export const LoginContainer = styled.div`
