@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as S from "./styles/PostDetailCss";
 import postDetailbackground from "../../assets/postDetail/bread.png";
 import seeMore from "../../assets/postDetail/seeMore.png";

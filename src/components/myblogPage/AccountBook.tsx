@@ -1,5 +1,5 @@
 import * as S from "./styles/AccountBook";
-import { useState } from "react";
+// import { useState } from "react";
 
 interface ExpenseData {
   date: Date;
@@ -40,12 +40,14 @@ const expenses: ExpenseData[] = [
 ];
 
 export default function AccountBook() {
-  const [type, setType] = useState("calendar");
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
+  // const [type, setType] = useState("calendar");
+  // const date = new Date();
+  // const year = date.getFullYear();
+  // const month = date.getMonth() + 1;
 
-  const [value, onChange] = useState<Date>(new Date());
+  //임시
+  // const [value, onChange] = useState<Date>(new Date());
+  const value = new Date();
 
   const renderTileContent = ({ date, view }: { date: Date; view: string }) => {
     if (view === "month") {

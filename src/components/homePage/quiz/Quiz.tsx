@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as S from "../styles/QuizStyle";
 import quizbackground from "../../../assets/quiz/quizbackground.png";
 import quizObutton from "../../../assets/quiz/quizObutton.png";

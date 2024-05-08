@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import * as S from "./styles/MyblogWidgetCss";
-import nameEditbutton from "../../assets/myblog/nameEditbutton.png";
+// import nameEditbutton from "../../assets/myblog/nameEditbutton.png";
 export default function MyblogWidget() {
   return (
     <S.MyblogWidgetContainer>

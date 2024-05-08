@@ -1,5 +1,5 @@
 import * as S from "./styles/CreatepostCss";
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
@@ -42,9 +42,12 @@ export default function CreatePost() {
     setTagInput(e.target.value);
   };
 
-
   const handleSubTagInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSubtagInput(e.target.value);
+  };
+
+  const handleBackgroundImageUrl = () => {
+    setBackgroundImageUrl("/");
   };
 
   const handleAddTag = () => {
@@ -56,7 +59,7 @@ export default function CreatePost() {
       setTags([...tags, newTag]);
       setTagInput("");
     }
-  }
+  };
 
   const handleAddSubTag = () => {
     if (subtagInput.trim() !== "" && subtags.length < 10) {
@@ -67,8 +70,7 @@ export default function CreatePost() {
       setSubtags([...subtags, newSubTag]);
       setSubtagInput("");
     }
-  }
-
+  };
 
   const handleDeleteTag = (id: number) => {
     const updatedTags = tags.filter((tag) => tag.id !== id);
@@ -84,13 +86,24 @@ export default function CreatePost() {
     setPostCategory(category);
   };
 
-
   return (
     <>
       {/* 헤더 컴포넌트 여기로 옮겨야 작성하기 API연동할때 편함 */}
-      <S.Picturecontainer imageUrl={backgroundImageUrl}>
+      {postCategory}
+      {/* 빌드간 오류 해결용*/}
+      <S.Picturecontainer
+        imageUrl={backgroundImageUrl}
+        onClick={handleBackgroundImageUrl}
+      >
         <S.TitleContainer>
-          <S.SubTitleBox onChange={(e) => handleSelectCategory(e.target.value as PostCategory)}>
+          <S.SubTitleBox
+            // onChange={(e) =>
+            //   handleSelectCategory(e.target.value as PostCategory)
+            // }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleSelectCategory(e.target.value as PostCategory)
+            }
+          >
             <select>
               <option value="">게시판을 선택해주세요</option>
               <option value={PostCategory.자유글}>자유글</option>
@@ -98,7 +111,10 @@ export default function CreatePost() {
             </select>
             {/* <img src={selectPost} alt='선택' style={{ width: '14px', height: '6px', marginLeft: '5px' }} /> */}
           </S.SubTitleBox>
-          <S.TitleInput placeholder="제목을 입력하세요." style={{ fontSize: '24px' }} />
+          <S.TitleInput
+            placeholder="제목을 입력하세요."
+            style={{ fontSize: "24px" }}
+          />
         </S.TitleContainer>
       </S.Picturecontainer>
       <S.NewPostInputContainer>
@@ -131,15 +147,12 @@ export default function CreatePost() {
         </S.TextEditBox>
       </S.NewPostInputContainer>
 
-
       {/* 대표태그 input */}
       <S.TagBox>
         <S.RepresentativeTagBox>
-          <S.RepresentativeTagTitle>
-            대표태그
-          </S.RepresentativeTagTitle>
+          <S.RepresentativeTagTitle>대표태그</S.RepresentativeTagTitle>
           <S.RepresentativeTagInputBox>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               <S.TagInput
                 type="text"
                 placeholder="대표 태그를 입력해주세요(최대 5개)" //최대 5개 희망함
@@ -148,24 +161,26 @@ export default function CreatePost() {
               />
               <S.CreateTag onClick={handleAddTag}>추가</S.CreateTag>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               {tags.map((tag) => (
                 <S.TagItem key={tag.id}>
                   #{tag.name}
-                  <S.DeleteTagButton onClick={() => handleDeleteTag(tag.id)}>X</S.DeleteTagButton>
+                  <S.DeleteTagButton onClick={() => handleDeleteTag(tag.id)}>
+                    X
+                  </S.DeleteTagButton>
                 </S.TagItem>
               ))}
             </div>
           </S.RepresentativeTagInputBox>
         </S.RepresentativeTagBox>
       </S.TagBox>
-  
+
       {/* 서브태그 input 자리 */}
       <S.TagBox>
         <S.RepresentativeSubTagBox>
           <S.RepresentativeTagTitle>태그</S.RepresentativeTagTitle>
           <S.RepresentativeTagInputBox>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               <S.TagInput
                 type="text"
                 placeholder="세부 태그를 입력해주세요(최대 10개)" //최대 10개 희망함
@@ -174,11 +189,22 @@ export default function CreatePost() {
               />
               <S.CreateTag onClick={handleAddSubTag}>추가</S.CreateTag>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', overflowX: 'hidden' }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "15px",
+                overflowX: "hidden",
+              }}
+            >
               {subtags.map((subtag) => (
                 <S.TagItem key={subtag.id}>
                   #{subtag.name}
-                  <S.DeleteTagButton onClick={() => handleDeleteSubTag(subtag.id)}>X</S.DeleteTagButton>
+                  <S.DeleteTagButton
+                    onClick={() => handleDeleteSubTag(subtag.id)}
+                  >
+                    X
+                  </S.DeleteTagButton>
                 </S.TagItem>
               ))}
             </div>
