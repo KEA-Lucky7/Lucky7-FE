@@ -10,7 +10,6 @@ const HomePage = () => {
     // 공지사항 팝업 띄우기 여부를 가져오는 useEffect
     useEffect(() => {
         var noticeCookie = Cookies.get('notice')
-        console.log("Notice Cookie: ", noticeCookie);
         // notice 쿠키의 값이 false이면 팝업을 보여주지 않는다
         if (noticeCookie == 'false'){
             setShowPopup(false)

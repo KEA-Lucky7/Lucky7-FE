@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style/SideMenuStyle";
 import Cookies from "js-cookie";
-import Login from "./Login";
 import MemberInfo from "./SideMenuMemberInfo";
 import FinancialLuck from "../components/financialLuck/FinancialLuck";
+import Login from "../components/homePage/login/Login";
 
 interface Props {
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
