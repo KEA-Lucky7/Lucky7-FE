@@ -1,6 +1,4 @@
-// const { Kakao } = window;
 import * as S from "../styles/LoginStyle";
-// import { useEffect, useState } from "react";
 
 interface Props {
   setShowLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,11 +14,12 @@ const Login = ({ setShowLoginModal }: Props) => {
   const googleId = import.meta.env.VITE_GOOGLE_ID;
   // const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
   const redirectUri = import.meta.env.VITE_SERVER_URL;
+  const testUri = import.meta.env.VITE_FRONT_TEST_URL
   // const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
 
   // 구글 소셜로그인
   const handleGoogleLogin = () => {
-    const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http://localhost:5173/login/redirect&response_type=code&client_id=${googleId}&scope=https://www.googleapis.com/auth/userinfo.profile`;
+    const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${testUri}/login/redirect&response_type=code&client_id=${googleId}&scope=https://www.googleapis.com/auth/userinfo.profile`;
     window.location.href = GOOGLE_AUTH_URL;
   };
 
@@ -29,7 +28,7 @@ const Login = ({ setShowLoginModal }: Props) => {
     const KAKAO_AUTH_URL = `${redirectUri}/oauth2/authorization/kakao`;
     // const KAKAO_AUTH_URL2 = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirectUri}/oauth2/authorization/kakao&response_type=code`;
     window.location.href = KAKAO_AUTH_URL;
-  };
+  }
 
   const hideLoginModal = () => {
     setShowLoginModal(false);

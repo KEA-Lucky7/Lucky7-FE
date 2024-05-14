@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useStore } from "./state";
 
 const LoginRedirect = () => {
-    const [jwt, setJwt] = useState("");
+  const navigate = useNavigate();
+  const [isRegisteredIn, setIsRegisteredIn] = useState(false);
+  const { userToken, setUserToken } = useStore();
 
+  useEffect(() => {
+    // 작동안됨
+    // const query = new URLSearchParams(location.search);
+    // const token = query.get("access-token");
 
-    useEffect(() => {
-        console.log('왔어')
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get('code');
-        
-        if (code) {
-            setJwt(code);
-            console.log('코드 받음', jwt)
-            // 디코딩
-            // setID(jwtDecode(jwt));
-            // console.log(id);
-        }
-    }, [jwt]);
+    //임시
+    const token = "zustand!!!"
 
-    return (
-        <div>
-            <p>LoginRedirect</p>
-        </div>
-    );
-}
+    if (token) {
+        setUserToken(token);
+        setIsRegisteredIn(true)
+    }
+
+  }, [setUserToken]);
+
+  useEffect(() => {
+    if (!isRegisteredIn) {
+      navigate("/");
+    } else {
+      navigate("/");
+    }
+  }, [isRegisteredIn, navigate]);
+
+  return null;
+};
 
 export default LoginRedirect;
