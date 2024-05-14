@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MemberInfoContainer = styled.div`
-  margin-top: 8px;
+  margin: 40px 0px 0px 0px;
   padding: 10px;
   text-align: center;
 `;
@@ -12,7 +12,7 @@ export const ProfileImg = styled.img`
   height: 195px;
   background-color: #969696;
   border-radius: 50%;
-  margin: 10px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
 `;
 
 export const DiscContainer = styled.div`

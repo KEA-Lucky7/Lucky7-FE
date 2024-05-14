@@ -54,7 +54,7 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
     <S.MenuOverlay onClick={changeSideMenuState}>
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
         <S.Title>My Profile</S.Title>
-        <MemberInfo isLoggedIn={isLoggedIn} />
+        <MemberInfo isLoggedIn={isLoggedIn} setShowLoginModal={setShowLoginModal}/>
         <S.MenuList>
           <div onClick={goWritePage}>글쓰기</div>
           <div onClick={goMyblogPage}>내블로그</div>

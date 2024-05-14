@@ -4,19 +4,25 @@ import userImg from "../../src/assets/profile/userImg.png";
 
 interface Props {
   isLoggedIn: boolean;
+  setShowLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MemberInfo = ({ isLoggedIn }: Props) => {
+const MemberInfo = ({ isLoggedIn, setShowLoginModal }: Props) => {
   return (
     <S.MemberInfoContainer>
-      <S.ProfileImg src={isLoggedIn ? userImg : Profile} alt="Profile IMG" />
       {isLoggedIn ? (
-        <S.DiscContainer>
-          <S.Name>최정환</S.Name>
-          <S.Disc>유저 설명</S.Disc>
-        </S.DiscContainer>
+        <div>
+          <S.ProfileImg src={userImg} alt="Profile IMG" />
+          <S.DiscContainer>
+            <S.Name>최정환</S.Name>
+            <S.Disc>유저 설명</S.Disc>
+          </S.DiscContainer>
+        </div>
       ) : (
-        <S.DiscContainer>로그인 후 이용해주세요</S.DiscContainer>
+        <div onClick={() => setShowLoginModal(true)}>
+          <S.ProfileImg src={Profile} alt="Profile IMG" />
+          <S.DiscContainer>로그인 후 이용해주세요</S.DiscContainer>
+        </div>
       )}
     </S.MemberInfoContainer>
   );

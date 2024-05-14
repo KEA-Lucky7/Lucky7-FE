@@ -14,7 +14,7 @@ export const MenuOverlay = styled.div`
 `;
 
 export const SideContainer = styled.div`
-  border: solid 1px red;
+  // border: solid 1px red;
   padding: 30px 0px 0px 0px;
   position: fixed;
   top: 0;
@@ -36,7 +36,7 @@ export const LoginOut = styled.div`
 `;
 
 export const MenuList = styled.div`
-  height: 250px;
+  height: 280px;
   // border: solid 1px red;
   margin: 0px 30px 0px 30px;
   display: flex;
