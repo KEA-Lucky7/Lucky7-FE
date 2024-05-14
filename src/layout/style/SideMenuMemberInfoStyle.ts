@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 export const MemberInfoContainer = styled.div`
-  margin: 40px 0px 0px 0px;
+  margin: 35px 0px 0px 0px;
   padding: 10px;
   text-align: center;
 `;
 
 export const ProfileImg = styled.img`
-  // border: solid blue 1px;
   width: 195px;
   height: 195px;
   background-color: #969696;

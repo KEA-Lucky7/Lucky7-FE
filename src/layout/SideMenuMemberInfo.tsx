@@ -1,6 +1,6 @@
 import * as S from "./style/SideMenuMemberInfoStyle";
 import Profile from "../../src/assets/profile/profile.png";
-import userImg from "../../src/assets/profile/userImg.png";
+import userInfo from "../data/home/userInfo.json";
 
 interface Props {
   isLoggedIn: boolean;
@@ -10,12 +10,12 @@ interface Props {
 const MemberInfo = ({ isLoggedIn, setShowLoginModal }: Props) => {
   return (
     <S.MemberInfoContainer>
-      {isLoggedIn ? (
+      {!isLoggedIn ? (
         <div>
-          <S.ProfileImg src={userImg} alt="Profile IMG" />
+          <S.ProfileImg src={userInfo.profile_img} alt="Profile IMG" />
           <S.DiscContainer>
-            <S.Name>최정환</S.Name>
-            <S.Disc>유저 설명</S.Disc>
+            <S.Name>{userInfo.name}</S.Name>
+            <S.Disc>{userInfo.desc}</S.Disc>
           </S.DiscContainer>
         </div>
       ) : (

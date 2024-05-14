@@ -36,7 +36,7 @@ export const LoginOut = styled.div`
 `;
 
 export const MenuList = styled.div`
-  height: 280px;
+  height: 270px;
   // border: solid 1px red;
   margin: 0px 30px 0px 30px;
   display: flex;
