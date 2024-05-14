@@ -1,26 +1,8 @@
-import * as S from "../styles/LoginStyle";
+import * as S from "../styles/LoginInfoStyle";
 import { useNavigate } from "react-router-dom";
 
-// { setShowLoginModal }: Props
 const LoginInfo = () => {
-  const googleId = import.meta.env.VITE_GOOGLE_ID;
-  // const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
-  const redirectUri = import.meta.env.VITE_SERVER_URL;
-  const testUri = import.meta.env.VITE_FRONT_TEST_URL
-  // const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
 
-  // 구글 소셜로그인
-  const handleGoogleLogin = () => {
-    const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${testUri}/login/redirect&response_type=code&client_id=${googleId}&scope=https://www.googleapis.com/auth/userinfo.profile`;
-    window.location.href = GOOGLE_AUTH_URL;
-  };
-
-  // 카카오 소셜로그인
-  const handleKakaoLogin = () => {
-    const KAKAO_AUTH_URL = `${redirectUri}/oauth2/authorization/kakao`;
-    // const KAKAO_AUTH_URL2 = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirectUri}/oauth2/authorization/kakao&response_type=code`;
-    window.location.href = KAKAO_AUTH_URL;
-  }
 
   const navigate = useNavigate();
   const hideLoginModal = () => {
@@ -30,14 +12,30 @@ const LoginInfo = () => {
   return (
     <S.LoginOverlay onClick={hideLoginModal}>
       <S.LoginContainer onClick={(e) => e.stopPropagation()}>
-        <S.LoginTitleContainer>대충 유저 정보 입력하는 페이지</S.LoginTitleContainer>
-        <S.LoginInfoContainer>
-        (리다이렉션테스트용)
-        </S.LoginInfoContainer>
-        <S.LoginButtonContainer onClick={handleKakaoLogin}>
-          Kakao로 로그인
-        </S.LoginButtonContainer>
-        <S.LoginButtonContainer onClick={handleGoogleLogin}>
+        
+        <S.LoginTitleContainer>모아보아를 시작하기 전에,<br />기본 정보를 입력해 주세요</S.LoginTitleContainer>
+        
+        <S.LoginContents>
+        닉네임
+        <S.LoginInputContainer
+          placeholder="닉네임"
+          />
+        </S.LoginContents>
+
+        <S.LoginContents>
+        생년월일
+        <S.LoginInputContainer
+          placeholder="0000/00/00"
+          />
+        </S.LoginContents>
+
+        <S.LoginContents>
+        이메일
+        <S.LoginInputContainer
+          placeholder="example@example.com"
+          />
+        </S.LoginContents>
+        <S.LoginButtonContainer>
           Google로 로그인
         </S.LoginButtonContainer>
       </S.LoginContainer>
