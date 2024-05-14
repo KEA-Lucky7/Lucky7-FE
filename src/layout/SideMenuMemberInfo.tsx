@@ -13,7 +13,7 @@ const MemberInfo = ({ isLoggedIn }: Props) => {
       {isLoggedIn ? (
         <S.DiscContainer>
           <S.Name>최정환</S.Name>
-          <S.Disc>작고 소듕한 소비일기</S.Disc>
+          <S.Disc>유저 설명</S.Disc>
         </S.DiscContainer>
       ) : (
         <S.DiscContainer>로그인 후 이용해주세요</S.DiscContainer>
