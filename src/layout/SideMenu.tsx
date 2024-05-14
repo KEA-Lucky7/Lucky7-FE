@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style/SideMenuStyle";
 import Cookies from "js-cookie";
-import Login from "./Login";
 import MemberInfo from "./SideMenuMemberInfo";
 import FinancialLuck from "../components/financialLuck/FinancialLuck";
 
@@ -11,10 +10,9 @@ interface Props {
 }
 
 const SideMenu = ({ setShowSideMenu }: Props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showFortuneModal, setShowFortuneModal] = useState(false);
-  // 현재 로그인 여부를 가져오는 useEffect
+
   useEffect(() => {
     var memberCookie = Cookies.get("member");
     console.log("Member Cookie: ", memberCookie);
@@ -50,19 +48,15 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
     setShowSideMenu(false);
   }
 
+  function goLoginModal() {
+    navigate("/login");
+    setShowSideMenu(false);
+  }
+
   return (
     <S.MenuOverlay onClick={changeSideMenuState}>
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
         <S.Title>My Profile</S.Title>
-
-        {isLoggedIn && (
-          <div>
-            <S.LoginOut onClick={() => setShowLoginModal(true)}>
-              로그인/회원가입
-            </S.LoginOut>
-            {showLoginModal && <Login setShowLoginModal={setShowLoginModal} />}
-          </div>
-        )}
         <MemberInfo isLoggedIn={isLoggedIn} />
         <S.MenuList>
           <div onClick={goWritePage}>글쓰기</div>
@@ -80,7 +74,15 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
             <div>로그아웃</div>
           </S.Settings>
         ) : (
-          <S.Settings>계정을 잊어버리셨나요?</S.Settings>
+          <div>
+            <S.Settings>
+              <div onClick={goLoginModal} >
+               로그인/회원가입
+              </div>
+              <div>계정을 잊어버리셨나요?</div>
+            </S.Settings>
+          </div>
+          
         )}
       </S.SideContainer>
     </S.MenuOverlay>
