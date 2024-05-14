@@ -4,7 +4,6 @@ import * as S from "./style/SideMenuStyle";
 import Cookies from "js-cookie";
 import MemberInfo from "./SideMenuMemberInfo";
 import FinancialLuck from "../components/financialLuck/FinancialLuck";
-import Login from "../components/homePage/login/Login";
 
 interface Props {
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +11,6 @@ interface Props {
 
 const SideMenu = ({ setShowSideMenu }: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [showFortuneModal, setShowFortuneModal] = useState(false);
 
   useEffect(() => {
@@ -50,11 +48,16 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
     setShowSideMenu(false);
   }
 
+  function goLoginModal() {
+    navigate("/login");
+    setShowSideMenu(false);
+  }
+
   return (
     <S.MenuOverlay onClick={changeSideMenuState}>
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
         <S.Title>My Profile</S.Title>
-        <MemberInfo isLoggedIn={isLoggedIn} setShowLoginModal={setShowLoginModal}/>
+        <MemberInfo isLoggedIn={isLoggedIn} />
         <S.MenuList>
           <div onClick={goWritePage}>글쓰기</div>
           <div onClick={goMyblogPage}>내블로그</div>
@@ -73,10 +76,9 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
         ) : (
           <div>
             <S.Settings>
-              <div onClick={() => setShowLoginModal(true)}>
+              <div onClick={goLoginModal} >
                로그인/회원가입
               </div>
-              {showLoginModal && <Login setShowLoginModal={setShowLoginModal} />}
               <div>계정을 잊어버리셨나요?</div>
             </S.Settings>
           </div>

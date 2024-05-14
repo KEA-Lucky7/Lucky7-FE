@@ -9,13 +9,18 @@ import FinancialLuckPage from "./pages/FinancialLuckPage";
 import ReportPage from "./pages/ReportPage";
 import SettingPage from "./pages/SettingPage";
 import LoginRedirect from "./components/homePage/login/LoginRedirect";
+import Login from "./components/homePage/login/Login";
+import LoginInfo from "./components/homePage/login/LoginInfo";
 
 function App() {
   return (
     <MainLayout>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login/redirect" element={<LoginRedirect />} />
+        <Route path="/" element={<HomePage />} >
+          <Route path="/login" element={<Login />} />
+          <Route path="/login/redirect" element={<LoginRedirect />} />
+          <Route path="/login/info" element={<LoginInfo />} />
+        </Route>
         <Route path="/myblog" element={<MyblogPage />} />
         <Route path="/myblog/:id" element={<PostDetailPage />} />
         <Route path="/write" element={<CreatePostPage />} />

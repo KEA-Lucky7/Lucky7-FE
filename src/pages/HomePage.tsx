@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import NoticePopup from "../components/homePage/NoticePopup";
 import Home from "../components/homePage/Home";
+import { Outlet } from "react-router-dom";
 
 const HomePage = () => {
     // 공지사항 팝업 띄우기 여부 useState
@@ -22,6 +23,7 @@ const HomePage = () => {
                 <NoticePopup setShowPopup={setShowPopup} />
             )}
             <Home />
+            <Outlet />
         </div>
     );
 }

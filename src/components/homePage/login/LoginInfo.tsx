@@ -2,7 +2,7 @@ import * as S from "../styles/LoginStyle";
 import { useNavigate } from "react-router-dom";
 
 // { setShowLoginModal }: Props
-const Login = () => {
+const LoginInfo = () => {
   const googleId = import.meta.env.VITE_GOOGLE_ID;
   // const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
   const redirectUri = import.meta.env.VITE_SERVER_URL;
@@ -30,11 +30,9 @@ const Login = () => {
   return (
     <S.LoginOverlay onClick={hideLoginModal}>
       <S.LoginContainer onClick={(e) => e.stopPropagation()}>
-        <S.LoginTitleContainer>Moaboa</S.LoginTitleContainer>
+        <S.LoginTitleContainer>대충 유저 정보 입력하는 페이지</S.LoginTitleContainer>
         <S.LoginInfoContainer>
-          차곡차곡 모아봐요,
-          <br />
-          소비와 함께하는 즐거운 기록
+        (리다이렉션테스트용)
         </S.LoginInfoContainer>
         <S.LoginButtonContainer onClick={handleKakaoLogin}>
           Kakao로 로그인
@@ -47,4 +45,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginInfo;

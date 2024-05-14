@@ -5,7 +5,7 @@ import { useStore } from "./state";
 const LoginRedirect = () => {
   const navigate = useNavigate();
   const [isRegisteredIn, setIsRegisteredIn] = useState(false);
-  const { userToken, setUserToken } = useStore();
+  const { setUserToken } = useStore();
 
   useEffect(() => {
     // 작동안됨
@@ -24,7 +24,7 @@ const LoginRedirect = () => {
 
   useEffect(() => {
     if (!isRegisteredIn) {
-      navigate("/");
+      navigate("/login/info");
     } else {
       navigate("/");
     }
