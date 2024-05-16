@@ -3,12 +3,12 @@ import { useLocation } from "react-router-dom";
 
 import * as S from "./styles/SearchStyle";
 
-function useQuery() {
+function getQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 export default function Search() {
-  const query = useQuery();
+  const query = getQuery();
   const keyword = query.get("q");
 
   return (
