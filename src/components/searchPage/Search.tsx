@@ -1,6 +1,7 @@
-import * as S from "./styles/SearchStyle";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+
+import * as S from "./styles/SearchStyle";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
