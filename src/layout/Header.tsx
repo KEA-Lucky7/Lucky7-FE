@@ -1,25 +1,46 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 import * as S from "./style/HeaderStyled.ts";
 import moaboa from "../../src/assets/header/moaboa.png";
 import Menu from "../../src/assets/header/Menu.png";
 import Bell from "../../src/assets/header/Bell.png";
-import Search from "../../src/assets/header/search.png";
-import { useNavigate } from "react-router-dom";
 
-// HomePage.tsx에서 가져온 showPopup useState
 interface Props {
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Header({ setShowSideMenu }: Props) {
+
   const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
+
   const changeSideMenuState = () => {
     setShowSideMenu((prevState) => !prevState);
   };
 
   function goHomePage() {
-    // 그 전에 로그인 처리 됐는지 확인해야 함
     navigate("/");
     setShowSideMenu(false);
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      goSearchPage();
+    }
+  }
+
+  const changeKeyword = (e: string) => {
+    setKeyword(e);
+  }
+
+  const goSearchPage = () => {
+    
+    if (keyword == "") {
+      window.alert("검색어를 입력하세요");
+    } else {
+      navigate("/search?q=" + keyword);
+    }
   }
 
   return (
@@ -32,7 +53,6 @@ export default function Header({ setShowSideMenu }: Props) {
           width={"25px"}
           height={"15px"}
         />
-
         <img
           src={moaboa}
           onClick={goHomePage}
@@ -47,8 +67,10 @@ export default function Header({ setShowSideMenu }: Props) {
           <S.SearchInput
             type="text"
             placeholder="키워드를 검색하세요(내 블로그 내 검색)"
+            onChange={(e) => changeKeyword(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <S.Img src={Search} alt="Search" width={"20px"} height={"20px"} />
+          <S.ImgBtn onClick={goSearchPage} />
         </S.SearchContainer>
         <div
           style={{
