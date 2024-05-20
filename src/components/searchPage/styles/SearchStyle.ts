@@ -25,17 +25,29 @@ export const SearchMenu = styled.div<{ selected: boolean }>`
   width: 12vw;
   color: ${({ selected }) => (selected ? "black" : "#aaa")};
   border-bottom: 2px solid ${({ selected }) => (selected ? 'gray' : 'transparent')};
-
   &:hover {
     color: ${({ selected }) => (selected ? "black" : "gray")};
     border-bottom: 2px solid ${({ selected }) => (selected ? 'gray' : '#aaa')};
   }
 `;
 
-export const PeriodContainer = styled.div`
+export const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 0px;
 `;
 
-export const PeriodMenu = styled.div`
+export const PeriodContainer = styled.div`
+  display: flex;
+`;
+
+export const PeriodMenu = styled.div<{ selected: boolean }>`
+  margin: 0px 20px 0px 20px;
+  color: ${({ selected }) => (selected ? "black" : "#aaa")};
+  &:hover {
+    color: ${({ selected }) => (selected ? "black" : "gray")};
+  }
 `;
 
 export const SearchDesc = styled.div`

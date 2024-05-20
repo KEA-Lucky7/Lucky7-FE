@@ -56,24 +56,29 @@ const Search: React.FC = () => {
           별명 아이디
         </S.SearchMenu>
       </S.SearchMenuContainer>
+      <S.FlexContainer>
       <S.SearchDesc>{keyword}에 대한 검색결과 입니다.</S.SearchDesc>
       <S.PeriodContainer>
         <S.PeriodMenu
           onClick={() => handlePeriodChange('accuracy')}
+          selected={sort == 'accuracy'}
         >
           정확도
         </S.PeriodMenu>
         <S.PeriodMenu
           onClick={() => handlePeriodChange('latest')}
+          selected={sort === 'latest'}
         >
           최신순
           </S.PeriodMenu>
         <S.PeriodMenu
           onClick={() => handlePeriodChange('period')}
+          selected={sort === 'period'}
         >
           기간전체
         </S.PeriodMenu>
       </S.PeriodContainer>
+      </S.FlexContainer>
       <div>
         {tab === 'post' && <SearchPost />}
         {tab === 'blog' && <SearchBlog />}
