@@ -31,3 +31,15 @@ export const SearchMenu = styled.div<{ selected: boolean }>`
     border-bottom: 2px solid ${({ selected }) => (selected ? 'gray' : '#aaa')};
   }
 `;
+
+export const PeriodContainer = styled.div`
+`;
+
+export const PeriodMenu = styled.div`
+`;
+
+export const SearchDesc = styled.div`
+  margin: 20px 0px 20px 0px;
+  font-size: 13px;
+  color: #aaa;
+`;
