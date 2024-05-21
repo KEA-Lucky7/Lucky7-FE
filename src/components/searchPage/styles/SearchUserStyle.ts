@@ -11,12 +11,9 @@ export const UserCard = styled.div`
   display: flex;
   align-items: center;
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
   margin: 10px 0;
   padding: 20px;
   width: 80%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export const UserImage = styled.img`
