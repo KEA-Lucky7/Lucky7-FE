@@ -15,7 +15,11 @@ export const SearchMenuContainer = styled.div`
   width: 100%;
   display: flex;
   margin: 30px 0px 0px 0px;
-  border-bottom: 1px solid #aaa
+  border-bottom: 1px solid #aaa;
+  position: sticky;
+  top: 80px;
+  background: white;
+  z-index: 10;
 `;
 
 export const SearchMenu = styled.div<{ selected: boolean }>`
@@ -36,6 +40,11 @@ export const FlexContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0px 0px;
+  position: sticky;
+  top: 119px;
+  background: white;
+  z-index: 10;
+  padding: 10px 0;
 `;
 
 export const PeriodContainer = styled.div`
