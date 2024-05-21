@@ -1,19 +1,21 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
-
-import * as S from "./styles/SearchStyle";
-
-function getQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import * as S from "./styles/SearchBlogStyle";
+import searchBlog from "../../data/search/searchBlogList.json";
 
 export default function SearchBlog() {
-  const query = getQuery();
-  const keyword = query.get("q");
-
   return (
     <S.SearchContainer>
-      blog
-    </S.SearchContainer>  
+      {searchBlog.map((blog, index) => (
+        <S.BlogCard key={index}>
+          <S.BlogContent>
+            <S.BlogTitle>{blog.title}</S.BlogTitle>
+            <S.BlogDescription>{blog.describe}</S.BlogDescription>
+            <S.UserInfo>
+              <S.UserImage src={blog.user_image} alt={blog.user} />
+              <S.UserName>{blog.user}</S.UserName>
+            </S.UserInfo>
+          </S.BlogContent>
+        </S.BlogCard>
+      ))}
+    </S.SearchContainer>
   );
 }
