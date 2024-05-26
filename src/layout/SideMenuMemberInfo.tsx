@@ -1,22 +1,34 @@
 import * as S from "./style/SideMenuMemberInfoStyle";
 import Profile from "../../src/assets/profile/profile.png";
-import userImg from "../../src/assets/profile/userImg.png";
+import userInfo from "../data/home/userInfo.json";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   isLoggedIn: boolean;
 }
 
 const MemberInfo = ({ isLoggedIn }: Props) => {
+
+  const navigate = useNavigate();
+  const showLoginModal = () => {
+    navigate("/")
+  };
+  
   return (
     <S.MemberInfoContainer>
-      <S.ProfileImg src={isLoggedIn ? userImg : Profile} alt="Profile IMG" />
-      {isLoggedIn ? (
-        <S.DiscContainer>
-          <S.Name>최정환</S.Name>
-          <S.Disc>작고 소듕한 소비일기</S.Disc>
-        </S.DiscContainer>
+      {!isLoggedIn ? (
+        <div>
+          <S.ProfileImg src={userInfo.profile_img} alt="Profile IMG" />
+          <S.DiscContainer>
+            <S.Name>{userInfo.name}</S.Name>
+            <S.Disc>{userInfo.desc}</S.Disc>
+          </S.DiscContainer>
+        </div>
       ) : (
-        <S.DiscContainer>로그인 후 이용해주세요</S.DiscContainer>
+        <div onClick={showLoginModal}>
+          <S.ProfileImg src={Profile} alt="Profile IMG" />
+          <S.DiscContainer>로그인 후 이용해주세요</S.DiscContainer>
+        </div>
       )}
     </S.MemberInfoContainer>
   );

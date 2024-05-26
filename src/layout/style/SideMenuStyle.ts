@@ -11,45 +11,43 @@ export const MenuOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // backdrop-filter: blur(0.5px);
 `;
 
 export const SideContainer = styled.div`
   // border: solid 1px red;
+  padding: 30px 0px 0px 0px;
   position: fixed;
   top: 0;
   left: 0;
   width: 16vw;
   height: 100%;
   background-color: #e1e1e1;
-  // padding: 45px;
-  // padding-top: 60px;
 `;
 
 export const Title = styled.div`
   font-size: 18px;
-  margin: 40px 0px 0px 30px;
+  margin: 30px 30px 0px 30px;
 `;
 
 export const LoginOut = styled.div`
-  margin: 5px 0px 0px 30px;
+  margin: 5px 30px 0px 30px;
   color: #616161;
   font-size: 14px;
 `;
 
 export const MenuList = styled.div`
-  height: 250px;
+  height: 270px;
   // border: solid 1px red;
-  margin: 0px 0px 0px 30px;
+  margin: 0px 30px 0px 30px;
   display: flex;
   flex-flow: column;
   align-items: space-between;
   justify-content: space-evenly;
   font-size: 15px;
+  border-bottom: solid 1px #505050;
 `;
 
 export const Settings = styled.div`
-  border-top: solid 1px #505050;
   padding-top: 10px;
   margin: 0px 30px 0px 30px;
   height: 70px;
@@ -57,4 +55,5 @@ export const Settings = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   color: #616161;
+  font-size: 13px;
 `;
