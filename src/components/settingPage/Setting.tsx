@@ -1,26 +1,30 @@
-import * as S from './styles/SettingStyle';
-import profile from '../../assets/setting/profile.png';
-import React, { useState } from 'react';
-import BannerSetting from './settingItems/BannerSetting';
-import Alert from './settingItems/Alert';
+import * as S from "./styles/SettingStyle";
+import profile from "../../assets/setting/profile.png";
+import { useState } from "react";
+import BannerSetting from "./settingItems/BannerSetting";
+import Alert from "./settingItems/Alert";
 
 export default function Setting() {
-  const [nickname, setNickname] = useState('홍길동');
+  const [nickname, setNickname] = useState("홍길동");
   const [charCount, setCharCount] = useState(nickname.length);
 
-  const [introduce, setIntroduce] = useState('hello my name is name 이름의 모아보아');
+  const [introduce, setIntroduce] = useState(
+    "hello my name is name 이름의 모아보아"
+  );
   const [subcharCount, setSubcharCount] = useState(nickname.length);
 
   const [isModified, setIsModified] = useState(false); // 수정 여부 상태 추가
 
-  const handleNicknameChange = (e) => { // React.ChangeEvent<HTMLInputElement>를 사용하지 않아도 됩니다.
+  const handleNicknameChange = (e: { target: { value: any } }) => {
+    // React.ChangeEvent<HTMLInputElement>를 사용하지 않아도 됩니다.
     const inputText = e.target.value;
     setNickname(inputText);
     setCharCount(inputText.length);
     setIsModified(true);
   };
 
-  const handleIntroduceChange = (e) => { // React.ChangeEvent<HTMLInputElement>를 사용하지 않아도 됩니다.
+  const handleIntroduceChange = (e: { target: { value: any } }) => {
+    // React.ChangeEvent<HTMLInputElement>를 사용하지 않아도 됩니다.
     const inputsubText = e.target.value;
     setIntroduce(inputsubText);
     setSubcharCount(inputsubText.length);
@@ -29,10 +33,9 @@ export default function Setting() {
 
   const handleSave = () => {
     // 저장하기 버튼 클릭 시 처리하는 로직 작성
-    alert('저장되었습니다.');
+    alert("저장되었습니다.");
     setIsModified(false); // 저장 후 수정 여부 상태를 false로 변경하여 버튼 비활성화
   };
-
 
   return (
     <S.TotalContainer>
@@ -57,7 +60,7 @@ export default function Setting() {
         <S.profileContentBox>
           {/*사진 들어가는 자리 */}
           <div>
-            <S.Img src={profile} alt='사진' />
+            <S.Img src={profile} alt="사진" />
           </div>
           <S.InputBox>
             {/* 닉네임 수정 컨테이너 */}
@@ -78,7 +81,7 @@ export default function Setting() {
               <S.InputTitle>소개</S.InputTitle>
               {/* 닉네임 입력 */}
               <S.InputIntroduce
-                type="text"
+                // type="text"
                 value={introduce}
                 onChange={handleIntroduceChange}
               />
@@ -104,10 +107,8 @@ export default function Setting() {
       </S.AlertBox>
 
       <S.SecedeBox>
-        <S.Secede>
-          탈퇴하기
-        </S.Secede>
+        <S.Secede>탈퇴하기</S.Secede>
       </S.SecedeBox>
     </S.TotalContainer>
-  )
+  );
 }

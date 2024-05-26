@@ -5,7 +5,7 @@ import data from "../../data/report/MonthlyAmountSpent.json";
 import * as S from "./styles/ReportMonthlyStyle";
 import leftBtn from "../../assets/button/left.png";
 import rightBtn from "../../assets/button/right.png";
-import { TableHead } from "@mui/material";
+// import { TableHead } from "@mui/material";
 
 Chart.register(...registerables);
 
@@ -60,7 +60,7 @@ const ReportMonthly = () => {
     }, 0);
 
     return (
-        <div>
+        <S.Container>
         <S.TitleContainer>
             <S.TitleYear>{currentYear}</S.TitleYear>
             <S.TitleYearBtn src={leftBtn} />
@@ -80,8 +80,8 @@ const ReportMonthly = () => {
                     display: false,
                 },
                 ticks: {
-                    callback: (value, index) => {
-                        return monthLabels[index];
+                    callback: (index) => {
+                        return monthLabels[Number(index)];
                     }
                 }
                 },
@@ -104,8 +104,8 @@ const ReportMonthly = () => {
             <thead>
                 <tr style={{ backgroundColor: "#ededed" }}>
                 <S.TableHeader>전체</S.TableHeader>
-                {chartData.labels.map((value, index) => (
-                    <S.TableHeader key={index} >{monthLabels[index]}</S.TableHeader>
+                {chartData.labels.map((index) => (
+                    <S.TableHeader key={index} >{monthLabels[Number(index)]}</S.TableHeader>
                 ))}
                 </tr>
             </thead>
@@ -124,7 +124,7 @@ const ReportMonthly = () => {
             <S.YearlySum>{totalSpent}</S.YearlySum>
             원
         </S.YearlyContainer>
-        </div>
+        </S.Container>
     );
 };
 

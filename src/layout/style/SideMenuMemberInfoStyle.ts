@@ -1,22 +1,22 @@
 import styled from "styled-components";
 
 export const MemberInfoContainer = styled.div`
-  margin-top: 8px;
+  margin: 35px 0px 0px 0px;
   padding: 10px;
   text-align: center;
 `;
 
 export const ProfileImg = styled.img`
-  // border: solid blue 1px;
-  width: 125px;
-  height: 125px;
+  width: 195px;
+  height: 195px;
   background-color: #969696;
   border-radius: 50%;
+  margin: 0px 0px 0px 0px;
 `;
 
 export const DiscContainer = styled.div`
   color: #474747;
-  margin-top: 5px;
+  margin: 15px 0px 0px 0px;
 `;
 
 export const Name = styled.div`

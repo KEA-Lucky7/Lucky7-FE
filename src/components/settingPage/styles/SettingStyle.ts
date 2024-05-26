@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface SaveButtonProps {
-    modified: boolean;
+  modified: boolean;
 }
 
 interface PictureContainerProps {
@@ -11,7 +11,7 @@ interface PictureContainerProps {
 export const TotalContainer = styled.div`
   width: 40%;
   height: 100%;
-  margin: 0 auto;   
+  margin: 0 auto;
 `;
 
 export const Title = styled.div`
@@ -30,16 +30,12 @@ export const profileTitle = styled(Title)`
   border: none;
 `;
 
-
-
-
-
 export const AccountBox = styled.div`
   width: 50%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 30px;    
+  gap: 30px;
   margin-top: 20px;
 `;
 
@@ -63,15 +59,12 @@ export const SecedeBox = styled(AccountBox)`
   margin-top: 50px;
 `;
 
-
-
-
 export const profileContentBox = styled.div`
   width: 100%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: row;
-  gap: 30px;    
+  gap: 30px;
   margin-top: 0px;
   gap: 100px;
 `;
@@ -88,19 +81,19 @@ export const BannerImg = styled.div<PictureContainerProps>`
   position: relative;
   background: ${({ imageurl }) =>
     `black url(${imageurl}) no-repeat center center`};
-      background-size: cover;
+  background-size: cover;
 `;
 
 export const InputBox = styled.div`
   width: 100%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 export const BannerInputBox = styled.div`
   width: 60%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
@@ -108,7 +101,7 @@ export const BannerInputBox = styled.div`
 
 export const FirstInputBox = styled.div`
   width: 100%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -119,7 +112,7 @@ export const SecondInputBox = styled(FirstInputBox)`
 
 export const InputTitle = styled.div`
   width: 80%;
-  height: 100%; 
+  height: 100%;
   font-size: 14px;
   margin-bottom: 5px;
   color: #626262;
@@ -127,45 +120,42 @@ export const InputTitle = styled.div`
 
 export const FirstLine = styled.div`
   width: 100%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: row;
 `;
 
 export const SecondLine = styled(FirstLine)`
   width: 40%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: row;
 `;
 
 export const Text = styled.div`
   width: 20%;
-  height: 100%; 
+  height: 100%;
   font-size: 16px;
   font-weight: bold;
 `;
 
 export const Text2 = styled.div`
   width: 80%;
-  height: 100%; 
+  height: 100%;
   font-size: 16px;
 `;
 
-
-
 export const SecondText = styled.div`
   width: 100%;
-  height: 100%; 
+  height: 100%;
   font-size: 16px;
 `;
 
 export const EmailText = styled.div`
   width: 50%;
-  height: 100%; 
+  height: 100%;
   font-size: 16px;
 `;
-
 
 export const Input = styled.input`
   width: 100%;
@@ -178,14 +168,12 @@ export const Input = styled.input`
 export const InputIntroduce = styled.textarea`
   width: 100%;
   height: 80px;
-  border: 1px solid #EAEAEA;
+  border: 1px solid #eaeaea;
   outline: none;
   border-radius: 5px;
   resize: none;
   border-radius: 10px;
 `;
-
-
 
 export const CharCount = styled.span`
   width: 100%;
@@ -194,8 +182,8 @@ export const CharCount = styled.span`
 `;
 
 export const SaveButton = styled.button<SaveButtonProps>`
-  background-color: ${(props) => (props.modified ? '#7A7A7A' : '#E6E6E6')};
-  color: ${(props) => (props.modified ? '#fff' : '#fff')};
+  background-color: ${(props) => (props.modified ? "#7A7A7A" : "#E6E6E6")};
+  color: ${(props) => (props.modified ? "#fff" : "#fff")};
   padding: 10px 20px; /* Adjust padding as needed */
   border: none;
   border-radius: 5px;
@@ -204,7 +192,8 @@ export const SaveButton = styled.button<SaveButtonProps>`
   font-size: 14px;
 
   &:hover {
-    background-color: ${(props) => (props.modified ? '#616161' : '#DADADA')}; /* Change color on hover */
+    background-color: ${(props) =>
+      props.modified ? "#616161" : "#DADADA"}; /* Change color on hover */
   }
 `;
 
@@ -214,16 +203,13 @@ export const SeeButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #C2C2C2;
+  background-color: #c2c2c2;
   font-size: 14px;
-
 `;
-
-
 
 export const ButtonBox = styled.div`
   width: 31%;
-  height: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: row;
   margin-left: auto;
@@ -255,5 +241,4 @@ export const Secede = styled.div`
   font-size: 16px;
   color: #616161;
   border-bottom: 1px solid #616161;
-
 `;
