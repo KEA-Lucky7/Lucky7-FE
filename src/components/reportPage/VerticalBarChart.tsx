@@ -33,26 +33,36 @@ const options = {
   },
 };
 
-const labels = ["식비", "교통", "여가", "교육", "금융"];
+interface VerticalBarChartProps {
+  lastMonthData: { amount: number; type: string }[];
+  thisMonthData: { amount: number; type: string }[];
+}
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: "이번 달",
-      data: [48000, 88000, 48000, 48000, 48000], // 현재 달
-      backgroundColor: "rgba(75, 192, 192, 0.5)", // 초록색
-    },
-    {
-      label: "지난 달",
-      data: [125300, 155300, 11100, 25300, 31250], // 지난 달
-      backgroundColor: "rgba(201, 203, 207, 0.5)", // 회색
-    },
-  ],
-};
+const VerticalBarChart: React.FC<VerticalBarChartProps> = ({
+  lastMonthData = [],
+  thisMonthData = [],
+}) => {
+  const labels = lastMonthData.length
+    ? lastMonthData.map((item) => item.type)
+    : thisMonthData.map((item) => item.type);
 
-const ComparisonBarChart: React.FC = () => {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "이번 달",
+        data: thisMonthData.map((item) => item.amount),
+        backgroundColor: "rgba(75, 192, 192, 0.5)",
+      },
+      {
+        label: "지난 달",
+        data: lastMonthData.map((item) => item.amount),
+        backgroundColor: "rgba(201, 203, 207, 0.5)",
+      },
+    ],
+  };
+
   return <Bar options={options} data={data} />;
 };
 
-export default ComparisonBarChart;
+export default VerticalBarChart;
