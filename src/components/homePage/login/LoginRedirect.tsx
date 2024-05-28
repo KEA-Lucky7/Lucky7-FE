@@ -8,16 +8,14 @@ const LoginRedirect = () => {
   const { setUserToken } = useStore();
 
   useEffect(() => {
-    // 작동안됨
-    // const query = new URLSearchParams(location.search);
-    // const token = query.get("access-token");
 
-    //임시
-    const token = "zustand!!!"
+    const query = new URLSearchParams(location.search);
+    const token = query.get("code");
 
     if (token) {
         setUserToken(token);
         setIsRegisteredIn(true)
+        // window.alert(token);
     }
 
   }, [setUserToken]);

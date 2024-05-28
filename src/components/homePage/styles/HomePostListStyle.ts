@@ -30,7 +30,7 @@ export const ListItemBox = styled.div`
     background-color: #dedede;
     padding: 20px;
     &:hover {
-        // filter: brightness(0.4);
+        filter: brightness(0.7);
     }
     background-size: cover;
     background-repeat: no-repeat;
@@ -54,7 +54,6 @@ export const ListItemContainer = styled.div`
 `;
 
 export const ItemInfoContainer = styled.div`
-  //   border: solid 1px red;
   margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
