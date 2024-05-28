@@ -15,18 +15,15 @@ const LoginRedirect = () => {
     if (token) {
         setUserToken(token);
         setIsRegisteredIn(true)
-        // window.alert(token);
     }
 
   }, [setUserToken]);
 
   useEffect(() => {
-    if (!isRegisteredIn) {
+    if (isRegisteredIn) {
       navigate("/login/info");
-    } else {
-      navigate("/");
     }
-  }, [isRegisteredIn, navigate]);
+  }, [isRegisteredIn]);
 
   return null;
 };
