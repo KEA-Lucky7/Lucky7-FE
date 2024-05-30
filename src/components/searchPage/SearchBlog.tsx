@@ -17,9 +17,9 @@ export default function SearchBlog() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch('https://api.example.com/blogs');
+        const response = await fetch('https://vision-necktitude.shop/posts/home-list');
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('네트워크 에러');
         }
         const data = await response.json();
         setBlogs(data.content);
