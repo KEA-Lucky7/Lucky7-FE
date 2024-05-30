@@ -86,7 +86,7 @@ export const Tag = styled.span`
   color: #49519e;
 `;
 
-export const Botton = styled.div`
+export const Button = styled.div`
   background-color: #eaeaea;
   border-radius: 8px;
   color: #49519e;
