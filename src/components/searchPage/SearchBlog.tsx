@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from "axios";
-import * as S from './styles/SearchBlogStyle';
 import { useLocation } from 'react-router-dom';
+
 import basicImg from '../../../src/assets/profile/profile.png';
+import * as S from './styles/SearchBlogStyle';
 
 interface Blog {
   blogId: number;
@@ -21,12 +22,14 @@ function getQuery() {
 }
 
 export default function SearchBlog() {
+  const query = getQuery();
+  const keyword = query.get('q');
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+  
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const query = getQuery();
-  const keyword = query.get('q');
 
   const handleObserver = (entries: IntersectionObserverEntry[]) => {
     const target = entries[0];
@@ -49,7 +52,7 @@ export default function SearchBlog() {
   const fetchPosts = async (page: number) => {
     setLoading(true);
     try {
-      const response = await axios.get<BlogResponse>('https://vision-necktitude.shop/search/blog', {
+      const response = await axios.get<BlogResponse>(`${serverUrl}/search/blog`, {
         params: { value: keyword, page, size: 6 }
       });
       const newBlogs = response.data.content;

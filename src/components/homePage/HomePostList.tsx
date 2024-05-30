@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 import * as S from "../homePage/styles/HomePostListStyle";
 
 interface Post {
@@ -13,6 +14,7 @@ interface Post {
 }
 
 const HomePostList: React.FC = () => {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   const [hoverItem, setHoveredItemId] = useState<number>(0);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -23,7 +25,7 @@ const HomePostList: React.FC = () => {
   const fetchPosts = async (page: number) => {
     setLoading(true);
     try {
-      const response = await axios.get<Post[]>(`https://vision-necktitude.shop/posts/home-list`, {
+      const response = await axios.get<Post[]>(`${serverUrl}/posts/home-list`, {
         params: { page, pageSize: 6 }
       });
       const newPosts = response.data;
@@ -92,10 +94,8 @@ const HomePostList: React.FC = () => {
                 onMouseLeave={() => setHoveredItemId(0)}
                 style={{
                   backgroundImage: `url(${post.thumbnail})`,
-                  //transition: "filter 0.3s",
                 }}
               >
-
                 <S.ListItemBoxContents>
                   <div>{post.title}</div>
                   {hoverItem === post.postId && <div>{post.preview}</div>}
@@ -119,7 +119,7 @@ const HomePostList: React.FC = () => {
         })}
       </S.ListContainer>
       {hasMore ? (
-        <S.Botton onClick={handleShowMore}>더보기</S.Botton>
+        <S.Button onClick={handleShowMore}>더보기</S.Button>
       ) : (
         <div>인기글 목록을 전부 불러왔습니다.</div>
       )}
