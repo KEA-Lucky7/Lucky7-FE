@@ -5,11 +5,11 @@ import * as S from "../homePage/styles/HomePostListStyle";
 interface Post {
   postId: number;
   title: string;
+  preview: string;
   thumbnail: string;
   mainHashtag: string;
   nickname: string;
   createdAt: string;
-  content?: string; 
 }
 
 const HomePostList: React.FC = () => {
@@ -98,7 +98,7 @@ const HomePostList: React.FC = () => {
 
                 <S.ListItemBoxContents>
                   <div>{post.title}</div>
-                  {hoverItem === post.postId && <div>{post.content}</div>}
+                  {hoverItem === post.postId && <div>{post.preview}</div>}
                 </S.ListItemBoxContents>
               </S.ListItemBox>
 
