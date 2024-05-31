@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as S from "../styles/LoginStyle";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +13,6 @@ const Login = () => {
     window.location.href = GOOGLE_AUTH_URL;
   };
 
-  const testLogin = () => {
-    
-  }
   // 카카오 소셜로그인
   const handleKakaoLogin = () => {
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoKey}&redirect_uri=${redirectUri}/login/oauth2/code/kakao`;
