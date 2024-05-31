@@ -1,26 +1,80 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import * as S from "../homePage/styles/HomePostListStyle";
 
-import bestContents from "../../data/home/bestContents.json";
-// HomePostList 컴포넌트 정의
-const HomePostList = () => {
-  // 마우스 오버된 아이템의 ID를 추적하는 상태
-  const [hoverItem, setHoveredItemId] = useState(0);
-  // 현재 화면에 보이는 아이템의 수를 추적하는 상태 (초기값: 6)
-  const [visibleItems, setVisibleItems] = useState(6);
+interface Post {
+  postId: number;
+  title: string;
+  preview: string;
+  thumbnail: string;
+  mainHashtag: string;
+  nickname: string;
+  createdAt: string;
+}
 
-  // '더 보기' 버튼이 클릭될 때 호출되는 함수로, 보이는 아이템의 수를 6개씩 증가
-  const handleShowMore = () => {
-    setVisibleItems((prevVisibleItems) => prevVisibleItems + 6);
+const HomePostList: React.FC = () => {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
+  const [hoverItem, setHoveredItemId] = useState<number>(0);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
+  const fetchPosts = async (page: number) => {
+    setLoading(true);
+    try {
+      const response = await axios.get<Post[]>(`${serverUrl}/posts/home-list`, {
+        params: { page, pageSize: 6 }
+      });
+      const newPosts = response.data;
+
+      // 중복 체크를 통해 새로운 게시물 추가
+      setPosts((prevPosts) => {
+        const postIdSet = new Set(prevPosts.map(post => post.postId));
+        const filteredNewPosts = newPosts.filter(post => !postIdSet.has(post.postId));
+        return [...prevPosts, ...filteredNewPosts];
+      });
+      console.log(posts.length)
+
+      // 새로운 게시물이 없는 경우 hasMore를 false로 설정
+      setHasMore(posts.length <= 0);
+      setHasMore(newPosts.length > 0);
+    } catch (error) {
+      window.alert("Error:" + error);
+    }
+    setLoading(false);
   };
 
+  useEffect(() => {
+    fetchPosts(page);
+  }, [page]);
+
+  const handleObserver = (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0];
+    if (target.isIntersecting && !loading) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0,
+    });
+    const observerTarget = document.getElementById("observer");
+    if (observerTarget) {
+      observer.observe(observerTarget);
+    }
+  }, []);
+
   // 가장 긴 제목을 가진 아이템의 인덱스를 찾는 함수
-  const findLongestTitleIndex = (startIndex: number, endIndex: number) => {
+  const findLongestTitleIndex = (startIndex: number, endIndex: number): number => {
     let maxLength = 0;
-    let longestIndex = -1;
+    let longestIndex = startIndex;
     for (let i = startIndex; i < endIndex; i++) {
-      const post = bestContents[i];
-      if (post.title.length > maxLength) {
+      const post = posts[i];
+      if (post && post.title.length > maxLength) {
         maxLength = post.title.length;
         longestIndex = i;
       }
@@ -28,66 +82,58 @@ const HomePostList = () => {
     return longestIndex;
   };
 
-  // 컴포넌트 렌더링 부분
   return (
     <S.PostListContainer>
       <S.Title>BEST</S.Title>
-      <S.ListContainer style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-        {/* 가시적인 아이템들만 매핑하여 렌더링 */}
-        {bestContents.slice(0, visibleItems).map((post, index) => {
-          // 각 행의 시작과 끝 인덱스 계산
+      <S.ListContainer style={{ gridTemplateColumns: "repeat(7, 1fr)" }}>
+        {posts.map((post, index) => {
           const rowStartIndex = Math.floor(index / 3) * 3;
           const rowEndIndex = rowStartIndex + 3;
-          // 가장 긴 제목을 가진 아이템의 인덱스 찾기
           const longestTitleIndex = findLongestTitleIndex(
             rowStartIndex,
             rowEndIndex
           );
-          // 가장 긴 제목을 가진 아이템이면 gridColumn을 'span 3'으로, 아니면 'span 2'로 설정
-          const gridColumn = index === longestTitleIndex ? "span 2" : "span 1";
+          const gridColumn = index === longestTitleIndex ? "span 3" : "span 2";
           return (
-            <S.ListItemContainer key={post.id} style={{ gridColumn }}>
+            <S.ListItemContainer key={post.postId} style={{ gridColumn }}>
               <S.ListItemBox
-                onMouseEnter={() => setHoveredItemId(post.id)}
+                onMouseEnter={() => setHoveredItemId(post.postId)}
                 onMouseLeave={() => setHoveredItemId(0)}
                 style={{
                   backgroundImage: `url(${post.thumbnail})`,
-                  // 조건부 스타일: hoverItem 상태가 현재 아이템의 ID와 일치하면 필터를 적용
-                  filter: hoverItem === post.id ? "brightness(0.7)" : "none",
-                  transition: "filter 0.3s", // 부드러운 효과를 위해 트랜지션 추가
                 }}
               >
-                {/* 항상 제목을 표시하고, 마우스 오버시 내용을 추가로 표시 */}
                 <S.ListItemBoxContents>
                   <div>{post.title}</div>
-                  {hoverItem === post.id && <div>{post.content}</div>}
+                  {hoverItem === post.postId && <div>{post.preview}</div>}
                 </S.ListItemBoxContents>
               </S.ListItemBox>
 
-              {/* 작성자 정보, 태그, 작성일 표시 */}
               <S.ItemInfoContainer>
                 <S.ItemInfoLeft>
                   <S.ItemTitle>
-                    <S.Writer>{post.writer}</S.Writer>
+                    <S.Writer>{post.nickname}</S.Writer>
                     님의 일기
                   </S.ItemTitle>
-                  <S.Date>작성일: {post.date}</S.Date>
+                  <S.Date>작성일: {post.createdAt}</S.Date>
                 </S.ItemInfoLeft>
                 <S.ItemInfoRight>
-                  <S.Tag>#{post.tag}</S.Tag>
+                  <S.Tag>#{post.mainHashtag}</S.Tag>
                 </S.ItemInfoRight>
               </S.ItemInfoContainer>
-              {/* 디버깅을 위한 인덱스 표시 */}
             </S.ListItemContainer>
           );
         })}
       </S.ListContainer>
-      {/* 보이는 아이템의 수가 30개 이하일 경우 더 보기 버튼을 표시, 그렇지 않으면 완료 메시지 표시 */}
-      {visibleItems <= 30 ? (
-        <S.Botton onClick={handleShowMore}>더보기</S.Botton>
+      {hasMore ? (
+        <div>
+        왜안되는데말좀해봐
+        </div>
       ) : (
         <div>인기글 목록을 전부 불러왔습니다.</div>
       )}
+      {loading && <div>로딩 중...</div>}
+        <div id="observer" style={{ height: "10px" }}></div>
     </S.PostListContainer>
   );
 };

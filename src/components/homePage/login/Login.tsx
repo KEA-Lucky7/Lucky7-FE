@@ -1,13 +1,11 @@
 import * as S from "../styles/LoginStyle";
 import { useNavigate } from "react-router-dom";
 
-// { setShowLoginModal }: Props
 const Login = () => {
   const googleId = import.meta.env.VITE_GOOGLE_ID;
-  // const googleSecret = import.meta.env.VITE_GOOGLE_SECRET;
-  const redirectUri = import.meta.env.VITE_SERVER_URL;
   const testUri = import.meta.env.VITE_FRONT_TEST_URL
-  // const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
+  const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   // 구글 소셜로그인
   const handleGoogleLogin = () => {
@@ -17,9 +15,9 @@ const Login = () => {
 
   // 카카오 소셜로그인
   const handleKakaoLogin = () => {
-    const KAKAO_AUTH_URL = `${redirectUri}/oauth2/authorization/kakao`;
-    // const KAKAO_AUTH_URL2 = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirectUri}/oauth2/authorization/kakao&response_type=code`;
-    window.location.href = KAKAO_AUTH_URL;
+    // const KAKAO_AUTH_URL = `${serverUrl}/oauth2/authorization/kakao`;
+    const KAKAO_AUTH_URL2 = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${testUri}/login/redirect&response_type=code`;
+    window.location.href = KAKAO_AUTH_URL2;
   }
 
   const navigate = useNavigate();

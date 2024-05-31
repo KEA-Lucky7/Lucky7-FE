@@ -30,7 +30,7 @@ export const ListItemBox = styled.div`
     background-color: #dedede;
     padding: 20px;
     &:hover {
-        // filter: brightness(0.4);
+        filter: brightness(0.7);
     }
     background-size: cover;
     background-repeat: no-repeat;
@@ -54,7 +54,6 @@ export const ListItemContainer = styled.div`
 `;
 
 export const ItemInfoContainer = styled.div`
-  //   border: solid 1px red;
   margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
@@ -87,7 +86,7 @@ export const Tag = styled.span`
   color: #49519e;
 `;
 
-export const Botton = styled.div`
+export const Button = styled.div`
   background-color: #eaeaea;
   border-radius: 8px;
   color: #49519e;

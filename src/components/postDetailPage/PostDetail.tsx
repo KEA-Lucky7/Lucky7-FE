@@ -1,49 +1,93 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as S from "./styles/PostDetailCss";
-import postDetailbackground from "../../assets/postDetail/bread.png";
 import seeMore from "../../assets/postDetail/seeMore.png";
 import report from "../../assets/postDetail/report.png";
-import postPicture from "../../assets/postDetail/postPicture.png";
-import { postContentData } from "../../data/userBlog/postContentData";
 import postComment from "../../assets/postDetail/postComment.png";
 import postHeart from "../../assets/postDetail/postHeart.png";
 import seeMoreComment from "../../assets/postDetail/seeMoreComment.png";
 import profileImage from "../../assets/postDetail/profileImage.png";
-import blogPosts from "../../data/userBlog/articleListData.json";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Top from "../../assets/postDetail/Top.png";
 import InputComment from "./comment/InputComment";
 
 interface Post {
-  id: number;
-  content: string;
-  category: string;
-  tag: string;
+  postId: number;
+  memberId: number;
+  nickname: string;
+  profileImg: string;
+  about: string;
   title: string;
-  date: string;
-  views: number;
+  content: string;
+  preview: string | null;
+  thumbnail: string;
+  postType: string;
+  mainHashtag: string;
+  createdAt: string;
+  commentCnt: number;
+  likeCnt: number;
+  isLiked: boolean;
+  hashtagList: string[];
+  walletList: {
+    consumedDate: string;
+    walletType: string;
+    memo: string;
+    amount: number;
+  }[];
+  commentList: {
+    commentId: number;
+    memberId: number;
+    nickname: string;
+    profileImg: string;
+    content: string;
+    createdAt: string;
+    replyList: {
+      content: string;
+      memberId: string;
+      nickname: string;
+      profileImg: string;
+      createdAt: string;
+      commentId: number;
+      replyId: number;
+    }[];
+  }[];
+  postList: {
+    memberId: number;
+    createdAt: string;
+    commentCnt: number;
+    postId: number;
+    title: string;
+  }[];
 }
 
+
 export default function PostDetail() {
+  const { postId } = useParams<{ postId: string }>();
+  const [post, setPost] = useState<Post>([]);
+  const [error, setError] = useState<string | null>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isCommentVisible, setIsCommentVisible] = useState(false);
 
-  const postsPerPage: number = 5; // 페이지하나당 나타낼 게시글 수
 
-  const indexOfLastPost: number = currentPage * postsPerPage;
-  const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
-  const currentPosts: Post[] = blogPosts.slice(
-    indexOfFirstPost,
-    indexOfLastPost
-  );
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch post");
+        }
+        const data: Post = await response.json();
+        setPost(data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    fetchPost();
+  }, [postId]);
 
   const toggleCommentVisibility = () => {
     setIsCommentVisible(!isCommentVisible); // 상태를 반전시켜 댓글 보이기 여부를 토글합니다.
   };
-
-  //페이지변환
-  const paginate = (pageNumber: number): void => setCurrentPage(pageNumber);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -56,8 +100,8 @@ export default function PostDetail() {
       .then(() => {
         alert("URL이 클립보드에 복사되었습니다.");
       })
-      .catch((err) => {
-        console.error("URL 복사에 실패했습니다:", err);
+      .catch(() => {
+        alert("복사에 실패하였습니다.");
       });
   };
 
@@ -68,24 +112,24 @@ export default function PostDetail() {
     });
   };
 
-  const handleCommentSubmit = () => {};
+  const handleCommentSubmit = () => { };
 
   return (
     <>
       <S.Container>
         {/* 사진 & 사진 안 텍스트 */}
-        <S.Picturecontainer imageUrl={postDetailbackground}>
+        <S.Picturecontainer imageUrl={post.thumbnail}>
           <S.TextBox>
             <S.FirstLine>
-              <div>자유글</div>
-              <div>#대표태그</div>
+              <div>{post.postType}</div>
+              <div>#{post.mainHashtag}</div>
             </S.FirstLine>
             <S.SecondLine>
-              <div>내가 좋아하는 베이글 뿌시고 옴</div>
+              <div>{post.title}</div>
             </S.SecondLine>
             <S.ThirdLine>
-              <div>by HOAN.C</div>
-              <div>2024.04.14</div>
+              <div>by {post.nickname}</div>
+              <div>{post.createdAt}</div>
             </S.ThirdLine>
           </S.TextBox>
         </S.Picturecontainer>
@@ -139,24 +183,19 @@ export default function PostDetail() {
 
         {/* 본문 내용 */}
         <S.PostBox>
-          <img
-            src={postPicture}
-            alt="본문사진"
-            style={{ width: "100%", height: "600px" }}
-          />
-          {postContentData.map((line, index) => (
-            <div key={index}>{line}</div>
-          ))}
+          <div>{post.content}</div>
         </S.PostBox>
 
         {/* 태그 내용 */}
         <S.TagBox>
-          <S.FirstTag>#대표태그</S.FirstTag>
-          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-            <S.SecondTag>#서브태그</S.SecondTag>
-            <S.SecondTag>#서브태그</S.SecondTag>
-            <S.SecondTag>#서브태그</S.SecondTag>
-          </div>
+          <S.FirstTag>#{post.mainHashtag}</S.FirstTag>
+          {post.hashtagList && post.hashtagList.length > 0 && (
+            <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+              {post.hashtagList.map((tag, index) => (
+                <S.SecondTag key={index}>#{tag}</S.SecondTag>
+              ))}
+            </div>
+          )}
         </S.TagBox>
 
         {/* 댓글 내용 */}
@@ -175,7 +214,7 @@ export default function PostDetail() {
                 alt="댓글"
                 style={{ width: "25px", height: "25px" }}
               />
-              <div>댓글 2</div>
+              <div>댓글 {post.commentCnt}</div>
               <img
                 src={seeMoreComment}
                 alt="더보기"
@@ -196,7 +235,7 @@ export default function PostDetail() {
                 alt="하트"
                 style={{ width: "25px", height: "22px" }}
               />
-              <div>2</div>
+              <div>{post.likeCnt}</div>
             </div>
           </S.Commment>
           {isCommentVisible && (
@@ -219,46 +258,35 @@ export default function PostDetail() {
           />
         </S.PictureBox>
         <S.ContentBox>
-          <div style={{ fontWeight: "bold" }}>정환's Blog</div>
-          <div>안녕 내 이름은 최정환이야</div>
+          <div style={{ fontWeight: "bold" }}>{post.nickname}'s Blog</div>
+          <div>{post.about}</div>
         </S.ContentBox>
       </S.profileBox>
 
-      {/* 글리스트 내용 */}
-      <S.postDetailList>
-        <S.postDetailListTitle>전체글</S.postDetailListTitle>
-        <S.postDetailListBox>
-          {currentPosts.map((post, index) => (
-            <Link
-              to={`/myblog/${index + 1}`} // post 인덱스를 넘김
-              key={index}
-              style={{
-                textDecoration: "none",
-                color: "black",
-                width: "33vw",
-              }}
-            >
-              <S.ListBox key={post.id}>
-                <S.ListTitle>{post.title}</S.ListTitle>
-                <S.CheckField>{post.date}</S.CheckField>
-              </S.ListBox>
-            </Link>
-          ))}
-          {/* 페이지네이션 */}
-          <S.PaginationBox>
-            {[...Array(Math.ceil(blogPosts.length / postsPerPage)).keys()].map(
-              (pageNumber) => (
-                <S.PageNumber
-                  key={pageNumber}
-                  onClick={() => paginate(pageNumber + 1)}
-                >
-                  {pageNumber + 1}
-                </S.PageNumber>
-              )
-            )}
-          </S.PaginationBox>
-        </S.postDetailListBox>
-      </S.postDetailList>
+      {/* 글 리스트 내용 */}
+      {post.postList && post.postList.length > 0 && (
+        <S.postDetailList>
+          <S.postDetailListTitle>다른 글</S.postDetailListTitle>
+          <S.postDetailListBox>
+            {post.postList.map((postItem, index) => (
+              <Link
+                to={`/myblog/${postItem.postId}`}
+                key={index}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  width: "33vw",
+                }}
+              >
+                <S.ListBox key={postItem.postId}>
+                  <S.ListTitle>{postItem.title}</S.ListTitle>
+                  <S.CheckField>{postItem.createdAt}</S.CheckField>
+                </S.ListBox>
+              </Link>
+            ))}
+          </S.postDetailListBox>
+        </S.postDetailList>
+      )}
 
       {/* 위로 가기 */}
       <S.TopBox onClick={scrollToTop}>

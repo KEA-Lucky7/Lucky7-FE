@@ -10,7 +10,6 @@ export const NewPostInputContainer = styled.div`
     height: 100%;
     margin: 0 auto;
     border-bottom: 1px solid grey;
-    border: 1px solid red;
     
 `;
 
@@ -241,7 +240,6 @@ export const AccountBookContainer = styled.div`
   bottom: 0px;
   top: 500px;
   right:  300px;
-  border: 1px solid blue;
   cursor: pointer;
   display: flex;
   justify-content: center;

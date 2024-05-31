@@ -45,7 +45,6 @@ export default function CreatePost() {
 
   const [postCategory, setPostCategory] = useState<PostCategory | null>(null);
 
-  const [showAccountBookInputs, setShowAccountBookInputs] = useState<boolean>(false); // 입력란을 보여줄지 여부를 나타내는 상태
   const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]); // 입력된 값들을 저장할 배열 상태
   const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
@@ -174,8 +173,8 @@ export default function CreatePost() {
   };
 
   const handleAddAccountBookInput = () => {
-    // 입력란을 추가합니다.
-    setAccountBookInputs([...accountBookInputs, { consumedDate: "", memo: "", amount: "", walletType: "" }]);
+    // 입력된 값이 숫자인지 확인하고, 숫자로 변환하여 새로운 객체를 추가합니다.
+    setAccountBookInputs([...accountBookInputs, { consumedDate: "", memo: "", amount: 0, walletType: "" }]);
   };
 
   const handleInputChange = (index: number, key: string, value: string | number) => {
@@ -242,12 +241,12 @@ export default function CreatePost() {
 
     // Console log payload for debugging
     console.log('Payload:', payload);
-
+    console.log(accountBookInputs);
     try {
       const response = await axios.post('https://vision-necktitude.shop/posts/0', payload);
       console.log('Response:', response.data);
       alert('글 작성이 완료 되었습니다.');
-      navigate('/myblog');
+      //navigate('/myblog');
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -410,7 +409,7 @@ export default function CreatePost() {
             {accountBookInputs.map((input, index) => (
               <S.InputBox key={index}>
                 <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', margin: '15px 20px 15px 0px' }}>
-                  <S.Input type="text" placeholder="2024-05-31" value={input.consumedDate} onChange={(e) => handleInputChange(index, 'consumedDate', e.target.value)} />
+                  <S.Input type="text" placeholder="2024.05.31" value={input.consumedDate} onChange={(e) => handleInputChange(index, 'consumedDate', e.target.value)} />
                   <S.Input type="text" placeholder="메모" value={input.memo} onChange={(e) => handleInputChange(index, 'memo', e.target.value)} />
                   <S.Input type="number" placeholder="금액" value={input.amount} onChange={(e) => handleInputChange(index, 'amount', parseInt(e.target.value))} />
                   <S.Input type="text" placeholder="타입" value={input.walletType} onChange={(e) => handleInputChange(index, 'walletType', e.target.value)} />
@@ -437,7 +436,7 @@ export default function CreatePost() {
             <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               <S.TagInput
                 type="text"
-                placeholder="대표 태그를 입력해주세요(최대 5개)" //최대 5개 희망함
+                placeholder="대표 태그를 입력해주세요(최대 1개)" //최대 5개 희망함
                 value={tagInput}
                 onChange={handleTagInputChange}
               />
@@ -465,7 +464,7 @@ export default function CreatePost() {
             <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               <S.TagInput
                 type="text"
-                placeholder="세부 태그를 입력해주세요(최대 10개)" //최대 10개 희망함
+                placeholder="세부 태그를 입력해주세요(최대 5개)" //최대 10개 희망함
                 value={subtagInput}
                 onChange={handleSubTagInputChange}
               />

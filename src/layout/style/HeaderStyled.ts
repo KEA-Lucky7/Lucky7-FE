@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Search from "../../../src/assets/header/search.png";
 
 export const Header = styled.header`
   width: 100%;
@@ -47,13 +48,19 @@ export const SearchContainer = styled.div`
   opacity: 1;
 `;
 
-export const Img = styled.img`
+export const ImgBtn = styled.button`
+  background-size: cover;
+  background-color: #fff;
+  background-position: center;
   border: none;
   text-align: center;
   margin-right: 10px;
   overflow: auto;
   font-size: 15px;
   object-fit: cover;
+  width: 20px;
+  height: 20px;
+  background-image: url(${Search});
 `;
 
 export const SearchInput = styled.input`
