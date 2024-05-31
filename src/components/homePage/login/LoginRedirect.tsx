@@ -21,7 +21,8 @@ const LoginRedirect = () => {
 
   useEffect(() => {
     if (isRegisteredIn) {
-      navigate("/login/info");
+      
+      //navigate("/login/info");
     }
   }, [isRegisteredIn]);
 

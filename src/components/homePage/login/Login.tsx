@@ -3,21 +3,23 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const googleId = import.meta.env.VITE_GOOGLE_ID;
-  const testUri = import.meta.env.VITE_FRONT_TEST_URL
-  const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
-  const serverUrl = import.meta.env.VITE_SERVER_URL;
+  const kakaoKey = import.meta.env.VITE_KAKAO_SERVER_KEY;
+  const redirectUri = import.meta.env.VITE_SERVER_URL;
 
   // 구글 소셜로그인
   const handleGoogleLogin = () => {
-    const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${testUri}/login/redirect&response_type=code&client_id=${googleId}&scope=https://www.googleapis.com/auth/userinfo.profile`;
+    const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${redirectUri}/login/oauth2/code/google&response_type=code&client_id=${googleId}&scope=https://www.googleapis.com/auth/userinfo.profile`;
     window.location.href = GOOGLE_AUTH_URL;
   };
 
+  const testLogin = () => {
+    
+  }
   // 카카오 소셜로그인
   const handleKakaoLogin = () => {
-    // const KAKAO_AUTH_URL = `${serverUrl}/oauth2/authorization/kakao`;
-    const KAKAO_AUTH_URL2 = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${testUri}/login/redirect&response_type=code`;
-    window.location.href = KAKAO_AUTH_URL2;
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoKey}&redirect_uri=${redirectUri}/login/oauth2/code/kakao&prompt=none`;
+    const KAKAO_AUTH_URL2 = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirectUri}/oauth2/authorization/kakao&response_type=code`;
+    window.location.href = KAKAO_AUTH_URL;
   }
 
   const navigate = useNavigate();

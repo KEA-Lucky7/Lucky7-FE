@@ -30,8 +30,8 @@
     "react-kakao-login": "^2.1.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.22.3",
-    "tinyurl": "^1.1.7",
     "styled-components": "^6.1.11",
+    "tinyurl": "^1.1.7",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
