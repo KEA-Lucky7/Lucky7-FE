@@ -17,7 +17,7 @@ const Login = () => {
   }
   // 카카오 소셜로그인
   const handleKakaoLogin = () => {
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoKey}&redirect_uri=${redirectUri}/login/oauth2/code/kakao&prompt=none`;
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoKey}&redirect_uri=${redirectUri}/login/oauth2/code/kakao`;
     const KAKAO_AUTH_URL2 = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirectUri}/oauth2/authorization/kakao&response_type=code`;
     window.location.href = KAKAO_AUTH_URL;
   }
