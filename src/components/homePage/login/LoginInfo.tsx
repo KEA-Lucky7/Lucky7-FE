@@ -6,7 +6,10 @@ const LoginInfo = () => {
 
   const navigate = useNavigate();
   const hideLoginModal = () => {
-    navigate("/")
+    const hide = window.confirm("회원가입을 그만두시겠습니까? 입력한 정보가 삭제됩니다.");
+    if (hide) {
+      navigate("/")
+    }
   };
 
   return (
@@ -36,7 +39,7 @@ const LoginInfo = () => {
           />
         </S.LoginContents>
         <S.LoginButtonContainer>
-          Google로 로그인
+          회원가입 완료
         </S.LoginButtonContainer>
       </S.LoginContainer>
     </S.LoginOverlay>
