@@ -91,7 +91,7 @@ export default function Setting() {
           </S.InputBox>
         </S.profileContentBox>
         {/* 저장버튼 */}
-        <S.SaveButton onClick={handleSave} modified={isModified}>
+        <S.SaveButton onClick={handleSave}  modified={isModified ? "true" : undefined}>
           저장하기
         </S.SaveButton>
       </S.profileBox>

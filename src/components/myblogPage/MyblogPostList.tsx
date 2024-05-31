@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./styles/MyblogPostCss";
 import articleList from "../../assets/myblog/articleList.png";
 import pictureList from "../../assets/myblog/pictureList.png";
-import blogPosts from "../../data/userBlog/articleListData.json";
 import comment from "../../assets/myblog/comment.png";
 import heart from "../../assets/myblog/heart.png";
-import Titlebackground from "../../assets/myblog/Titlebackground.png";
+import axios from 'axios';
 
 interface Post {
   id: number;
@@ -16,6 +15,14 @@ interface Post {
   title: string;
   date: string;
   views: number;
+  mainHashtag: string;
+  postType: string;
+  createdAt: number;
+  commentCnt: number;
+  likeCnt: number;
+  preview: string;
+  thumbnail:string;
+  
 }
 
 const MyblogPostList: React.FC = () => {
@@ -23,6 +30,7 @@ const MyblogPostList: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<"article" | "picture">(
     "article"
   ); // 사진포함 x 글리스트가 기본 셋팅값
+  const [blogPosts, setBlogPosts] = useState<Post[]>([]);
 
   const postsPerPage: number = 15; // 페이지하나당 나타낼 게시글 수
 
@@ -42,28 +50,43 @@ const MyblogPostList: React.FC = () => {
     setSelectedTab(tab);
   };
 
-  // 사진 포함 글 정렬 방식
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://vision-necktitude.shop/posts/1/post-list?postType=ALL&hashtag=ALL&page=0');
+        setBlogPosts(response.data.postList); 
+      } catch (error) {
+
+        console.error('Error fetching data:', error);
+
+
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // =================사진 포함 글 정렬 방식=================
   const renderPictureList = () => (
     <S.PostListContainer>
       {currentPosts.map((post, index) => (
         <Link
           to={`/myblog/${index + 1}`} // post 인덱스를 넘김
           key={index}
-          style={{ textDecoration: "none" , color: 'black'}}
+          style={{ textDecoration: "none", color: 'black' }}
         >
           <S.PictureListBox key={post.id}>
             <S.PictureList>
               <S.FirstLine>
-                <S.PictureListCategory>{post.category}</S.PictureListCategory>
-                <S.PictureListTag>#{post.tag}</S.PictureListTag>
+                <S.PictureListCategory>{post.postType}</S.PictureListCategory>
+                <S.PictureListTag>#{post.mainHashtag}</S.PictureListTag>
               </S.FirstLine>
               <S.PictureListTitle>{post.title}</S.PictureListTitle>
-              <S.PictureListContent>{post.content}</S.PictureListContent>
+              <S.PictureListContent>{post.preview}</S.PictureListContent>
               <div
-                style={{ display: "flex", flexDirection: "row", gap: "30px", marginTop:'10px' }}
+                style={{ display: "flex", flexDirection: "row", gap: "30px", marginTop: '10px' }}
               >
-                <div>{post.date}</div>
-                <div>조회 {post.views}</div>
+                <div>{post.createdAt}</div>
                 <div
                   style={{
                     display: "flex",
@@ -78,19 +101,19 @@ const MyblogPostList: React.FC = () => {
                     alt="댓글"
                     style={{ width: "21px", height: "21px" }}
                   />
-                  <div>2</div>
+                  <div>{post.commentCnt}</div>
                   <img
                     src={heart}
                     alt="좋아요"
                     style={{ width: "18px", height: "18px" }}
                   />
-                  <div>2</div>
+                  <div>{post.likeCnt}</div>
                 </div>
               </div>
             </S.PictureList>
             <S.PictureBox>
               <img
-                src={Titlebackground}
+                src={post.thumbnail}
                 alt={post.title}
                 style={{ width: "100%", height: "100%" }}
               />
@@ -114,13 +137,15 @@ const MyblogPostList: React.FC = () => {
     </S.PostListContainer>
   );
 
-  //사진 제외 글 정렬 방식
+
+
+  //=================사진 제외 글 정렬 방식=================
   const renderArticleList = () => (
     <S.PostListContainer>
       <S.FieldBox>
         <S.TitleField>제목</S.TitleField>
         <S.DateField>작성일</S.DateField>
-        <S.CheckField>조회</S.CheckField>
+        <S.CheckField>댓글</S.CheckField>
       </S.FieldBox>
       {currentPosts.map((post, index) => (
         <Link
@@ -129,11 +154,11 @@ const MyblogPostList: React.FC = () => {
           style={{ textDecoration: "none", color: "black" }}
         >
           <S.ListBox key={post.id}>
-            <S.ListCategory>{post.category}</S.ListCategory>
-            <S.ListTag>#{post.tag}</S.ListTag>
+            <S.ListCategory>{post.postType}</S.ListCategory>
+            <S.ListTag>#{post.mainHashtag}</S.ListTag>
             <S.ListTitle>{post.title}</S.ListTitle>
-            <S.DateField>{post.date}</S.DateField>
-            <S.CheckField>{post.views}</S.CheckField>
+            <S.DateField>{post.createdAt}</S.DateField>
+            <S.CheckField>{post.commentCnt}</S.CheckField>
           </S.ListBox>
         </Link>
       ))}

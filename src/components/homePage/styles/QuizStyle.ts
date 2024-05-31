@@ -60,7 +60,7 @@ export const QuizTitle = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
-    top: 60%;
+    top: 20%;
     right: 20%;
     transform: ( -50%, -50%);
 `;

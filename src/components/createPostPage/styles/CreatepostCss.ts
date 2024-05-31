@@ -7,9 +7,10 @@ interface PictureContainerProps {
 
 export const NewPostInputContainer = styled.div`
     width: 40%;
-    height: 800px;
+    height: 100%;
     margin: 0 auto;
     border-bottom: 1px solid grey;
+    border: 1px solid red;
     
 `;
 
@@ -26,9 +27,8 @@ export const TemporaryBox = styled.div`
 
 export const TextEditBox = styled.div`
     width: 100%;
-    height: 100px;
+    height: 100%;
     margin: 0 auto;
-
 `;
 
 export const TitleInputBox = styled.div`
@@ -122,14 +122,33 @@ export const TagItem = styled.div`
 export const TagInput = styled.input`
     width: 100%;
     height: 50px;
-    border: 1px solid black;
+    border: 1px solid #EAEAEA;
+    border-radius: 20px;
+    outline: none;
     font-size: 20px;
     &::placeholder { 
-        font-size: 20px;
+        font-size: 14px;
         color: grey;
+        padding-left: 5px;
     }
 `;
 
+export const Input = styled.input`
+    width: 100%;
+    height: 20px;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+    outline: none;
+    font-size: 12px;
+    &::placeholder { 
+        font-size: 12px;
+        color: grey;
+    }
+
+    &:hover { 
+      border: 1px solid #00A5FF;
+    }
+`;
 
 
 export const Header = styled.div`
@@ -177,6 +196,7 @@ export const TemporaryButton = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #D7D7D7;
+  cursor: pointer;
 `;
 
 export const PostButton = styled(TemporaryButton)`
@@ -204,6 +224,31 @@ export const TitleContainer = styled.div`
   bottom: 80px;
   left: 350px;
 `;
+
+export const ChangeImageBox = styled.div`
+  width: 300px;
+  position: absolute;
+  text-align: left;
+  bottom: 10px;
+  right: 0px;
+  cursor: pointer;
+`;
+
+export const AccountBookContainer = styled.div`
+  width: 120px;
+  height: 30px;
+  position: absolute;
+  bottom: 0px;
+  top: 500px;
+  right:  300px;
+  border: 1px solid blue;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+`;
+
+
 
 export const TitleBox = styled.div`
   font-size: 28px;
@@ -238,4 +283,61 @@ export const DeleteTagButton = styled.div`
 
 `;
 
+export const InputBox = styled.div`
+  width: 80%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #dcdcdc;
+  display: flex;
+  flex-direction: row;
+  margin:0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
 
+
+export const DeleteButton = styled.div`
+  width: 65px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1677ff;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover { 
+    background-color: rgba(22, 119, 255, 0.8);
+    }
+
+`;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
+export const ModalContent = styled.div`
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-height: 100%;
+  overflow-y: auto;
+`;
+
+export const CloseButton = styled.div`
+  margin-top: 10px;
+`;
