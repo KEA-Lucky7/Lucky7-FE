@@ -1,5 +1,5 @@
 import * as S from "./styles/CreatepostCss";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
@@ -213,6 +213,7 @@ export default function CreatePost() {
     });
   };
 
+  //글작성 API 
   const handleSubmit = async () => {
     const contentRaw = convertToRaw(editorState.getCurrentContent());
     const content = JSON.stringify(contentRaw);
@@ -245,24 +246,71 @@ export default function CreatePost() {
     try {
       const response = await axios.post('https://vision-necktitude.shop/posts/0', payload);
       console.log('Response:', response.data);
+      alert('글 작성이 완료 되었습니다.');
       navigate('/myblog');
     } catch (error) {
       console.error('Error posting data:', error);
     }
   };
 
+  //글 임시저장 API
+  const handleTemporarySubmit = async () => {
+    const contentRaw = convertToRaw(editorState.getCurrentContent());
+    const content = JSON.stringify(contentRaw);
+    const preview = content.slice(0, 50);
+    const postType = postCategory === '자유글' ? 'FREE' : 'WALLET';
+
+    let resizedThumbnail: string = '';
+
+    try {
+      const imageBlob = await urlToBlob(backgroundImageUrl);
+      resizedThumbnail = await resizeImage(imageBlob);
+    } catch (error) {
+      console.error('Error resizing image:', error);
+    }
+
+    const payload = {
+      title,
+      content,
+      preview,
+      thumbnail: resizedThumbnail,
+      mainHashtag: tags.length > 0 ? tags[0].name : '',
+      postType,
+      hashtagList: subtags.map(tag => tag.name),
+      walletList: accountBookInputs,
+    };
+
+    // Console log payload for debugging
+    console.log('Payload:', payload);
+
+    try {
+      const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload);
+      console.log('Response:', response.data);
+      alert('임시 저장이 완료 되었습니다.');
+      location.reload();
+    } catch (error) {
+      console.error('Error posting data:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchTemporaryPosts = async () => {
+      try {
+        const response = await fetch('https://vision-necktitude.shop/posts/temp-list');
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching temporary posts:', error);
+      }
+    };
+
+    fetchTemporaryPosts();
+  }, []);
+
   return (
     <>
       <S.Header>
         <S.LeftContainer>
-          <img
-            src={Menu}
-            onClick={changeSideMenuState}
-            alt="메뉴"
-            width={"25px"}
-            height={"15px"}
-          />
-
           <img
             src={moaboa}
             onClick={goHomePage}
@@ -273,7 +321,10 @@ export default function CreatePost() {
           />
         </S.LeftContainer>
         <S.RightContainer>
-          <S.TemporaryButton onClick={toggleModal}>임시저장&nbsp;|&nbsp;{posts.length}</S.TemporaryButton>
+          <S.TemporaryButton>
+            <div onClick={handleTemporarySubmit}>임시저장</div>
+            <div onClick={toggleModal}>&nbsp;|&nbsp;{posts.length}</div>
+          </S.TemporaryButton>
           <S.PostButton onClick={handleSubmit}>저장하기</S.PostButton>
         </S.RightContainer>
 

@@ -276,7 +276,7 @@ export const ListTag = styled.div`
   border-radius: 7px;
   background-color: #eaeaea;
   text-align: left;
-  font-size: 18px;
+  font-size: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -308,7 +308,7 @@ export const CheckField = styled.div`
 `;
 
 export const PictureListCategory = styled.div`
-  width: 30%;
+  width: 40%;
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;

@@ -46,14 +46,6 @@ export default function CreatePostHeader({ setShowSideMenu }: Props) {
     <S.Header>
       <S.LeftContainer>
         <img
-          src={Menu}
-          onClick={changeSideMenuState}
-          alt="메뉴"
-          width={"25px"}
-          height={"15px"}
-        />
-
-        <img
           src={moaboa}
           onClick={goHomePage}
           alt="로고"
