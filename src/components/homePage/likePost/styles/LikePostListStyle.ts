@@ -17,7 +17,8 @@ export const ListContainer = styled.div`
 export const ListItem = styled.div`
   display: flex;
   width: 100%;
-  padding: 10px 0;
+  padding: 13px 0;
+  align-items: center;
 `;
 
 export const Title = styled.div`
@@ -41,6 +42,13 @@ export const Item = styled.div`
 export const ListHeader = styled(ListItem)`
   font-weight: bold;
   border-bottom: 1px solid #ddd;
+  margin: 0px 0px 0px 0px;
+`;
+
+export const CheckBox = styled.input`
+  width: 17px;
+  height: 17px;
+  margin: 0px 30px 0px 0px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -59,4 +67,8 @@ export const SelectAllCheckboxContainer = styled.div`
 
 export const SelectAllCheckboxLabel = styled.label`
   margin-left: 5px;
+`;
+
+export const DeleteLikeBtn = styled.div`
+  margin-left: auto;
 `;

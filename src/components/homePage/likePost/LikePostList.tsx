@@ -33,18 +33,33 @@ export default function LikePostList() {
   const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
-    fetchPosts();
+    fetchLike();
   }, [page]);
 
-  const fetchPosts = async () => {
+  const fetchLike = async () => {
     setLoading(true);
     try {
       const response = await axios.get<LikeResponse>(`${serverUrl}/posts/like-list`, {
         params: { page: page - 1 }
       });
       setLikeList(response.data.postList);
-      setSelectedPosts([]); // 페이지 변경 시 선택된 항목 초기화
-      setSelectAll(false); // 페이지 변경 시 전체 선택 초기화
+      setSelectedPosts([]);
+      setSelectAll(false);
+    } catch (error) {
+      window.alert('Error:' + error);
+    }
+    setLoading(false);
+  };
+
+  const deleteLike = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.patch<LikeResponse>(`${serverUrl}/posts/like-list`, {
+        postIdList: selectedPosts
+      });
+      window.alert(response.data);
+      setSelectedPosts([]);
+      setSelectAll(false);
     } catch (error) {
       window.alert('Error:' + error);
     }
@@ -63,12 +78,19 @@ export default function LikePostList() {
 
   const handleSelectAllCheckboxChange = () => {
     if (selectAll) {
-      setSelectedPosts([]); // Deselect all if already selected
+      setSelectedPosts([]); 
     } else {
-      setSelectedPosts(likeList.map(post => post.postId)); // Select all
+      setSelectedPosts(likeList.map(post => post.postId)); 
     }
-    setSelectAll(!selectAll); // Toggle selectAll state
+    setSelectAll(!selectAll); 
   };
+
+  const handleDeleteLike = () => {
+    const hide = window.confirm("선택한 글의 좋아요를 취소하시겠습니까?");
+    if (hide) {
+      deleteLike();
+    }
+  }
 
   useEffect(() => {
     console.log(selectedPosts);
@@ -79,15 +101,16 @@ export default function LikePostList() {
       {likeList.length > 0 && (
         <S.ListContainer>
           <S.ListHeader>
+            <div style={{ width: '47px' }}></div>
             <S.TitleHeader>제목</S.TitleHeader>
-            <S.Item>메인 해시태그</S.Item>
+            <S.Item></S.Item>
             <S.Item>작성자</S.Item>
             <S.Item>작성일</S.Item>
             <S.Item>좋아요</S.Item>
           </S.ListHeader>
           {likeList.map((post, index) => (
             <S.ListItem key={index}>
-              <input 
+              <S.CheckBox
                 type='checkbox' 
                 checked={selectedPosts.includes(post.postId)} 
                 onChange={() => handleCheckboxChange(post.postId)}
@@ -102,13 +125,14 @@ export default function LikePostList() {
         </S.ListContainer>
       )}
       <S.ButtonContainer>
-        <input
+        <S.CheckBox
           type='checkbox'
           id='selectall'
           checked={selectAll}
           onChange={handleSelectAllCheckboxChange}
         />
         <label htmlFor="selectall">전체 선택</label>
+        <S.DeleteLikeBtn onClick={handleDeleteLike}>삭제깅</S.DeleteLikeBtn>
       </S.ButtonContainer>  
       {loading && <p>Loading...</p>}
     </S.SearchContainer>
