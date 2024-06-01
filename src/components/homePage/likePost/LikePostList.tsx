@@ -15,16 +15,22 @@ interface LikePost {
   mainHashtag: string;
 }
 
+interface LikeResponse {
+  postList: LikePost[];
+}
+
 function getQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 export default function LikePostList() {
   const query = getQuery();
-  const page = query.get('page');
+  const page: number = Number(query.get('page'));
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const [loading, setLoading] = useState(false);
   const [likeList, setLikeList] = useState<LikePost[]>([]);
+  const [selectedPosts, setSelectedPosts] = useState<number[]>([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -33,15 +39,40 @@ export default function LikePostList() {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${serverUrl}/posts/like-list`, {
-        params: { page: page }
+      const response = await axios.get<LikeResponse>(`${serverUrl}/posts/like-list`, {
+        params: { page: page - 1 }
       });
-      setLikeList(response.data);
+      setLikeList(response.data.postList);
+      setSelectedPosts([]); // 페이지 변경 시 선택된 항목 초기화
+      setSelectAll(false); // 페이지 변경 시 전체 선택 초기화
     } catch (error) {
       window.alert('Error:' + error);
     }
     setLoading(false);
   };
+
+  const handleCheckboxChange = (postId: number) => {
+    setSelectedPosts(prevSelectedPosts => {
+      if (prevSelectedPosts.includes(postId)) {
+        return prevSelectedPosts.filter(id => id !== postId);
+      } else {
+        return [...prevSelectedPosts, postId];
+      }
+    });
+  };
+
+  const handleSelectAllCheckboxChange = () => {
+    if (selectAll) {
+      setSelectedPosts([]); // Deselect all if already selected
+    } else {
+      setSelectedPosts(likeList.map(post => post.postId)); // Select all
+    }
+    setSelectAll(!selectAll); // Toggle selectAll state
+  };
+
+  useEffect(() => {
+    console.log(selectedPosts);
+  }, [selectedPosts]);
 
   return (
     <S.SearchContainer>
@@ -56,6 +87,11 @@ export default function LikePostList() {
           </S.ListHeader>
           {likeList.map((post, index) => (
             <S.ListItem key={index}>
+              <input 
+                type='checkbox' 
+                checked={selectedPosts.includes(post.postId)} 
+                onChange={() => handleCheckboxChange(post.postId)}
+              />
               <S.Title>{post.title}</S.Title>
               <S.Item>{post.mainHashtag}</S.Item>
               <S.Item>{post.nickname}</S.Item>
@@ -65,6 +101,15 @@ export default function LikePostList() {
           ))}
         </S.ListContainer>
       )}
+      <S.ButtonContainer>
+        <input
+          type='checkbox'
+          id='selectall'
+          checked={selectAll}
+          onChange={handleSelectAllCheckboxChange}
+        />
+        <label htmlFor="selectall">전체 선택</label>
+      </S.ButtonContainer>  
       {loading && <p>Loading...</p>}
     </S.SearchContainer>
   );

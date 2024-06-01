@@ -6,3 +6,22 @@ export const Container = styled.div`
   margin: 0 auto;
   border: 1px solid blue;
 `;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+
+  button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+`;

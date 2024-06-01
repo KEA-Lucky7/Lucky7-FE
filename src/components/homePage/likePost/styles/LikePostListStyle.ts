@@ -42,3 +42,21 @@ export const ListHeader = styled(ListItem)`
   font-weight: bold;
   border-bottom: 1px solid #ddd;
 `;
+
+export const ButtonContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+`;
+
+export const SelectAllCheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+export const SelectAllCheckboxLabel = styled.label`
+  margin-left: 5px;
+`;
