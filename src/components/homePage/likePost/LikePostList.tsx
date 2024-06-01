@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from "axios";
 import { useLocation } from 'react-router-dom';
+import axios from "axios";
+
 import * as S from './styles/LikePostListStyle';
 
 interface LikePost {
@@ -92,12 +93,8 @@ export default function LikePostList() {
     }
   }
 
-  useEffect(() => {
-    console.log(selectedPosts);
-  }, [selectedPosts]);
-
   return (
-    <S.SearchContainer>
+    <S.PostContainer>
       {likeList.length > 0 && (
         <S.ListContainer>
           <S.ListHeader>
@@ -135,6 +132,6 @@ export default function LikePostList() {
         <S.DeleteLikeBtn onClick={handleDeleteLike}>삭제깅</S.DeleteLikeBtn>
       </S.ButtonContainer>  
       {loading && <p>Loading...</p>}
-    </S.SearchContainer>
+    </S.PostContainer>
   );
 }

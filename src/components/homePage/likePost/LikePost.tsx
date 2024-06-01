@@ -5,20 +5,33 @@ import axios from 'axios';
 import LikePostList from './LikePostList';
 import * as S from './styles/LikePostStyle';
 
+
+interface LikeResponse {
+  postCnt: number;
+}
+
 export default function LikePost() {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
-  const [totalPages, setTotalPages] = useState(3);
+  const [likeCount, setLikeCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
-  // const fetchTotalPages = async () => {
-  //   try {
-  //     const response = await axios.get(`${serverUrl}/posts/like-list`);
-  //     setTotalPages(response.data.totalPages);
-  //   } catch (error) {
-  //     window.alert('Error:' + error);
-  //   }
-  // };
+  useEffect(() => {
+    fetchTotalPages();
+  }, [likeCount]);
+
+  const fetchTotalPages = async () => {
+    try {
+      const response = await axios.get<LikeResponse>(`${serverUrl}/posts/like-list`, {
+        params: { page: 0 }
+      });
+      setLikeCount(response.data.postCnt)
+      setTotalPages(Math.ceil(likeCount / 15));
+    } catch (error) {
+      window.alert('Error:' + error);
+    }
+  };
 
   const goToPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -27,6 +40,8 @@ export default function LikePost() {
 
   return (
     <S.Container>
+      <S.LikeTitle>좋아요한 글</S.LikeTitle>
+      <S.LikeCount>{likeCount}개의 글</S.LikeCount>
       <LikePostList/>
       <S.Pagination>
         <button onClick={() => goToPage(1)} disabled={currentPage === 1}>처음</button>

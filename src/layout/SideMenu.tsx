@@ -43,6 +43,11 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
     setShowSideMenu(false);
   }
 
+  function goLikePage() {
+    navigate("/like?page=1");
+    setShowSideMenu(false);
+  }
+
   function goSettingPage() {
     navigate("/setting");
     setShowSideMenu(false);
@@ -62,7 +67,7 @@ const SideMenu = ({ setShowSideMenu }: Props) => {
           <div onClick={goWritePage}>글쓰기</div>
           <div onClick={goMyblogPage}>내블로그</div>
           <div>내 팔로우</div>
-          <div>좋아요한 글</div>
+          <div onClick={goLikePage}>좋아요한 글</div>
           {showFortuneModal && (
             <FinancialLuck setShowFortuneModal={setShowFortuneModal} />
           )}

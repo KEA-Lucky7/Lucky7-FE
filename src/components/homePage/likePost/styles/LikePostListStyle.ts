@@ -1,7 +1,8 @@
 // LikePostListStyle.js
 import styled from 'styled-components';
 
-export const SearchContainer = styled.div`
+export const PostContainer = styled.div`
+  height: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +18,7 @@ export const ListContainer = styled.div`
 export const ListItem = styled.div`
   display: flex;
   width: 100%;
-  padding: 13px 0;
+  padding: 11px 0;
   align-items: center;
 `;
 

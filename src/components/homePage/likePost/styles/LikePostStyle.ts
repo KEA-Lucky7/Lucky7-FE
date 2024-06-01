@@ -4,7 +4,21 @@ export const Container = styled.div`
   width: 67vw;
   height: 100%;
   margin: 0 auto;
-  border: 1px solid blue;
+  //border: 1px solid blue;
+`;
+
+export const LikeTitle = styled.div`
+  font-size: 32px;
+  margin: 20px 0px 20px 0px;
+  padding: 0px 0px 10px 0px;
+  background-color: #ffffff;
+  position: sticky;
+  top: 80px;
+`;
+
+export const LikeCount = styled.div`
+  font-size: 13px;
+  margin: 20px 0px 10px 0px;
 `;
 
 export const Pagination = styled.div`
