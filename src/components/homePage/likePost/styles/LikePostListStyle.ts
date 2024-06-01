@@ -22,28 +22,28 @@ export const ListItem = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.div`
-  flex: 0 0 50%;
-  text-align: left;
-  padding-right: 10px;
-  overflow: hidden; /* 넘치는 내용을 숨깁니다. */
-  text-overflow: ellipsis; /* 넘치는 내용을 줄임표로 표시합니다. */
-  white-space: nowrap; /* 텍스트를 한 줄로만 표시합니다. */
-`;
-
 export const TitleHeader = styled.div`
   flex: 0 0 50%;
   padding-right: 10px;
   text-align: center;
 `;
 
+export const Title = styled.div`
+  flex: 0 0 50%;
+  text-align: left;
+  padding-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 export const Item = styled.div`
   flex: 1;
   padding-right: 10px;
   text-align: center;
-  overflow: hidden; /* 넘치는 내용을 숨깁니다. */
-  text-overflow: ellipsis; /* 넘치는 내용을 줄임표로 표시합니다. */
-  white-space: nowrap; /* 텍스트를 한 줄로만 표시합니다. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const ListHeader = styled(ListItem)`
