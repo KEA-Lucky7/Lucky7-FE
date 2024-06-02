@@ -1,35 +1,50 @@
+import React, { useState, useEffect } from 'react';
 import * as S from "../styles/CreatepostCss";
 import moaboa from "../../../assets/header/moaboa.png";
 import Menu from "../../../assets/header/Menu.png";
 import { useNavigate } from "react-router-dom";
-// HomePage.tsx에서 가져온 showPopup useState
+import { TemporarySaveModal } from "../createPostItems/TemporarySaveModal";
+
 interface Props {
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CreatePostHeader({ setShowSideMenu }: Props) {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [temporarySaves, setTemporarySaves] = useState<string[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
+
   const changeSideMenuState = () => {
     setShowSideMenu((prevState) => !prevState);
   };
 
   function goHomePage() {
-    // 그 전에 로그인 처리 됐는지 확인해야 함
     navigate("/");
     setShowSideMenu(false);
   }
 
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  useEffect(() => {
+    const fetchTemporaryPosts = async () => {
+      try {
+        const response = await fetch('https://vision-necktitude.shop/posts/temp-list');
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching temporary posts:', error);
+      }
+    };
+
+    fetchTemporaryPosts();
+  }, []);
+
   return (
     <S.Header>
       <S.LeftContainer>
-        <img
-          src={Menu}
-          onClick={changeSideMenuState}
-          alt="메뉴"
-          width={"25px"}
-          height={"15px"}
-        />
-
         <img
           src={moaboa}
           onClick={goHomePage}
@@ -40,9 +55,16 @@ export default function CreatePostHeader({ setShowSideMenu }: Props) {
         />
       </S.LeftContainer>
       <S.RightContainer>
-        <S.TemporaryButton>임시저장</S.TemporaryButton>
+        <S.TemporaryButton onClick={toggleModal}>임시저장&nbsp;|&nbsp;{posts.length}</S.TemporaryButton>
         <S.PostButton>저장하기</S.PostButton>
       </S.RightContainer>
+
+      {isModalVisible && (
+        <TemporarySaveModal
+          temporarySaves={temporarySaves}
+          closeModal={toggleModal}
+        />
+      )}
     </S.Header>
   );
 }
