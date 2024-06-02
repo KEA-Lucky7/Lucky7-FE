@@ -13,14 +13,16 @@ const LoginRedirect = () => {
 
   useEffect(() => {
     if (access_token && refresh_token) {
-      window.alert(`${access_token}\n${refresh_token}`);
       setUserToken(access_token, refresh_token);
       setIsRegisteredIn(true);
-      navigate("/login/info");
-    } else {
-      window.alert("아직안옴.(과연아직일까?)");
     }
   }, [access_token, refresh_token, navigate, setUserToken]);
+
+  useEffect(() => {
+    if (isRegisteredIn) {
+      navigate("/login/info");
+    }
+  }, [isRegisteredIn]);
 
   return null;
 };
