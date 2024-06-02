@@ -1,27 +1,51 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import styled from "styled-components";
-
+import axios from "axios";
 import CommonButton from "./CommomButton";
 
 type InputProps = {
   className: string;
   placeholder: string;
-  onClick: () => void;
+  postId: number;
   children?: ReactNode;
 };
 
 const InputComment = ({
   className,
   placeholder,
-  onClick,
+  postId,
   children,
 }: InputProps) => {
+  const [comment, setComment] = useState("");
+
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
+  };
+
+  const handleCommentSubmit = () => {
+    axios
+      .post(`https://vision-necktitude.shop/posts/${postId}/comment`, {
+        content: comment,
+      })
+      .then((response) => {
+        console.log("댓글 제출 성공: ", response.data);
+        setComment("");
+      })
+      .catch((error) => {
+        console.error("댓글 제출 실패: ", error);
+      });
+  };
+
   return (
     <InputWrapper className={className}>
       {children}
-      <InputArea placeholder={placeholder} />
+      <InputArea
+        placeholder={placeholder}
+        value={comment}
+        onChange={handleCommentChange}
+      />
       <InputButtonWrapper>
-        <InputButton className={className} onClick={onClick}>
+        <InputButton className={className} onClick={handleCommentSubmit}>
           댓글등록
         </InputButton>
       </InputButtonWrapper>

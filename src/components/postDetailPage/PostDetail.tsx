@@ -68,8 +68,6 @@ export default function PostDetail() {
     });
   };
 
-  const handleCommentSubmit = () => {};
-
   return (
     <>
       <S.Container>
@@ -198,12 +196,12 @@ export default function PostDetail() {
               />
               <div>2</div>
             </div>
-          </S.Commment>
+          </S.Commment>{" "}
           {isCommentVisible && (
             <InputComment
               className="custom-input"
               placeholder="댓글을 입력하세요..."
-              onClick={handleCommentSubmit}
+              postId={/* 여기에 postId를 전달해야 합니다 */ 1}
             />
           )}
         </S.CommentBox>
