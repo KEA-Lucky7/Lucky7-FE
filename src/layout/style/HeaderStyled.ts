@@ -4,7 +4,6 @@ import Search from "../../../src/assets/header/search.png";
 export const Header = styled.header`
   width: 100%;
   height: 80px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,6 +11,7 @@ export const Header = styled.header`
   top: 0px;
   background: white;
   z-index: 1;
+  // border: 1px solid blue;
 `;
 
 export const LeftContainer = styled.div`
@@ -20,9 +20,8 @@ export const LeftContainer = styled.div`
   // border: 1px solid blue;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  margin-left: calc(16.5vw - 50px);
 `;
 
 export const RightContainer = styled.div`
@@ -33,11 +32,10 @@ export const RightContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  margin-right: 16.5vw;
 `;
 
 export const SearchContainer = styled.div`
-  width: 330px;
+  width: 310px;
   height: 35px;
   border-radius: 15px;
   border: solid 1.5px black;
@@ -71,4 +69,5 @@ export const SearchInput = styled.input`
   margin-left: 10px;
   overflow: auto;
   font-size: 15px;
+  background: none;
 `;
