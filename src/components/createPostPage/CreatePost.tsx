@@ -6,7 +6,6 @@ import { EditorState, convertToRaw } from "draft-js";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
 import axios from "axios";
-import Menu from "../../assets/header/Menu.png";
 import moaboa from "../../assets/header/moaboa.png";
 import { useNavigate } from "react-router-dom";
 import { TemporarySaveModal } from "./createPostItems/TemporarySaveModal";

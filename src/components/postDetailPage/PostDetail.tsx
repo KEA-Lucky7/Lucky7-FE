@@ -9,7 +9,10 @@ import profileImage from "../../assets/postDetail/profileImage.png";
 import { Link, useParams } from "react-router-dom";
 import Top from "../../assets/postDetail/Top.png";
 import InputComment from "./comment/InputComment";
-
+import axios from "axios";
+import deletebutton from "../../assets/postDetail/deletebutton.png";
+import ConfirmModal from './ConfirmModal';
+import { useNavigate } from "react-router-dom";
 interface Post {
   postId: number;
   memberId: number;
@@ -60,15 +63,24 @@ interface Post {
 }
 
 
+interface WalletItem {
+  consumedDate: string;
+  memo: string;
+  amount: number;
+  walletType: string;
+}
+
 export default function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post>([]);
   const [error, setError] = useState<string | null>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isCommentVisible, setIsCommentVisible] = useState(false);
+  const [likeCount, setLikeCount] = useState<number>(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigate = useNavigate();
 
-
-
+  //글 상세조회 API
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -84,6 +96,39 @@ export default function PostDetail() {
     };
     fetchPost();
   }, [postId]);
+
+  //좋아요 누르는 API
+  const handleLikeClick = async () => {
+    try {
+      await axios.post(`https://vision-necktitude.shop/posts/${postId}/like`);
+      setLikeCount(likeCount + 1); // 좋아요 증가
+      alert('좋아요를 눌렀습니다.');
+    } catch (error) {
+      console.error("Error liking the post:", error);
+    }
+  };
+
+  //글 삭제 API
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        alert('성공적으로 삭제되었습니다.');
+        navigate('/myblog');
+        // Redirect or update the UI as needed
+      } else {
+        alert('삭제에 실패하였습니다.');
+      }
+    } catch (error) {
+      console.error('Error deleting the post:', error);
+      alert('삭제를 하는 과정 중 에러가 발생하였습니다.');
+    } finally {
+      setIsModalVisible(false);
+    }
+  };
+
 
   const toggleCommentVisibility = () => {
     setIsCommentVisible(!isCommentVisible); // 상태를 반전시켜 댓글 보이기 여부를 토글합니다.
@@ -139,52 +184,101 @@ export default function PostDetail() {
       <S.PostContainer>
         {/* 본문 맨 위 내용 */}
         <S.PostIntro>
-          <S.FuncContainer>
+          <S.FuncContainer style={{ position: "relative" }}>
             <div onClick={handleCopyURL}>URL 복사</div>
             <img
               src={seeMore}
               alt="더보기"
-              style={{ width: "3px", height: "15px" }}
+              style={{ width: "3px", height: "15px", cursor: 'pointer' }}
               onClick={toggleDropdown}
             />
-          </S.FuncContainer>
-          {/* 드롭다운 메뉴 내용 */}
-          {isDropdownVisible && (
-            <div
-              style={{
-                position: "absolute",
-                top: "520px",
-                right: "670px",
-                backgroundColor: "#fff",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                padding: "10px",
-              }}
-            >
+            {/* 드롭다운 메뉴 내용 */}
+            {isDropdownVisible && (
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "10px",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  position: "absolute",
+                  top: "20px", // 이미지를 기준으로 약간의 간격을 둠
+                  right: "0",
+                  backgroundColor: "#fff",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  zIndex: 1000,
                 }}
               >
-                신고하기
-                <img
-                  src={report}
-                  alt="신고"
-                  style={{ width: "24px", height: "24px" }}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "10px",
+                    justifyContent: "left",
+                    alignItems: "center",
+                    width: "100px",
+                    cursor: "pointer"
+                  }}
+                >
+                  <img
+                    src={report}
+                    alt="신고"
+                    style={{ width: "24px", height: "24px" }}
+                  />
+                  신고하기
+                </div>
+
+                {/* 삭제버튼 */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "10px",
+                    justifyContent: "left",
+                    alignItems: "center",
+                    width: "100px",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setIsModalVisible(true)}
+                >
+                  <img
+                    src={deletebutton}
+                    alt="Delete"
+                    style={{ width: "24px", height: "24px" }}
+                  />
+                  삭제
+                </div>
+
+                {/* Confirmation Modal */}
+                <ConfirmModal
+                  isVisible={isModalVisible}
+                  onConfirm={handleDelete}
+                  onCancel={() => setIsModalVisible(false)}
                 />
               </div>
-            </div>
-          )}
+            )}
+          </S.FuncContainer>
         </S.PostIntro>
 
         {/* 본문 내용 */}
         <S.PostBox>
           <div>{post.content}</div>
         </S.PostBox>
+
+        {/* Wallet List */}
+        <div>
+          <S.WalletListBox>
+            {post.walletList && post.walletList.length > 0 && (
+              <div>
+                {post.walletList.map((walletItem, index) => (
+                  <S.WalletItem key={index}>
+                    <div>날짜: {walletItem.consumedDate}</div>
+                    <div>메모: {walletItem.memo}</div>
+                    <div>금액: {walletItem.amount}</div>
+                    <div>타입: {walletItem.walletType}</div>
+                  </S.WalletItem>
+                ))}
+              </div>
+            )}
+          </S.WalletListBox>
+        </div>
 
         {/* 태그 내용 */}
         <S.TagBox>
@@ -233,7 +327,8 @@ export default function PostDetail() {
               <img
                 src={postHeart}
                 alt="하트"
-                style={{ width: "25px", height: "22px" }}
+                style={{ width: "25px", height: "22px", cursor: 'pointer' }}
+                onClick={handleLikeClick}
               />
               <div>{post.likeCnt}</div>
             </div>
