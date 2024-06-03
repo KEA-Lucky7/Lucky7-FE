@@ -1,64 +1,82 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import * as S from "./styles/AccountBook";
-// import { useState } from "react";
 
 interface ExpenseData {
   date: Date;
   amount: number;
 }
 
-const expenses: ExpenseData[] = [
-  { date: new Date(2024, 3, 2), amount: 48370 },
-  { date: new Date(2024, 3, 3), amount: 29470 },
-  { date: new Date(2024, 3, 4), amount: 28320 },
-  { date: new Date(2024, 3, 6), amount: 21200 },
-  { date: new Date(2024, 3, 7), amount: 33200 },
-  { date: new Date(2024, 3, 8), amount: 47292 },
-  { date: new Date(2024, 3, 13), amount: 95254 },
-  // { date: new Date(2024, 3, 18), amount: 48030 },
-  { date: new Date(2024, 3, 27), amount: 59744 },
-  { date: new Date(2024, 3, 1), amount: 99774 },
-  { date: new Date(2024, 3, 5), amount: 72148 },
-  { date: new Date(2024, 3, 9), amount: 16851 },
-  { date: new Date(2024, 3, 10), amount: 16372 },
-  // { date: new Date(2024, 3, 11), amount: 52032 },
-  { date: new Date(2024, 3, 12), amount: 22589 },
-  { date: new Date(2024, 3, 14), amount: 50275 },
-  { date: new Date(2024, 3, 15), amount: 40130 },
-  // { date: new Date(2024, 3, 16), amount: 16699 },
-  { date: new Date(2024, 3, 17), amount: 19009 },
-  { date: new Date(2024, 3, 19), amount: 99351 },
-  { date: new Date(2024, 3, 20), amount: 61475 },
-  { date: new Date(2024, 3, 21), amount: 18196 },
-  { date: new Date(2024, 3, 22), amount: 49230 },
-  { date: new Date(2024, 3, 23), amount: 58703 },
-  // { date: new Date(2024, 3, 24), amount: 19810 },
-  { date: new Date(2024, 3, 25), amount: 76217 },
-  { date: new Date(2024, 3, 26), amount: 65435 },
-  { date: new Date(2024, 3, 28), amount: 57377 },
-  { date: new Date(2024, 3, 29), amount: 44889 },
-  { date: new Date(2024, 3, 30), amount: 15428 },
-];
+const AccountBook = () => {
+  const [expenses, setExpenses] = useState<ExpenseData[]>([]);
+  const [value, setValue] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<string>("2024.04.04");
+  const [endDate, setEndDate] = useState<string>(
+    new Date().toISOString().split("T")[0].replace(/-/g, ".")
+  );
 
-export default function AccountBook() {
-  // const [type, setType] = useState("calendar");
-  // const date = new Date();
-  // const year = date.getFullYear();
-  // const month = date.getMonth() + 1;
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const response = await axios.get(
+          "https://vision-necktitude.shop/posts/calender",
+          {
+            headers: {
+              Authorization:
+                "eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjciLCJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTcxNzMyNDk0NCwiZXhwIjoxNzE3MzMyMTQ0fQ.cnnjC8J1OIA9y-19KMPVpDk-pG4VK3xosgcDhmRbPLk",
+            },
+            params: {
+              month: "2024.05", // 조회하고 싶은 월
+              specificDate: "2024.04.10", // 특정 날짜
+            },
+          }
+        );
 
-  //임시
-  // const [value, onChange] = useState<Date>(new Date());
-  const value = new Date();
+        console.log("API response:", response); // 추가된 디버깅 정보
 
-  const renderTileContent = ({ date, view }: { date: Date; view: string }) => {
+        if (response.data && response.data.consumedList) {
+          const fetchedExpenses = response.data.consumedList.map(
+            (item: any) => ({
+              date: new Date(item.consumedDate),
+              amount: item.amount,
+            })
+          );
+          setExpenses(fetchedExpenses);
+        } else {
+          console.error("Invalid response structure:", response.data);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error("Axios error:", error.message);
+          if (error.response) {
+            console.error("Error response data:", error.response.data); // 서버 응답 오류
+            console.error("Error response status:", error.response.status); // 서버 응답 상태 코드
+          }
+        } else {
+          console.error("Unexpected error:", error);
+        }
+      }
+    };
+
+    fetchExpenses();
+  }, []);
+
+  const calculateTotalAmount = (start: string, end: string) => {
+    const startDate = new Date(start.replace(/\./g, "-"));
+    const endDate = new Date(end.replace(/\./g, "-"));
+    return expenses
+      .filter((exp) => exp.date >= startDate && exp.date <= endDate)
+      .reduce((acc, exp) => acc + exp.amount, 0);
+  };
+
+  const accountBookData = ({ date, view }: { date: Date; view: string }) => {
     if (view === "month") {
-      // 해당 날짜의 지출을 찾습니다.
       const expense = expenses.find(
         (exp) =>
           exp.date.getDate() === date.getDate() &&
           exp.date.getMonth() === date.getMonth() &&
           exp.date.getFullYear() === date.getFullYear()
       );
-      // 지출이 있으면 표시합니다.
       return expense ? <p>{`${expense.amount.toLocaleString()} 원`}</p> : null;
     }
   };
@@ -66,22 +84,76 @@ export default function AccountBook() {
   return (
     <S.AccountBookContainer>
       <S.Title>가계부보기</S.Title>
-      <S.TypeContainer>
-        <S.Type>가계부 </S.Type>
-        <S.line></S.line>
-        <S.Type> 글목록</S.Type>
-      </S.TypeContainer>
-      {/* <S.MonthControl>
-        <S.Month>{year + "." + month}</S.Month>
-        <S.MonthButton>⟨</S.MonthButton>
-        <S.MonthButton>⟩</S.MonthButton>
-      </S.MonthControl> */}
+
       <S.StyledCalendar
-        calendarType="US"
-        // onChange={onChange}
+        calendarType="gregory"
         value={value}
-        tileContent={renderTileContent}
+        tileContent={accountBookData}
       />
+
+      <S.ExpenseCalculationContainer>
+        <S.ExpenseCalculationItem>
+          <label>
+            <S.DateInput
+              type="text"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            부터 오늘까지 총 소비 금액
+            <S.DateInput
+              type="text"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              disabled
+            />
+          </label>
+          <S.Amount>
+            {calculateTotalAmount(startDate, endDate).toLocaleString()} 원
+          </S.Amount>
+        </S.ExpenseCalculationItem>
+
+        <S.ExpenseCalculationItem>
+          <label>
+            <S.DateInput
+              type="text"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            부터
+            <S.DateInput
+              type="text"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+            까지 총 소비 금액
+          </label>
+          <S.Amount>
+            {calculateTotalAmount(startDate, endDate).toLocaleString()} 원
+          </S.Amount>
+        </S.ExpenseCalculationItem>
+
+        <S.ExpenseCalculationItem>
+          <label>
+            <S.DateInput
+              type="text"
+              value={(new Date().getMonth() + 1).toString().padStart(2, "0")}
+              disabled
+            />
+            월 소비 금액
+          </label>
+          <S.Amount>
+            {calculateTotalAmount(
+              `${new Date().getFullYear()}.${(new Date().getMonth() + 1)
+                .toString()
+                .padStart(2, "0")}.01`,
+              endDate
+            ).toLocaleString()}{" "}
+            원
+          </S.Amount>
+        </S.ExpenseCalculationItem>
+      </S.ExpenseCalculationContainer>
     </S.AccountBookContainer>
   );
-}
+};
+
+export default AccountBook;
