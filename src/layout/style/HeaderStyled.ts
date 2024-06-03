@@ -3,7 +3,7 @@ import Search from "../../../src/assets/header/search.png";
 
 export const Header = styled.header`
   width: 100%;
-  height: 80px;
+  height: 55px;
   display: flex;
   justify-content: space-between;
   align-items: center;
