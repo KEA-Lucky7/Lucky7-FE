@@ -1,11 +1,13 @@
 import { create } from "zustand";
 
 export interface UserStore {
-  userToken: string;
-  setUserToken: (token: string) => void;
+  accessToken: string;
+  refreshToken: string;
+  setUserToken: (accessToken: string, refreshToken: string) => void;
 }
 
-export const useStore = create<UserStore>((set) => ({
-  userToken: "",
-  setUserToken: (token) => set({ userToken: token }),
+export const useStoreJwt = create<UserStore>((set) => ({
+  accessToken: "",
+  refreshToken: "",
+  setUserToken: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
 }));
