@@ -79,7 +79,7 @@ export default function Header({ setShowSideMenu }: Props) {
             alignItems: "center",
           }}
         >
-          <img src={Bell} alt="Bell" width={"20px"} height={"25px"} />
+          <img src={Bell} alt="Bell" height={"22px"} />
         </div>
       </S.RightContainer>
     </S.Header>

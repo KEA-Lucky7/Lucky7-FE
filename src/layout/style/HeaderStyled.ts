@@ -22,6 +22,7 @@ export const LeftContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  margin-left: 13px;
 `;
 
 export const RightContainer = styled.div`
@@ -36,9 +37,9 @@ export const RightContainer = styled.div`
 
 export const SearchContainer = styled.div`
   width: 310px;
-  height: 35px;
+  height: 30px;
   border-radius: 15px;
-  border: solid 1.5px black;
+  border: solid 1.5px #858585;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,8 +57,8 @@ export const ImgBtn = styled.button`
   overflow: auto;
   font-size: 15px;
   object-fit: cover;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   background-image: url(${Search});
 `;
 
