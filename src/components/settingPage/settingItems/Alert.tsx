@@ -21,6 +21,7 @@ export default function Alert() {
     };
 
     return (
+        <S.AlertBox>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <S.profileTitle>알림 설정</S.profileTitle>
             <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }} onClick={togglePushNotification}>
@@ -36,5 +37,6 @@ export default function Alert() {
                 <div>이벤트 및 광고성 정보 수신</div>
             </div>
         </div>
+        </S.AlertBox>
     );
 }
