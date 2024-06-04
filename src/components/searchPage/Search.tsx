@@ -16,17 +16,20 @@ const Search: React.FC = () => {
   const keyword = query.get('q');
   const tab = query.get('tab') || 'post';
 
-  const [sort, setSort] = useState(query.get('sort') || 'accuracy');
+  const [sort, setSort] = useState(query.get('sort') || 'likeDESC');
   const [periodMenuOpen, setPeriodMenuOpen] = useState(false);
   const [period, setPeriod] = useState(query.get('period') || 'all');
   const [startPeriod, setStartPeriod] = useState('');
   const [endPeriod, setEndPeriod] = useState('');
 
   useEffect(() => {
-    if (tab === 'user') {
+    if (tab === 'blog' || tab === 'user') {
       query.delete('sort');
+      query.delete('startDate');
+      query.delete('endDate');
     } else if (!query.get('sort')) {
-      query.set('sort', sort);
+      query.set('sort', sort)
+      setPeriodQuery()
     }
     updateSearchParams();
   }, [tab, sort]);
@@ -35,11 +38,14 @@ const Search: React.FC = () => {
     if (tab === 'blog' || tab === 'user') {
       query.delete('period');
     } else if (!query.get('period')) {
-      setPeriod("all");
-      query.set('period', "all");
+      query.set('period', period);
     }
     updateSearchParams();
   }, [tab]);
+
+  useEffect(() => {
+    setPeriodQuery();
+  }, [period, startPeriod, endPeriod]);
 
   const setPeriodQuery = () => {
     if (period === 'all') {
@@ -91,7 +97,7 @@ const Search: React.FC = () => {
       setStartPeriod(getPreviousMonth());
       setEndPeriod(getTodayDate());
     } else if (newPeriod === 'userSet') {
-      // No changes for userSet as it relies on user input
+      // 
     }
 
     if (isValidDate(startPeriod) && isValidDate(endPeriod)) {
@@ -187,14 +193,14 @@ const Search: React.FC = () => {
         {tab !== 'user' && (
           <S.SortContainer>
             <S.SortMenu
-              onClick={() => handleSortChange('accuracy')}
-              selected={sort === 'accuracy'}
+              onClick={() => handleSortChange('likeDESC')}
+              selected={sort === 'likeDESC'}
             >
               정확도
             </S.SortMenu>
             <S.SortMenu
-              onClick={() => handleSortChange('latest')}
-              selected={sort === 'latest'}
+              onClick={() => handleSortChange('latestASC')}
+              selected={sort === 'latestASC'}
             >
               최신순
             </S.SortMenu>

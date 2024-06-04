@@ -98,7 +98,7 @@ export default function SearchBlog() {
         <div id="observer" style={{ height: "10px" }}></div>
         </div>
       ) : (
-        <div>인기글 목록을 전부 불러왔습니다.</div>
+        <div>블로그 목록을 전부 불러왔습니다.</div>
       )}
       
     </S.SearchContainer>
