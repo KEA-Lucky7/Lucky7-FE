@@ -245,7 +245,7 @@ export default function CreatePost() {
       const response = await axios.post('https://vision-necktitude.shop/posts/0', payload);
       console.log('Response:', response.data);
       alert('글 작성이 완료 되었습니다.');
-      //navigate('/myblog');
+      navigate('/myblog');
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -411,7 +411,15 @@ export default function CreatePost() {
                   <S.Input type="text" placeholder="2024.05.31" value={input.consumedDate} onChange={(e) => handleInputChange(index, 'consumedDate', e.target.value)} />
                   <S.Input type="text" placeholder="메모" value={input.memo} onChange={(e) => handleInputChange(index, 'memo', e.target.value)} />
                   <S.Input type="number" placeholder="금액" value={input.amount} onChange={(e) => handleInputChange(index, 'amount', parseInt(e.target.value))} />
-                  <S.Input type="text" placeholder="타입" value={input.walletType} onChange={(e) => handleInputChange(index, 'walletType', e.target.value)} />
+                  <select value={input.walletType} onChange={(e) => handleInputChange(index, 'walletType', e.target.value)}>
+                    <option value="">타입 선택</option>
+                    <option value="FOOD">FOOD</option>
+                    <option value="TRAFFIC">TRAFFIC</option>
+                    <option value="LEISURE">LEISURE</option>
+                    <option value="EDUCATION">EDUCATION</option>
+                    <option value="LIFE">LIFE</option>
+                    <option value="FINANCE">FINANCE</option>
+                  </select>
                 </div>
                 <div>
                   {/* <button onClick={() => handleSaveAccountBook(index)}>저장</button> */}

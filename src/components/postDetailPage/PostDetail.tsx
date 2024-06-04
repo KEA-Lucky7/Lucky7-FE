@@ -11,8 +11,11 @@ import Top from "../../assets/postDetail/Top.png";
 import InputComment from "./comment/InputComment";
 import axios from "axios";
 import deletebutton from "../../assets/postDetail/deletebutton.png";
+import postEdit from "../../assets/postDetail/postEdit.png";
 import ConfirmModal from './ConfirmModal';
 import { useNavigate } from "react-router-dom";
+import EditPostForm from "./EditPostForm";
+
 interface Post {
   postId: number;
   memberId: number;
@@ -78,6 +81,23 @@ export default function PostDetail() {
   const [isCommentVisible, setIsCommentVisible] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedPost, setEditedPost] = useState({
+    title: '',
+    content: '',
+    preview: '',
+    thumbnail: '',
+    mainHashtag: '',
+    postType: '',
+    hashtagList: [] as string[],
+    walletList: [] as {
+      consumedDate: string;
+      memo: string;
+      amount: number;
+      walletType: string;
+    }[]
+  });
+
   const navigate = useNavigate();
 
   //글 상세조회 API
@@ -130,6 +150,86 @@ export default function PostDetail() {
   };
 
 
+  // 글 수정 API
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setEditedPost({
+      title: post.title,
+      content: post.content,
+      preview: post.preview,
+      thumbnail: post.thumbnail,
+      mainHashtag: post.mainHashtag,
+      postType: post.postType,
+      hashtagList: [...post.hashtagList],
+      walletList: [...post.walletList],
+    });
+  };
+
+  // Function to handle changes in input fields
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number, field?: string) => {
+    const { name, value } = e.target;
+    if (name === "hashtagList") {
+      const newHashtagList = [...editedPost.hashtagList];
+      newHashtagList[index!] = value;
+      setEditedPost((prev) => ({
+        ...prev,
+        hashtagList: newHashtagList,
+      }));
+    } else if (name === "walletList") {
+      const newWalletList = [...editedPost.walletList];
+      if (field) {
+        newWalletList[index!][field] = value;
+      }
+      setEditedPost((prev) => ({
+        ...prev,
+        walletList: newWalletList,
+      }));
+    } else {
+      setEditedPost((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleEditSubmit = async () => {
+    try {
+      // Translate the postType value before sending the request
+      const translatedPost = {
+        ...editedPost,
+        postType: editedPost.postType === "자유글" ? "FREE" : editedPost.postType === "가계부" ? "WALLET" : editedPost.postType
+      };
+
+      // Log the edited post data before sending it
+      console.log('Edited Post Data:', translatedPost);
+
+      const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(translatedPost),
+      });
+
+      if (response.ok) {
+        const updatedPost = await response.json();
+        setPost(updatedPost);
+
+        // Log the updated post data received from the server
+        console.log('Updated Post Data from Server:', updatedPost);
+
+        //setIsEditing(false);
+        alert('글이 성공적으로 수정되었습니다.');
+        //setIsDropdownVisible(false);
+      } else {
+        alert('글 수정에 실패하였습니다.');
+      }
+    } catch (error) {
+      console.error('Error updating the post:', error);
+      alert('글 수정 과정 중 에러가 발생하였습니다.');
+    }
+  };
+
   const toggleCommentVisibility = () => {
     setIsCommentVisible(!isCommentVisible); // 상태를 반전시켜 댓글 보이기 여부를 토글합니다.
   };
@@ -161,237 +261,274 @@ export default function PostDetail() {
 
   return (
     <>
-      <S.Container>
-        {/* 사진 & 사진 안 텍스트 */}
-        <S.Picturecontainer imageUrl={post.thumbnail}>
-          <S.TextBox>
-            <S.FirstLine>
-              <div>{post.postType}</div>
-              <div>#{post.mainHashtag}</div>
-            </S.FirstLine>
-            <S.SecondLine>
-              <div>{post.title}</div>
-            </S.SecondLine>
-            <S.ThirdLine>
-              <div>by {post.nickname}</div>
-              <div>{post.createdAt}</div>
-            </S.ThirdLine>
-          </S.TextBox>
-        </S.Picturecontainer>
-      </S.Container>
-
-      {/* 본문 시작*/}
-      <S.PostContainer>
-        {/* 본문 맨 위 내용 */}
-        <S.PostIntro>
-          <S.FuncContainer style={{ position: "relative" }}>
-            <div onClick={handleCopyURL}>URL 복사</div>
-            <img
-              src={seeMore}
-              alt="더보기"
-              style={{ width: "3px", height: "15px", cursor: 'pointer' }}
-              onClick={toggleDropdown}
-            />
-            {/* 드롭다운 메뉴 내용 */}
-            {isDropdownVisible && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "20px", // 이미지를 기준으로 약간의 간격을 둠
-                  right: "0",
-                  backgroundColor: "#fff",
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  zIndex: 1000,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "10px",
-                    justifyContent: "left",
-                    alignItems: "center",
-                    width: "100px",
-                    cursor: "pointer"
-                  }}
-                >
-                  <img
-                    src={report}
-                    alt="신고"
-                    style={{ width: "24px", height: "24px" }}
-                  />
-                  신고하기
-                </div>
-
-                {/* 삭제버튼 */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "10px",
-                    justifyContent: "left",
-                    alignItems: "center",
-                    width: "100px",
-                    cursor: "pointer"
-                  }}
-                  onClick={() => setIsModalVisible(true)}
-                >
-                  <img
-                    src={deletebutton}
-                    alt="Delete"
-                    style={{ width: "24px", height: "24px" }}
-                  />
-                  삭제
-                </div>
-
-                {/* Confirmation Modal */}
-                <ConfirmModal
-                  isVisible={isModalVisible}
-                  onConfirm={handleDelete}
-                  onCancel={() => setIsModalVisible(false)}
-                />
-              </div>
-            )}
-          </S.FuncContainer>
-        </S.PostIntro>
-
-        {/* 본문 내용 */}
-        <S.PostBox>
-          <div>{post.content}</div>
-        </S.PostBox>
-
-        {/* Wallet List */}
-        <div>
-          <S.WalletListBox>
-            {post.walletList && post.walletList.length > 0 && (
-              <div>
-                {post.walletList.map((walletItem, index) => (
-                  <S.WalletItem key={index}>
-                    <div>날짜: {walletItem.consumedDate}</div>
-                    <div>메모: {walletItem.memo}</div>
-                    <div>금액: {walletItem.amount}</div>
-                    <div>타입: {walletItem.walletType}</div>
-                  </S.WalletItem>
-                ))}
-              </div>
-            )}
-          </S.WalletListBox>
-        </div>
-
-        {/* 태그 내용 */}
-        <S.TagBox>
-          <S.FirstTag>#{post.mainHashtag}</S.FirstTag>
-          {post.hashtagList && post.hashtagList.length > 0 && (
-            <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-              {post.hashtagList.map((tag, index) => (
-                <S.SecondTag key={index}>#{tag}</S.SecondTag>
-              ))}
-            </div>
-          )}
-        </S.TagBox>
-
-        {/* 댓글 내용 */}
-        <S.CommentBox>
-          <S.Commment>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "5px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={postComment}
-                alt="댓글"
-                style={{ width: "25px", height: "25px" }}
-              />
-              <div>댓글 {post.commentCnt}</div>
-              <img
-                src={seeMoreComment}
-                alt="더보기"
-                style={{ width: "16px", height: "7px" }}
-                onClick={toggleCommentVisibility}
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "5px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={postHeart}
-                alt="하트"
-                style={{ width: "25px", height: "22px", cursor: 'pointer' }}
-                onClick={handleLikeClick}
-              />
-              <div>{post.likeCnt}</div>
-            </div>
-          </S.Commment>
-          {isCommentVisible && (
-            <InputComment
-              className="custom-input"
-              placeholder="댓글을 입력하세요..."
-              onClick={handleCommentSubmit}
-            />
-          )}
-        </S.CommentBox>
-      </S.PostContainer>
-
-      {/* 마이프로필 내용 */}
-      <S.profileBox>
-        <S.PictureBox>
-          <img
-            src={profileImage}
-            alt="배경사진"
-            style={{ width: "123px", height: "123px" }}
-          />
-        </S.PictureBox>
-        <S.ContentBox>
-          <div style={{ fontWeight: "bold" }}>{post.nickname}'s Blog</div>
-          <div>{post.about}</div>
-        </S.ContentBox>
-      </S.profileBox>
-
-      {/* 글 리스트 내용 */}
-      {post.postList && post.postList.length > 0 && (
-        <S.postDetailList>
-          <S.postDetailListTitle>다른 글</S.postDetailListTitle>
-          <S.postDetailListBox>
-            {post.postList.map((postItem, index) => (
-              <Link
-                to={`/myblog/${postItem.postId}`}
-                key={index}
-                style={{
-                  textDecoration: "none",
-                  color: "black",
-                  width: "33vw",
-                }}
-              >
-                <S.ListBox key={postItem.postId}>
-                  <S.ListTitle>{postItem.title}</S.ListTitle>
-                  <S.CheckField>{postItem.createdAt}</S.CheckField>
-                </S.ListBox>
-              </Link>
-            ))}
-          </S.postDetailListBox>
-        </S.postDetailList>
-      )}
-
-      {/* 위로 가기 */}
-      <S.TopBox onClick={scrollToTop}>
-        <img
-          src={Top}
-          alt="위로가기"
-          style={{ width: "16px", height: "12px" }}
+      {isEditing ? (
+        <EditPostForm
+          editedPost={editedPost}
+          onChange={handleEditChange}
+          onSubmit={handleEditSubmit}
+          onCancel={() => setIsEditing(false)}
+          isEditing={isEditing}
         />
-        <div>Top</div>
-      </S.TopBox>
+      ) : (
+        <>
+          <S.Container>
+            {/* 사진 & 사진 안 텍스트 */}
+            <S.Picturecontainer imageUrl={post.thumbnail}>
+              <S.TextBox>
+                <S.FirstLine>
+                  <div>{post.postType}</div>
+                  <div>#{post.mainHashtag}</div>
+                </S.FirstLine>
+                <S.SecondLine>
+                  <div>{post.title}</div>
+                </S.SecondLine>
+                <S.ThirdLine>
+                  <div>by {post.nickname}</div>
+                  <div>{post.createdAt}</div>
+                </S.ThirdLine>
+              </S.TextBox>
+            </S.Picturecontainer>
+          </S.Container>
+
+          {/* 본문 시작*/}
+          <S.PostContainer>
+            {/* 본문 맨 위 내용 */}
+            <S.PostIntro>
+              <S.FuncContainer style={{ position: "relative" }}>
+                <div onClick={handleCopyURL}>URL 복사</div>
+                <img
+                  src={seeMore}
+                  alt="더보기"
+                  style={{ width: "3px", height: "15px", cursor: 'pointer' }}
+                  onClick={toggleDropdown}
+                />
+                {/* 드롭다운 메뉴 내용 */}
+                {isDropdownVisible && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "20px", // 이미지를 기준으로 약간의 간격을 둠
+                      right: "0",
+                      backgroundColor: "#fff",
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                      padding: "10px",
+                      zIndex: 1000,
+                      columnGap: "10px"
+                    }}
+                  >
+                    {/* 신고버튼 */}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        justifyContent: "left",
+                        alignItems: "center",
+                        width: "100px",
+                        cursor: "pointer",
+                        marginBottom: '10px'
+                      }}
+                    >
+                      <img
+                        src={report}
+                        alt="신고"
+                        style={{ width: "24px", height: "24px" }}
+                      />
+                      신고하기
+                    </div>
+
+                    {/* 수정버튼 */}
+                    <div
+                      onClick={handleEditClick}
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        justifyContent: "left",
+                        alignItems: "center",
+                        width: "100px",
+                        cursor: "pointer",
+                        marginBottom: '10px'
+                      }}
+                    >
+                      <img
+                        src={postEdit}
+                        alt="신고"
+                        style={{ width: "24px", height: "24px" }}
+                      />
+                      수정
+                    </div>
+
+                    {/* 삭제버튼 */}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        justifyContent: "left",
+                        alignItems: "center",
+                        width: "100px",
+                        cursor: "pointer"
+                      }}
+                      onClick={() => setIsModalVisible(true)}
+                    >
+                      <img
+                        src={deletebutton}
+                        alt="Delete"
+                        style={{ width: "24px", height: "24px" }}
+                      />
+                      삭제
+                    </div>
+
+                    {/* Confirmation Modal */}
+                    <ConfirmModal
+                      isVisible={isModalVisible}
+                      onConfirm={handleDelete}
+                      onCancel={() => setIsModalVisible(false)}
+                    />
+                  </div>
+                )}
+              </S.FuncContainer>
+            </S.PostIntro>
+
+            {/* 본문 내용 */}
+            <S.PostBox>
+              <div>{post.content}</div>
+            </S.PostBox>
+
+            {/* Wallet List */}
+            <div>
+              <S.WalletListBox>
+                {post.walletList && post.walletList.length > 0 && (
+                  <div>
+                    {post.walletList.map((walletItem, index) => (
+                      <S.WalletItem key={index}>
+                        <div>날짜: {walletItem.consumedDate}</div>
+                        <div>메모: {walletItem.memo}</div>
+                        <div>금액: {walletItem.amount}</div>
+                        <div>타입: {walletItem.walletType}</div>
+                      </S.WalletItem>
+                    ))}
+                  </div>
+                )}
+              </S.WalletListBox>
+            </div>
+
+            {/* 태그 내용 */}
+            <S.TagBox>
+              <S.FirstTag>#{post.mainHashtag}</S.FirstTag>
+              {post.hashtagList && post.hashtagList.length > 0 && (
+                <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                  {post.hashtagList.map((tag, index) => (
+                    <S.SecondTag key={index}>#{tag}</S.SecondTag>
+                  ))}
+                </div>
+              )}
+            </S.TagBox>
+
+            {/* 댓글 내용 */}
+            <S.CommentBox>
+              <S.Commment>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "5px",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={postComment}
+                    alt="댓글"
+                    style={{ width: "25px", height: "25px" }}
+                  />
+                  <div>댓글 {post.commentCnt}</div>
+                  <img
+                    src={seeMoreComment}
+                    alt="더보기"
+                    style={{ width: "16px", height: "7px" }}
+                    onClick={toggleCommentVisibility}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "5px",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={postHeart}
+                    alt="하트"
+                    style={{ width: "25px", height: "22px", cursor: 'pointer' }}
+                    onClick={handleLikeClick}
+                  />
+                  <div>{post.likeCnt}</div>
+                </div>
+              </S.Commment>
+              {isCommentVisible && (
+                <InputComment
+                  className="custom-input"
+                  placeholder="댓글을 입력하세요..."
+                  onClick={handleCommentSubmit}
+                />
+              )}
+            </S.CommentBox>
+          </S.PostContainer>
+
+          {/* 마이프로필 내용 */}
+          <S.profileBox>
+            <S.PictureBox>
+              <img
+                src={profileImage}
+                alt="배경사진"
+                style={{ width: "123px", height: "123px" }}
+              />
+            </S.PictureBox>
+            <S.ContentBox>
+              <div style={{ fontWeight: "bold" }}>{post.nickname}'s Blog</div>
+              <div>{post.about}</div>
+            </S.ContentBox>
+          </S.profileBox>
+
+          {/* 글 리스트 내용 */}
+          {post.postList && post.postList.length > 0 && (
+            <S.postDetailList>
+              <S.postDetailListTitle>다른 글</S.postDetailListTitle>
+              <S.postDetailListBox>
+                {post.postList.map((postItem, index) => (
+                  <Link
+                    to={`/myblog/${postItem.postId}`}
+                    key={index}
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      width: "33vw",
+                    }}
+                  >
+                    <S.ListBox key={postItem.postId}>
+                      <S.ListTitle>{postItem.title}</S.ListTitle>
+                      <S.CheckField>{postItem.createdAt}</S.CheckField>
+                    </S.ListBox>
+                  </Link>
+                ))}
+              </S.postDetailListBox>
+            </S.postDetailList>
+          )}
+
+          {/* 위로 가기 */}
+          <S.TopBox onClick={scrollToTop}>
+            <img
+              src={Top}
+              alt="위로가기"
+              style={{ width: "16px", height: "12px" }}
+            />
+            <div>Top</div>
+          </S.TopBox>
+        </>
+      )}
     </>
   );
 }
