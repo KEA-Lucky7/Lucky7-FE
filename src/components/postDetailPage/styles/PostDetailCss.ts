@@ -297,3 +297,28 @@ export const TopBox = styled.div`
   gap: 10px;
   text-align: center;
 `;
+
+
+export const WalletListBox = styled.div`
+  width: 33vw;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 0 auto;
+  margin-top: 30px;
+`;
+
+export const WalletItem = styled.div`
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  margin: 0 auto;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  div {
+    margin: 5px 0;
+  }
+`;

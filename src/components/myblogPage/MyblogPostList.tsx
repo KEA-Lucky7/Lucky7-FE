@@ -21,8 +21,9 @@ interface Post {
   commentCnt: number;
   likeCnt: number;
   preview: string;
-  thumbnail:string;
-  
+  thumbnail: string;
+  postId: number;
+
 }
 
 const MyblogPostList: React.FC = () => {
@@ -54,7 +55,7 @@ const MyblogPostList: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://vision-necktitude.shop/posts/1/post-list?postType=ALL&hashtag=ALL&page=0');
-        setBlogPosts(response.data.postList); 
+        setBlogPosts(response.data.postList);
       } catch (error) {
 
         console.error('Error fetching data:', error);
@@ -69,13 +70,13 @@ const MyblogPostList: React.FC = () => {
   // =================사진 포함 글 정렬 방식=================
   const renderPictureList = () => (
     <S.PostListContainer>
-      {currentPosts.map((post, index) => (
+      {currentPosts.map((post) => (
         <Link
-          to={`/myblog/${index + 1}`} // post 인덱스를 넘김
-          key={index}
+          to={`/myblog/${post.postId}`} // Use post.id instead of index
+          key={post.postId}
           style={{ textDecoration: "none", color: 'black' }}
         >
-          <S.PictureListBox key={post.id}>
+          <S.PictureListBox key={post.postId}>
             <S.PictureList>
               <S.FirstLine>
                 <S.PictureListCategory>{post.postType}</S.PictureListCategory>
@@ -147,13 +148,13 @@ const MyblogPostList: React.FC = () => {
         <S.DateField>작성일</S.DateField>
         <S.CheckField>댓글</S.CheckField>
       </S.FieldBox>
-      {currentPosts.map((post, index) => (
+      {currentPosts.map((post) => (
         <Link
-          to={`/myblog/${index + 1}`} // post 인덱스를 넘김
-          key={index}
+          to={`/myblog/${post.postId}`} // Use post.id instead of index
+          key={post.postId}
           style={{ textDecoration: "none", color: "black" }}
         >
-          <S.ListBox key={post.id}>
+          <S.ListBox key={post.postId}>
             <S.ListCategory>{post.postType}</S.ListCategory>
             <S.ListTag>#{post.mainHashtag}</S.ListTag>
             <S.ListTitle>{post.title}</S.ListTitle>

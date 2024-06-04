@@ -59,7 +59,7 @@ export default function Quiz() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    selected_answer: selectedOption
+                    selectedAnswer: selectedOption
                 })
             });
             const data = await response.json();

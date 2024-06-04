@@ -308,7 +308,7 @@ export const CheckField = styled.div`
 `;
 
 export const PictureListCategory = styled.div`
-  width: 40%;
+  width: 50%;
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -316,12 +316,12 @@ export const PictureListCategory = styled.div`
   font-size: 16px;
   font-weight: bold;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 `;
 
 export const PictureListTag = styled.div`
-  width: 25%;
+  width: 50%;
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
