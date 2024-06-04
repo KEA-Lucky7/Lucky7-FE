@@ -6,7 +6,6 @@ import { EditorState, convertToRaw } from "draft-js";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
 import axios from "axios";
-import Menu from "../../assets/header/Menu.png";
 import moaboa from "../../assets/header/moaboa.png";
 import { useNavigate } from "react-router-dom";
 import { TemporarySaveModal } from "./createPostItems/TemporarySaveModal";
@@ -27,10 +26,6 @@ enum PostCategory {
   가계부 = "가계부",
 }
 
-interface Props {
-  setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 export default function CreatePost() {
   const [backgroundImageUrl, setBackgroundImageUrl] =
     useState<string>(postDetailbackground);
@@ -45,7 +40,6 @@ export default function CreatePost() {
 
   const [postCategory, setPostCategory] = useState<PostCategory | null>(null);
 
-  const [showAccountBookInputs, setShowAccountBookInputs] = useState<boolean>(false); // 입력란을 보여줄지 여부를 나타내는 상태
   const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]); // 입력된 값들을 저장할 배열 상태
   const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
@@ -54,9 +48,7 @@ export default function CreatePost() {
   const [posts, setPosts] = useState<any[]>([]);
   const [showSideMenu, setShowSideMenu] = useState(false);
 
-  const changeSideMenuState = () => {
-    setShowSideMenu((prevState) => !prevState);
-  };
+
 
   function goHomePage() {
     navigate("/");
@@ -164,14 +156,6 @@ export default function CreatePost() {
     }
   };
 
-  const handleSaveAccountBook = (index: number) => {
-    // 해당 입력란의 값들을 가져옵니다.
-    const input = accountBookInputs[index];
-
-    // 여기서 입력된 값들을 사용하여 작업을 수행하면 됩니다.
-    // 예: API 호출 등
-    console.log("저장된 가계부:", input);
-  };
 
   const handleAddAccountBookInput = () => {
     // 입력란을 추가합니다.
