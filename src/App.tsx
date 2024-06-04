@@ -12,6 +12,7 @@ import LoginRedirect from "./components/homePage/login/LoginRedirect";
 import Login from "./components/homePage/login/Login";
 import LoginInfo from "./components/homePage/login/LoginInfo";
 import SearchPage from "./pages/SearchPage";
+import LikePage from "./pages/LikePage";
 
 function App() {
   return (
@@ -22,11 +23,12 @@ function App() {
           <Route path="/login/redirect" element={<LoginRedirect />} />
           <Route path="/login/info" element={<LoginInfo />} />
         </Route>
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/fortune" element={<FinancialLuckPage />} />
+        <Route path="/like" element={<LikePage />} />
         <Route path="/myblog" element={<MyblogPage />} />
         <Route path="/myblog/:postId" element={<PostDetailPage />} />
         <Route path="/write" element={<CreatePostPage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/fortune" element={<FinancialLuckPage />} />
         <Route path="/report/*" element={<ReportPage />} />
         <Route path="/setting" element={<SettingPage />} />
       </Routes>

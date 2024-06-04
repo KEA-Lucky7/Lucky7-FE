@@ -4,86 +4,105 @@ import * as S from "./style/SideMenuStyle";
 import Cookies from "js-cookie";
 import MemberInfo from "./SideMenuMemberInfo";
 import FinancialLuck from "../components/financialLuck/FinancialLuck";
+import moaboa from "../../src/assets/header/moaboa.png";
+import Liked from "../../src/assets/sidemenu/Liked.png";
+import Luck from "../../src/assets/sidemenu/Luck.png";
+import Myblog from "../../src/assets/sidemenu/Myblog.png";
+import Write from "../../src/assets/sidemenu/Write.png";
+import Setting from "../../src/assets/sidemenu/setting.png";
+import LogInOut from "../../src/assets/sidemenu/LogInOut.png";
 
 interface Props {
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideMenu = ({ setShowSideMenu }: Props) => {
+interface MenuItemProps {
+  icon: string;
+  label: string;
+  onClick: () => void;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({ icon, label, onClick }) => (
+  <S.MenuItems onClick={onClick}>
+    <img src={icon} alt={label} />
+    <div>{label}</div>
+  </S.MenuItems>
+);
+
+const SideMenu: React.FC<Props> = ({ setShowSideMenu }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showFortuneModal, setShowFortuneModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    var memberCookie = Cookies.get("member");
-    console.log("Member Cookie: ", memberCookie);
-    //
+    const memberCookie = Cookies.get("member");
     if (memberCookie) {
       setIsLoggedIn(true);
     }
-  });
+  }, []);
 
-  const changeSideMenuState = () => {
-    setShowSideMenu((prevState) => !prevState);
-  };
-
-  const changeFortuneModalState = () => {
+  const toggleSideMenu = () => setShowSideMenu((prevState) => !prevState);
+  const toggleFortuneModal = () =>
     setShowFortuneModal((prevState) => !prevState);
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setShowSideMenu(false);
   };
-
-  const navigate = useNavigate();
-
-  function goWritePage() {
-    // 그 전에 로그인 처리 됐는지 확인해야 함
-    navigate("/write");
-    setShowSideMenu(false);
-  }
-
-  function goMyblogPage() {
-    navigate("/myblog");
-    setShowSideMenu(false);
-  }
-
-  function goSettingPage() {
-    navigate("/setting");
-    setShowSideMenu(false);
-  }
-
-  function goLoginModal() {
-    navigate("/login");
-    setShowSideMenu(false);
-  }
 
   return (
-    <S.MenuOverlay onClick={changeSideMenuState}>
+    <S.MenuOverlay onClick={toggleSideMenu}>
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
-        <S.Title>My Profile</S.Title>
+        <S.TitleImg src={moaboa} alt="titleImg" />
         <MemberInfo isLoggedIn={isLoggedIn} />
         <S.MenuList>
-          <div onClick={goWritePage}>글쓰기</div>
-          <div onClick={goMyblogPage}>내블로그</div>
-          <div>내 팔로우</div>
-          <div>좋아요한 글</div>
+          <MenuItem
+            icon={Write}
+            label="글쓰기"
+            onClick={() => handleNavigation("/write")}
+          />
+          <MenuItem
+            icon={Myblog}
+            label="내블로그"
+            onClick={() => handleNavigation("/myblog")}
+          />
+          <MenuItem icon={Liked} label="내 팔로우" onClick={() => {}} />
+          <MenuItem
+            icon={Luck}
+            label="좋아요한 글"
+            onClick={() => handleNavigation("/like?page=1")}
+          />
           {showFortuneModal && (
             <FinancialLuck setShowFortuneModal={setShowFortuneModal} />
           )}
-          <div onClick={changeFortuneModalState}>내 금전운</div>
+          <MenuItem
+            icon={Luck}
+            label="내 금전운"
+            onClick={toggleFortuneModal}
+          />
         </S.MenuList>
-        {isLoggedIn ? (
-          <S.Settings>
-            <div onClick={goSettingPage}>설정</div>
-            <div>로그아웃</div>
-          </S.Settings>
-        ) : (
-          <div>
-            <S.Settings>
-              <div onClick={goLoginModal} >
-               로그인/회원가입
-              </div>
-              <div>계정을 잊어버리셨나요?</div>
-            </S.Settings>
-          </div>
-          
-        )}
+        <S.Settings>
+          {isLoggedIn ? (
+            <>
+              <MenuItem
+                icon={Setting}
+                label="설정"
+                onClick={() => handleNavigation("/setting")}
+              />
+              <MenuItem
+                icon={LogInOut}
+                label="로그아웃"
+                onClick={() => handleNavigation("/setting")}
+              />
+            </>
+          ) : (
+            <MenuItem
+              icon={LogInOut}
+              label="로그인/회원가입"
+              onClick={() => handleNavigation("/login")}
+            />
+          )}
+        </S.Settings>
       </S.SideContainer>
     </S.MenuOverlay>
   );
