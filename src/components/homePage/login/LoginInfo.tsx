@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as S from "../styles/LoginInfoStyle";
 import { useNavigate } from "react-router-dom";
 import { useStore, useUserStore } from './state';
