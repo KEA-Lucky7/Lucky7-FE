@@ -18,7 +18,7 @@ const Search: React.FC = () => {
 
   const [sort, setSort] = useState(query.get('sort') || 'accuracy');
   const [periodMenuOpen, setPeriodMenuOpen] = useState(false);
-  const [period, setPeriod] = useState('기간 전체');
+  const [period, setPeriod] = useState(query.get('period') || 'all');
   const [startPeriod, setStartPeriod] = useState('');
   const [endPeriod, setEndPeriod] = useState('');
 
@@ -31,11 +31,34 @@ const Search: React.FC = () => {
     updateSearchParams();
   }, [tab, sort]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handlePeriodChange("직접 입력")
+  useEffect(() => {
+    if (tab === 'blog' || tab === 'user') {
+      query.delete('period');
+    } else if (!query.get('period')) {
+      setPeriod("all");
+      query.set('period', "all");
     }
-  }
+    updateSearchParams();
+  }, [tab]);
+
+  const setPeriodQuery = () => {
+    if (period === 'all') {
+      query.set('period', 'all');
+      query.delete('startDate');
+      query.delete('endDate');
+    } else {
+      query.set('startDate', startPeriod);
+      query.set('endDate', endPeriod);
+      query.delete('period');
+    }
+    updateSearchParams();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handlePeriodChange('userSet');
+    }
+  };
 
   const updateSearchParams = () => {
     let queryString = query.toString();
@@ -58,24 +81,24 @@ const Search: React.FC = () => {
     setPeriod(newPeriod);
     setPeriodMenuOpen(false);
 
-    if (newPeriod == "기간 전체") {
-      setStartPeriod("1900-01-01")
-      setEndPeriod(getTodayDate);
-    } else if (newPeriod == "최근 1주일") {
-      setStartPeriod("1900-01-01")
-      setEndPeriod(getTodayDate);
-    } else if (newPeriod == "최근 1달") {
-      setStartPeriod("1900-01-01")
-      setEndPeriod(getTodayDate);
-    } else if (newPeriod == "직접 입력") {
-
+    if (newPeriod === 'all') {
+      setStartPeriod('1900-01-01');
+      setEndPeriod(getTodayDate());
+    } else if (newPeriod === 'week') {
+      setStartPeriod(getPreviousWeek());
+      setEndPeriod(getTodayDate());
+    } else if (newPeriod === 'month') {
+      setStartPeriod(getPreviousMonth());
+      setEndPeriod(getTodayDate());
+    } else if (newPeriod === 'userSet') {
+      // No changes for userSet as it relies on user input
     }
-    if(isValidDate(startPeriod) && isValidDate(endPeriod) ){
 
-    } else{
-      window.alert("올바른 입력이 아닙니다. 날짜의 형식을 YYYY-MM-DD로 입력해 주세요.")
+    if (isValidDate(startPeriod) && isValidDate(endPeriod)) {
+      setPeriodQuery();
+    } else {
+      window.alert("올바른 입력이 아닙니다. 날짜의 형식을 YYYY-MM-DD로 입력해 주세요.");
     }
-    window.alert(startPeriod + endPeriod)
   };
 
   const getTodayDate = () => {
@@ -86,39 +109,51 @@ const Search: React.FC = () => {
     return `${year}-${month}-${day}`;
   };
 
+  const getPreviousWeek = () => {
+    const today = new Date();
+    const prevWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+    const year = prevWeek.getFullYear();
+    const month = String(prevWeek.getMonth() + 1).padStart(2, '0');
+    const day = String(prevWeek.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const getPreviousMonth = () => {
+    const today = new Date();
+    const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+    const year = prevMonth.getFullYear();
+    const month = String(prevMonth.getMonth() + 1).padStart(2, '0');
+    const day = String(prevMonth.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   function isValidDate(dateString: string) {
-    // 정규식을 사용하여 형식이 YYYY-MM-DD인지 확인합니다.
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     if (!regex.test(dateString)) {
       return false;
     }
-  
-    // 날짜 부분을 추출합니다.
+
     const [year, month, day] = dateString.split('-').map(Number);
-  
-    // 월이 1-12 범위에 있는지 확인합니다.
+
     if (month < 1 || month > 12) {
       return false;
     }
-  
-    // 날짜가 해당 월에 유효한지 확인합니다.
+
     const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  
-    // 윤년 체크
+
     if (month === 2) {
       const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
       if (isLeapYear) {
         monthLengths[1] = 29;
       }
     }
-  
-    // 날짜가 해당 월의 범위에 있는지 확인합니다.
+
     if (day < 1 || day > monthLengths[month - 1]) {
       return false;
     }
-  
+
     return true;
-  }  
+  }
 
   const togglePeriodMenu = () => {
     setPeriodMenuOpen(!periodMenuOpen);
@@ -166,20 +201,23 @@ const Search: React.FC = () => {
             {tab === 'post' && (
               <>
                 <S.SortMenu onClick={togglePeriodMenu} selected={periodMenuOpen}>
-                  {period}
+                  { period === 'all' && <div> 기간 전체 </div>}
+                  { period === 'week' && <div> 최근 1주일 </div>}
+                  { period === 'month' && <div> 최근 1달 </div>}
+                  { period === 'userSet' && <div> 직접 입력 </div>}
                 </S.SortMenu>
                 {periodMenuOpen && (
                   <S.PeriodContainer>
-                    <S.PeriodOption onClick={() => handlePeriodChange('기간 전체')}>
+                    <S.PeriodOption onClick={() => handlePeriodChange('all')}>
                       기간 전체
                     </S.PeriodOption>
-                    <S.PeriodOption onClick={() => handlePeriodChange('최근 1주일')}>
+                    <S.PeriodOption onClick={() => handlePeriodChange('week')}>
                       최근 1주일
                     </S.PeriodOption>
-                    <S.PeriodOption onClick={() => handlePeriodChange('최근 1달')}>
+                    <S.PeriodOption onClick={() => handlePeriodChange('month')}>
                       최근 1달
                     </S.PeriodOption>
-                    <S.PeriodOption onClick={() => handlePeriodChange('직접 입력')}>
+                    <S.PeriodOption onClick={() => handlePeriodChange('userSet')}>
                       직접 입력
                     </S.PeriodOption>
                     <S.PeriodInput
@@ -187,13 +225,13 @@ const Search: React.FC = () => {
                       value={startPeriod}
                       onKeyDown={handleKeyDown}
                       onChange={(e) => setStartPeriod(e.target.value)}
-                      />
+                    />
                     <S.PeriodInput
                       placeholder="2000-01-01"
                       value={endPeriod}
                       onKeyDown={handleKeyDown}
                       onChange={(e) => setEndPeriod(e.target.value)}
-                      />
+                    />
                   </S.PeriodContainer>
                 )}
               </>
