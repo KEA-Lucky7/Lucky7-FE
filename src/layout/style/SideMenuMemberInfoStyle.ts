@@ -7,11 +7,10 @@ export const MemberInfoContainer = styled.div`
 `;
 
 export const ProfileImg = styled.img`
-  width: 195px;
-  height: 195px;
+  width: 133px;
+  height: 133px;
   background-color: #969696;
   border-radius: 50%;
-  margin: 0px 0px 0px 0px;
 `;
 
 export const DiscContainer = styled.div`
@@ -22,7 +21,6 @@ export const DiscContainer = styled.div`
 export const Name = styled.div`
   color: black;
   font-size: 15px;
-  margin-top: 5px;
 `;
 
 export const Disc = styled.div`

@@ -1,51 +1,61 @@
-import { useState } from "react";
 import * as S from "./styles/ReportStyle";
-import ReportAge from "./ReportAge";
-import ReportCategory from "./ReportCategory";
-import ReportMonthly from "./ReportMonthly";
+import VerticalBarChart from "./VerticalBarChart";
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+interface ReportData {
+  sameDayLastMonthReportList: { amount: number; type: string }[];
+  sameDayThisMonthReportList: { amount: number; type: string }[];
+  sameDayLastMonthAmount: number;
+  sameDayThisMonthAmount: number;
+}
 
 export default function Report() {
-  let [selectedMenu, setSelectedMenu] = useState<string>("monthly");
-  //"monthly", "category", "age"
+  const [lastMonthData, setLastMonthData] = useState<
+    { amount: number; type: string }[]
+  >([]);
+  const [thisMonthData, setThisMonthData] = useState<
+    { amount: number; type: string }[]
+  >([]);
+  const [lastMonthTotal, setLastMonthTotal] = useState<number>(0);
+  const [thisMonthTotal, setThisMonthTotal] = useState<number>(0);
 
-  const handleMenuClick = (menu: string) => {
-    setSelectedMenu(menu);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<ReportData>(
+          "https://vision-necktitude.shop/reports/compare"
+        ); // 데이터를 받아올 URL
+        setLastMonthData(response.data.sameDayLastMonthReportList);
+        setThisMonthData(response.data.sameDayThisMonthReportList);
+        setLastMonthTotal(response.data.sameDayLastMonthAmount);
+        setThisMonthTotal(response.data.sameDayThisMonthAmount);
+        console.error("데이터를 불러왔습니다.");
+        console.error(
+          lastMonthData,
+          thisMonthData,
+          lastMonthTotal,
+          thisMonthTotal
+        );
+      } catch (error) {
+        console.error("데이터를 불러오는데 실패했습니다.", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <S.Container>
-      <S.ReportTitle>레포트 보기</S.ReportTitle>
-      <S.ReportMenuContainer>
-        <S.ReportMenu
-          selected={selectedMenu === "monthly"}
-          onClick={() => handleMenuClick("monthly")}
-        >
-          월별 총 지출액 분석
-        </S.ReportMenu>
-        <S.ReportMenuSep>|</S.ReportMenuSep>
-        <S.ReportMenu
-          selected={selectedMenu === "category"}
-          onClick={() => handleMenuClick("category")}
-        >
-          카테고리별 내역
-        </S.ReportMenu>
-        <S.ReportMenuSep>|</S.ReportMenuSep>
-        <S.ReportMenu
-          selected={selectedMenu === "age"}
-          onClick={() => handleMenuClick("age")}
-        >
-          비슷한 나이대 비교 분석
-        </S.ReportMenu>
-      </S.ReportMenuContainer>
+      <S.ReportTitle>소비 레포트</S.ReportTitle>
       <S.ReportContent>
-        {selectedMenu === "monthly" && <ReportMonthly />}
-        {selectedMenu === "category" && <ReportCategory />}
-        {selectedMenu === "age" && <ReportAge />}
-        {/* <Routes>
-          <Route path="/monthly" element={<ReportMonthly />} />
-          <Route path="/category" element={<ReportCategory />} />
-          <Route path="/age" element={<ReportAge />} />
-        </Routes> */}
+        <S.ReportCompare>
+          지난 달 보다 {lastMonthTotal - thisMonthTotal}원{" "}
+          {lastMonthTotal - thisMonthTotal > 0 ? "더" : "덜"} 쓰는 중
+        </S.ReportCompare>
+        <VerticalBarChart
+          lastMonthData={lastMonthData}
+          thisMonthData={thisMonthData}
+        />
       </S.ReportContent>
     </S.Container>
   );

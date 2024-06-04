@@ -1,4 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const slideIn = keyframes`
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
 
 export const MenuOverlay = styled.div`
   position: fixed;
@@ -6,7 +15,7 @@ export const MenuOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -14,19 +23,22 @@ export const MenuOverlay = styled.div`
 `;
 
 export const SideContainer = styled.div`
-  // border: solid 1px red;
-  padding: 30px 0px 0px 0px;
   position: fixed;
   top: 0;
   left: 0;
-  width: 16vw;
+  width: 230px;
   height: 100%;
-  background-color: #e1e1e1;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  animation: ${slideIn} 0.3s ease forwards;
 `;
 
-export const Title = styled.div`
-  font-size: 18px;
-  margin: 30px 30px 0px 30px;
+export const TitleImg = styled.img`
+  width: 100px;
+  margin-top: 30px;
 `;
 
 export const LoginOut = styled.div`
@@ -37,23 +49,37 @@ export const LoginOut = styled.div`
 
 export const MenuList = styled.div`
   height: 270px;
-  // border: solid 1px red;
-  margin: 0px 30px 0px 30px;
+  padding-right: 70px;
   display: flex;
   flex-flow: column;
-  align-items: space-between;
   justify-content: space-evenly;
   font-size: 15px;
-  border-bottom: solid 1px #505050;
+`;
+
+export const MenuItems = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  img {
+    width: 15px;
+    height: 15px;
+    padding: 8px;
+    background-color: lightgray;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
 `;
 
 export const Settings = styled.div`
-  padding-top: 10px;
-  margin: 0px 30px 0px 30px;
-  height: 70px;
+  padding-right: 70px;
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   justify-content: space-evenly;
-  color: #616161;
-  font-size: 13px;
+  font-size: 15px;
 `;
