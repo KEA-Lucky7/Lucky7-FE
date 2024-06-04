@@ -1,23 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styles/SettingInfoStyle";
 import profile from "../../assets/setting/profile.png";
+import axios from "axios";
+import { useStore, useUserStore } from "../homePage/login/state";
 
 export default function SettingInfo() {
-  const [nickname, setNickname] = useState("홍길동");
+  const [nickname, setNickname] = useState("닉네임");
   const [charCount, setCharCount] = useState(nickname.length);
-  const [introduce, setIntroduce] = useState("hello my name is name 이름의 모아보아");
+  const [introduce, setIntroduce] = useState("소개");
   const [subcharCount, setSubcharCount] = useState(nickname.length);
   const [isModified, setIsModified] = useState(false);
   const [profileImage, setProfileImage] = useState(profile);
+  const { accessToken } = useStore();
+  const { userInfo, setUserInfo } = useUserStore();
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
-  const handleNicknameChange = (e: { target: { value: any } }) => {
+  useEffect(() => {
+    const storedUserInfo = JSON.parse(userInfo)
+    console.log(storedUserInfo);
+    setNickname(storedUserInfo.nickname)
+    setIntroduce(storedUserInfo.about)
+  }, [userInfo]);
+
+  const modifyUser = async () => {
+    try {
+      const response = await axios.patch(`${serverUrl}/member/${accessToken}`, {
+        nickname,
+        birth: "2001-01-01",
+        profileImage,
+        introduce
+      });
+      console.log(response.data)
+      const data = response.data.data;
+      const strJson = JSON.stringify({id: data.id, nickname: data.nickname, about: data.about})
+      setUserInfo(strJson);
+      console.log(strJson)
+    } catch (error) {
+      window.alert('Error:' + error);
+    }
+  };
+
+  const handleNicknameChange = (e: { target: { value: string } }) => {
     const inputText = e.target.value;
     setNickname(inputText);
     setCharCount(inputText.length);
     setIsModified(true);
   };
 
-  const handleIntroduceChange = (e: { target: { value: any } }) => {
+  const handleIntroduceChange = (e: { target: { value: string } }) => {
     const inputsubText = e.target.value;
     setIntroduce(inputsubText);
     setSubcharCount(inputsubText.length);
@@ -25,6 +55,7 @@ export default function SettingInfo() {
   };
 
   const handleSave = () => {
+    modifyUser()
     alert("저장되었습니다.");
     setIsModified(false);
   };
