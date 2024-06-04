@@ -37,7 +37,8 @@ export default function Header({ setShowSideMenu }: Props) {
     if (keyword == "") {
       window.alert("검색어를 입력하세요");
     } else {
-      navigate("/search?q=" + keyword + "&tab=post&sort=accuracy");
+      navigate("/search?q=" + keyword);
+      location.reload();
     }
   };
 
