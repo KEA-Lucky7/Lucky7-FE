@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SearchContainer = styled.div`
   width: 67vw;
@@ -47,11 +47,12 @@ export const FlexContainer = styled.div`
   padding: 10px 0;
 `;
 
-export const PeriodContainer = styled.div`
+export const SortContainer = styled.div`
   display: flex;
+  position: relative;
 `;
 
-export const PeriodMenu = styled.div<{ selected: boolean }>`
+export const SortMenu = styled.div<{ selected: boolean }>`
   margin: 0px 20px 0px 20px;
   color: ${({ selected }) => (selected ? "black" : "#aaa")};
   &:hover {
@@ -63,4 +64,42 @@ export const SearchDesc = styled.div`
   margin: 20px 0px 20px 0px;
   font-size: 13px;
   color: #aaa;
+`;
+
+export const PeriodContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px 0px 10px 0px;
+  border-radius: 10px;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  z-index: 1;
+`;
+
+export const PeriodOption = styled.div`
+  padding: 10px 20px 10px 20px;
+  cursor: pointer;
+  &:hover {
+    background: #f0f0f0;
+  }
+`;
+
+export const PeriodInput = styled.input`
+    margin: 7px 0px 7px 0px;
+    padding: 0px 10px 0px 10px;
+    background-color: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    border-radius: 10px;
+    margin: 5px 10px 0px 10px;
+    height: 20px;
+    width: 20%
+    justify-content: center;
+    align-items: center;
+    &:focus {
+        border: 1px solid #ccc;
+        outline: none;
+    }
 `;
