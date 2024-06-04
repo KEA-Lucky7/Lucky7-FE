@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 import * as S from "../homePage/styles/HomePostListStyle";
 
 interface Post {
@@ -30,7 +29,6 @@ const HomePostList: React.FC = () => {
       });
       const newPosts = response.data;
 
-      // 중복 체크를 통해 새로운 게시물 추가
       setPosts((prevPosts) => {
         const postIdSet = new Set(prevPosts.map((post) => post.postId));
         const filteredNewPosts = newPosts.filter(
@@ -38,10 +36,7 @@ const HomePostList: React.FC = () => {
         );
         return [...prevPosts, ...filteredNewPosts];
       });
-      console.log(posts.length);
 
-      // 새로운 게시물이 없는 경우 hasMore를 false로 설정
-      setHasMore(posts.length <= 0);
       setHasMore(newPosts.length > 0);
     } catch (error) {
       window.alert("Error:" + error);
@@ -70,7 +65,6 @@ const HomePostList: React.FC = () => {
     }
   }, []);
 
-  // 가장 긴 제목을 가진 아이템의 인덱스를 찾는 함수
   const findLongestTitleIndex = (
     startIndex: number,
     endIndex: number
@@ -108,6 +102,7 @@ const HomePostList: React.FC = () => {
                   backgroundImage: `url(${post.thumbnail})`,
                 }}
               >
+                <S.ListItemBoxOverlay />
                 <S.ListItemBoxContents>
                   <S.TextContainer>
                     <div>{post.title}</div>
