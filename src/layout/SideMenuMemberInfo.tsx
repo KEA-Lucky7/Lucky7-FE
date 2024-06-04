@@ -8,12 +8,11 @@ interface Props {
 }
 
 const MemberInfo = ({ isLoggedIn }: Props) => {
-
   const navigate = useNavigate();
   const showLoginModal = () => {
-    navigate("/")
+    navigate("/");
   };
-  
+
   return (
     <S.MemberInfoContainer>
       {!isLoggedIn ? (
@@ -21,7 +20,6 @@ const MemberInfo = ({ isLoggedIn }: Props) => {
           <S.ProfileImg src={userInfo.profile_img} alt="Profile IMG" />
           <S.DiscContainer>
             <S.Name>{userInfo.name}</S.Name>
-            <S.Disc>{userInfo.desc}</S.Disc>
           </S.DiscContainer>
         </div>
       ) : (

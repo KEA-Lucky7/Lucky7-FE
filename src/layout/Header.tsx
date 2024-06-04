@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default function Header({ setShowSideMenu }: Props) {
-
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState("");
 
@@ -28,20 +27,19 @@ export default function Header({ setShowSideMenu }: Props) {
     if (e.key === "Enter") {
       goSearchPage();
     }
-  }
+  };
 
   const changeKeyword = (e: string) => {
     setKeyword(e);
-  }
+  };
 
   const goSearchPage = () => {
-    
     if (keyword == "") {
       window.alert("검색어를 입력하세요");
     } else {
       navigate("/search?q=" + keyword + "&tab=post&sort=accuracy");
     }
-  }
+  };
 
   return (
     <S.Header>
@@ -57,16 +55,18 @@ export default function Header({ setShowSideMenu }: Props) {
           src={moaboa}
           onClick={goHomePage}
           alt="로고"
-          width={"130px"}
-          height={"27px"}
-          style={{ marginBottom: "10px", marginLeft: "10px" }}
+          width={"110px"}
+          style={{
+            marginLeft: "10px",
+            // border: "1px solid red",
+          }}
         />
       </S.LeftContainer>
       <S.RightContainer>
         <S.SearchContainer>
           <S.SearchInput
             type="text"
-            placeholder="키워드를 검색하세요(내 블로그 내 검색)"
+            placeholder="키워드를 검색하세요(닉네임, 글, 제목)"
             onChange={(e) => changeKeyword(e.target.value)}
             onKeyDown={handleKeyDown}
           />
@@ -79,7 +79,7 @@ export default function Header({ setShowSideMenu }: Props) {
             alignItems: "center",
           }}
         >
-          <img src={Bell} alt="Bell" width={"20px"} height={"25px"} />
+          <img src={Bell} alt="Bell" height={"22px"} />
         </div>
       </S.RightContainer>
     </S.Header>

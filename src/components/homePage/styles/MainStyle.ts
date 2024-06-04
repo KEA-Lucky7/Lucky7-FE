@@ -6,6 +6,7 @@ export const HomeContainer = styled.div`
   align-items: center;
   //   border: 1px solid red;
   width: 100%;
+  background-color: #fffef9;
 `;
 
 export const MainContainer = styled.div`
