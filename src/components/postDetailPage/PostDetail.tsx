@@ -96,12 +96,17 @@ export default function PostDetail() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`);
+        const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+          }
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
         const data: Post = await response.json();
         setPost(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }

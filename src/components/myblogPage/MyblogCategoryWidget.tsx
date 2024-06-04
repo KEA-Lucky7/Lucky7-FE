@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -16,6 +16,31 @@ interface MyblogCategoryWidgetProps {
   // ... 기타 props
 }
 
+interface Post {
+  id: number;
+  content: string;
+  category: string;
+  tag: string;
+  title: string;
+  date: string;
+  views: number;
+  mainHashtag: string;
+  postType: string;
+  createdAt: number;
+  commentCnt: number;
+  likeCnt: number;
+  preview: string;
+  thumbnail: string;
+  postId: number;
+  postCnt: number;
+}
+
+
+interface BlogData {
+  postCnt: number;
+  postList: Post[];
+}
+
 export default function MyblogPostCategory({
   setContents,
 }: MyblogCategoryWidgetProps) {
@@ -24,11 +49,16 @@ export default function MyblogPostCategory({
   const [freetextCategory, setFreetextCategory] = React.useState(true); //자유글 카테고리
   const [freeList, setFreeList] = React.useState<string[]>([]);
   const [walletList, setWalletList] = React.useState<string[]>([]);
+  const [blogData, setBlogData] = useState<BlogData>({ postCnt: 0, postList: [] });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://vision-necktitude.shop/posts/1/hashtag-list');
+        const response = await axios.get('https://vision-necktitude.shop/posts/3/hashtag-list', {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+          }
+        });
         const { freeList, walletList } = response.data;
         setFreeList(freeList);
         setWalletList(walletList);
@@ -39,6 +69,24 @@ export default function MyblogPostCategory({
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0', {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+          }
+        });
+        setBlogData(response.data || { postCnt: 0, postList: [] });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const reportCategoryClick = () => {
     setReportCategory(!reportCategory);
@@ -69,7 +117,7 @@ export default function MyblogPostCategory({
       <S.Title>Category</S.Title>
       <S.ContentTitle>
         <S.Circle />
-        전체(89)
+        전체({blogData.postCnt})
       </S.ContentTitle>
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}

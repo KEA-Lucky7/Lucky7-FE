@@ -354,3 +354,10 @@ export const PictureListContent = styled.div`
   text-align: left;
   line-height: 20px;
 `;
+
+export const NoPostsMessage = styled.div`
+  text-align: center;
+  margin: 20px 0;
+  font-size: 18px;
+  color: #999;
+`;

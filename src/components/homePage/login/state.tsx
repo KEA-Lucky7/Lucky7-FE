@@ -1,13 +1,36 @@
-import { create } from "zustand";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-export interface UserStore {
+interface JwtStore { 
   accessToken: string;
-  refreshToken: string;
-  setUserToken: (accessToken: string, refreshToken: string) => void;
+  setAccessToken: (accessToken: string) => void;
 }
 
-export const useStoreJwt = create<UserStore>((set) => ({
-  accessToken: "",
-  refreshToken: "",
-  setUserToken: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
-}));
+export const useStore = create(
+  persist<JwtStore>(
+    (set) => ({
+      accessToken: window.localStorage.getItem('accessToken') || "error",
+      setAccessToken: (select) => set({ accessToken: select })
+    }),
+    {
+      name: 'accessToken'
+    },
+  ),
+);
+
+interface UserStore { 
+  userInfo: string,
+  setUserInfo: ( userInfo: string ) => void;
+}
+
+export const useUserStore = create(
+  persist<UserStore>(
+    (set) => ({
+      userInfo: window.localStorage.getItem('userInfo') || "{}",
+      setUserInfo: (userInfo) => set({ userInfo }),
+    }),
+    {
+      name: 'userInfo'
+    },
+  ),
+);

@@ -23,14 +23,11 @@ interface Post {
   preview: string;
   thumbnail: string;
   postId: number;
-
 }
 
 const MyblogPostList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [selectedTab, setSelectedTab] = useState<"article" | "picture">(
-    "article"
-  ); // 사진포함 x 글리스트가 기본 셋팅값
+  const [selectedTab, setSelectedTab] = useState<"article" | "picture">("article"); // 사진포함 x 글리스트가 기본 셋팅값
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
 
   const postsPerPage: number = 15; // 페이지하나당 나타낼 게시글 수
@@ -38,12 +35,9 @@ const MyblogPostList: React.FC = () => {
   // 페이지계산로직
   const indexOfLastPost: number = currentPage * postsPerPage;
   const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
-  const currentPosts: Post[] = blogPosts.slice(
-    indexOfFirstPost,
-    indexOfLastPost
-  );
+  const currentPosts: Post[] = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-  //페이지변환
+  // 페이지변환
   const paginate = (pageNumber: number): void => setCurrentPage(pageNumber);
 
   // 사진 or 글 리스트 나열 방식 선택
@@ -54,20 +48,21 @@ const MyblogPostList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://vision-necktitude.shop/posts/1/post-list?postType=ALL&hashtag=ALL&page=0');
-        setBlogPosts(response.data.postList);
+        const response = await axios.get('https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0', {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+          }
+        });
+        setBlogPosts(response.data.postList || []);
       } catch (error) {
-
         console.error('Error fetching data:', error);
-
-
       }
     };
 
     fetchData();
   }, []);
 
-  // =================사진 포함 글 정렬 방식=================
+  // 사진 포함 글 정렬 방식
   const renderPictureList = () => (
     <S.PostListContainer>
       {currentPosts.map((post) => (
@@ -84,63 +79,38 @@ const MyblogPostList: React.FC = () => {
               </S.FirstLine>
               <S.PictureListTitle>{post.title}</S.PictureListTitle>
               <S.PictureListContent>{post.preview}</S.PictureListContent>
-              <div
-                style={{ display: "flex", flexDirection: "row", gap: "30px", marginTop: '10px' }}
-              >
+              <div style={{ display: "flex", flexDirection: "row", gap: "30px", marginTop: '10px' }}>
                 <div>{post.createdAt}</div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img
-                    src={comment}
-                    alt="댓글"
-                    style={{ width: "21px", height: "21px" }}
-                  />
+                <div style={{ display: "flex", flexDirection: "row", gap: "5px", justifyContent: "center", alignItems: "center" }}>
+                  <img src={comment} alt="댓글" style={{ width: "21px", height: "21px" }} />
                   <div>{post.commentCnt}</div>
-                  <img
-                    src={heart}
-                    alt="좋아요"
-                    style={{ width: "18px", height: "18px" }}
-                  />
+                  <img src={heart} alt="좋아요" style={{ width: "18px", height: "18px" }} />
                   <div>{post.likeCnt}</div>
                 </div>
               </div>
             </S.PictureList>
             <S.PictureBox>
-              <img
-                src={post.thumbnail}
-                alt={post.title}
-                style={{ width: "100%", height: "100%" }}
-              />
+              <img src={post.thumbnail} alt={post.title} style={{ width: "100%", height: "100%" }} />
             </S.PictureBox>
           </S.PictureListBox>
         </Link>
       ))}
       {/* 페이지네이션 */}
-      <S.PaginationBox>
-        {[...Array(Math.ceil(blogPosts.length / postsPerPage)).keys()].map(
-          (pageNumber) => (
-            <S.PageNumber
-              key={pageNumber}
-              onClick={() => paginate(pageNumber + 1)}
-            >
-              {pageNumber + 1}
-            </S.PageNumber>
-          )
-        )}
-      </S.PaginationBox>
+      {blogPosts.length > 0 && (
+        <S.PaginationBox>
+          {[...Array(Math.ceil(blogPosts.length / postsPerPage)).keys()].map(
+            (pageNumber) => (
+              <S.PageNumber key={pageNumber} onClick={() => paginate(pageNumber + 1)}>
+                {pageNumber + 1}
+              </S.PageNumber>
+            )
+          )}
+        </S.PaginationBox>
+      )}
     </S.PostListContainer>
   );
 
-
-
-  //=================사진 제외 글 정렬 방식=================
+  // 사진 제외 글 정렬 방식
   const renderArticleList = () => (
     <S.PostListContainer>
       <S.FieldBox>
@@ -164,18 +134,17 @@ const MyblogPostList: React.FC = () => {
         </Link>
       ))}
       {/* 페이지네이션 */}
-      <S.PaginationBox>
-        {[...Array(Math.ceil(blogPosts.length / postsPerPage)).keys()].map(
-          (pageNumber) => (
-            <S.PageNumber
-              key={pageNumber}
-              onClick={() => paginate(pageNumber + 1)}
-            >
-              {pageNumber + 1}
-            </S.PageNumber>
-          )
-        )}
-      </S.PaginationBox>
+      {blogPosts.length > 0 && (
+        <S.PaginationBox>
+          {[...Array(Math.ceil(blogPosts.length / postsPerPage)).keys()].map(
+            (pageNumber) => (
+              <S.PageNumber key={pageNumber} onClick={() => paginate(pageNumber + 1)}>
+                {pageNumber + 1}
+              </S.PageNumber>
+            )
+          )}
+        </S.PaginationBox>
+      )}
     </S.PostListContainer>
   );
 
@@ -214,7 +183,11 @@ const MyblogPostList: React.FC = () => {
         </S.IconBox>
       </S.SubTitleContainer>
       {/* 글 리스트 */}
-      {selectedTab === "article" ? renderArticleList() : renderPictureList()}
+      {blogPosts.length === 0 ? (
+        <S.NoPostsMessage>게시글이 없습니다.</S.NoPostsMessage>
+      ) : (
+        selectedTab === "article" ? renderArticleList() : renderPictureList()
+      )}
     </S.MyblogPostContainer>
   );
 };
