@@ -32,10 +32,11 @@ const Search: React.FC = () => {
     updateSearchParams();
   }, [tab, sort]);
 
-  useEffect(() => {
-    setStartPeriod("1900-01-01")
-    setEndPeriod(getTodayDate);
-  });
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handlePeriodChange("직접 입력")
+    }
+  }
 
   const updateSearchParams = () => {
     let queryString = query.toString();
@@ -70,6 +71,7 @@ const Search: React.FC = () => {
     } else if (newPeriod == "직접 입력") {
 
     }
+    window.alert(startPeriod + endPeriod)
   };
 
   const getTodayDate = () => {
@@ -143,14 +145,15 @@ const Search: React.FC = () => {
                       직접 입력
                     </S.PeriodOption>
                     <S.PeriodInput
-                      placeholder="닉네임"
+                      placeholder="2000-01-01"
                       value={startPeriod}
+                      onKeyDown={handleKeyDown}
                       onChange={(e) => setStartPeriod(e.target.value)}
                       />
-                      {""}
                     <S.PeriodInput
-                      placeholder="닉네임"
+                      placeholder="2000-01-01"
                       value={endPeriod}
+                      onKeyDown={handleKeyDown}
                       onChange={(e) => setEndPeriod(e.target.value)}
                       />
                   </S.PeriodContainer>
