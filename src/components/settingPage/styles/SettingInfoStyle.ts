@@ -31,6 +31,7 @@ export const AccountBox = styled.div`
 
 export const profileBox = styled(AccountBox)`
   margin-top: 100px;
+  padding: 20px;
 `;
 
 export const profileContentBox = styled.div`
@@ -48,49 +49,48 @@ export const Img = styled.img`
   height: 190px;
 `;
 
-
-export const InputBox = styled.div`
+export const InputContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-export const FirstInputBox = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const SecondInputBox = styled(FirstInputBox)`
-  margin-top: 10px;
 `;
 
 export const InputTitle = styled.div`
   width: 80%;
-  height: 100%;
   font-size: 14px;
-  margin-bottom: 5px;
+  margin: 5px 0px 5px 0px;
   color: #626262;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid grey;
-  outline: none;
+export const NameInput = styled.input`
+  margin: 7px 0px 7px 0px;
+  padding: 0px 20px 0px 20px;
+  border: 1px solid #f5f5f5;
   border-radius: 10px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:focus {
+    border: 1px solid #ccc;
+    outline: none;
+  }
 `;
 
-export const InputIntroduce = styled.textarea`
-  width: 100%;
-  height: 80px;
-  border: 1px solid #eaeaea;
-  outline: none;
-  border-radius: 5px;
-  resize: none;
+export const IntroInput = styled.textarea`
+  margin: 7px 0px 7px 0px;
+  padding: 0px 20px 0px 20px;
+  border: 1px solid #f5f5f5;
   border-radius: 10px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:focus {
+    border: 1px solid #ccc;
+    outline: none;
+  }
 `;
 
 export const CharCount = styled.span`
@@ -99,18 +99,20 @@ export const CharCount = styled.span`
   text-align: right;
 `;
 
-export const SaveButton = styled.button<SaveButtonProps>`
-  background-color: ${(props) => (props.modified ? "#7A7A7A" : "#E6E6E6")};
-  color: ${(props) => (props.modified ? "#fff" : "#fff")};
-  padding: 10px 20px; /* Adjust padding as needed */
+export const SaveButton = styled.button`
+  background-color: #E6E6E6;
+  margin-right: 0px;
+  width: 100px;
+  color: #fff;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Add transition for smooth color change */
+  transition: background-color 0.3s ease;
   font-size: 14px;
+  align-self: flex-end;
 
   &:hover {
-    background-color: ${(props) =>
-      props.modified ? "#616161" : "#DADADA"}; /* Change color on hover */
+    background-color: #616161;
   }
 `;

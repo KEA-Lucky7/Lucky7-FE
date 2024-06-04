@@ -35,28 +35,24 @@ export default function SettingInfo() {
           <div>
             <S.Img src={profile} alt="사진" />
           </div>
-          <S.InputBox>
-            <S.FirstInputBox>
-              <S.InputTitle>닉네임</S.InputTitle>
-              <S.Input
-                type="text"
-                value={nickname}
-                onChange={handleNicknameChange}
-              />
-              <S.CharCount>{`${charCount}/20`}</S.CharCount>
-            </S.FirstInputBox>
+          <S.InputContainer>
+            <S.InputTitle>닉네임</S.InputTitle>
+            <S.NameInput
+              type="text"
+              value={nickname}
+              onChange={handleNicknameChange}
+            />
+            <S.CharCount>{`${charCount}/20`}</S.CharCount>
 
-            <S.SecondInputBox>
-              <S.InputTitle>소개</S.InputTitle>
-              <S.InputIntroduce
-                value={introduce}
-                onChange={handleIntroduceChange}
-              />
-              <S.CharCount>{`${subcharCount}/20`}</S.CharCount>
-            </S.SecondInputBox>
-          </S.InputBox>
+            <S.InputTitle>소개</S.InputTitle>
+            <S.IntroInput
+              value={introduce}
+              onChange={handleIntroduceChange}
+            />
+            <S.CharCount>{`${subcharCount}/20`}</S.CharCount>
+          </S.InputContainer>
         </S.profileContentBox>
-        <S.SaveButton onClick={handleSave} modified={isModified}>
+        <S.SaveButton onClick={handleSave} >
           저장하기
         </S.SaveButton>
       </S.profileBox>

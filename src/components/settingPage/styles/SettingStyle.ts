@@ -1,13 +1,5 @@
 import styled from "styled-components";
 
-interface SaveButtonProps {
-  modified: boolean;
-}
-
-interface PictureContainerProps {
-  imageurl: string;
-}
-
 export const SettingContainer = styled.div`
   width: 50vw;
   height: 100%;
