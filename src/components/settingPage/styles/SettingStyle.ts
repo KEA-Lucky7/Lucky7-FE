@@ -4,11 +4,9 @@ export const SettingContainer = styled.div`
   width: 50vw;
   height: 100%;
   margin: 0 auto;
-  border: 1px solid red;
 `;
 
 export const Title = styled.div`
-  width: 90%;
   height: 100%;
   font-size: 28px;
   font-weight: bold;
@@ -17,10 +15,9 @@ export const Title = styled.div`
 `;
 
 export const profileTitle = styled(Title)`
-  width: 100%;
-  height: 100%;
-  font-size: 20px;
-  border: none;
+font-size: 20px;
+font-weight: bold;
+padding-bottom: 30px;
 `;
 
 export const AccountBox = styled.div`
@@ -29,7 +26,6 @@ export const AccountBox = styled.div`
   flex-direction: column;
   gap: 30px;
   margin-top: 20px;
-  border: 1px solid blue;
 `;
 
 export const AlertBox = styled(AccountBox)`

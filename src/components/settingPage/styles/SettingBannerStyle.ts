@@ -1,27 +1,17 @@
 import styled from "styled-components";
 
 interface SaveButtonProps {
-  modified: boolean;
+  modified: String;
 }
 
-interface PictureContainerProps {
-  imageurl: string;
-}
+// interface PictureContainerProps {
+//   backgroundImage: string;
+// }
 
-export const Title = styled.div`
-  width: 90%;
-  height: 100%;
-  font-size: 28px;
-  font-weight: bold;
-  border-bottom: 1px solid grey;
-  padding-bottom: 30px;
-`;
-
-export const profileTitle = styled(Title)`
-  width: 100%;
-  height: 100%;
+export const profileTitle = styled.div`
   font-size: 20px;
-  border: none;
+  font-weight: bold;
+  padding-bottom: 30px;
 `;
 
 export const AccountBox = styled.div`
@@ -30,7 +20,6 @@ export const AccountBox = styled.div`
   flex-direction: column;
   gap: 30px;
   margin-top: 20px;
-  border: 1px solid blue;
 `;
 
 export const BannerBox = styled(AccountBox)`
@@ -47,15 +36,13 @@ export const profileContentBox = styled.div`
   gap: 100px;
 `;
 
-export const BannerImg = styled.div<PictureContainerProps>`
+export const BannerImg = styled.img`
   width: 50vw;
   height: 300px;
   border-radius: 10px;
-  position: relative;
-  background: ${({ imageurl }) =>
-    `black url(${imageurl}) no-repeat center center`};
-  background-size: cover;
+  object-fit: cover;
 `;
+
 
 export const BannerInputBox = styled.div`
   width: 60%;
@@ -63,6 +50,10 @@ export const BannerInputBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: auto;
+`;
+
+export const ImgInput = styled.input`
+  display: none;
 `;
 
 export const FirstInputBox = styled.div`
@@ -84,22 +75,34 @@ export const InputTitle = styled.div`
   color: #626262;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid grey;
-  outline: none;
+export const NameInput = styled.input`
+  margin: 7px 0px 7px 0px;
+  padding: 0px 20px 0px 20px;
+  border: 1px solid #ddd;
   border-radius: 10px;
+  height: 30px;    
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:focus {
+      border: 1px solid #bbb;
+      outline: none;
+  }
 `;
 
-export const InputIntroduce = styled.textarea`
-  width: 100%;
-  height: 80px;
-  border: 1px solid #eaeaea;
-  outline: none;
-  border-radius: 5px;
-  resize: none;
+export const IntroInput = styled.textarea`
+  margin: 7px 0px 7px 0px;
+  padding: 0px 20px 0px 20px;
+  border: 1px solid #ddd;
   border-radius: 10px;
+  height: 100px;    
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:focus {
+      border: 1px solid #bbb;
+      outline: none;
+  }
 `;
 
 export const CharCount = styled.span`
@@ -109,9 +112,12 @@ export const CharCount = styled.span`
 `;
 
 export const SaveButton = styled.button<SaveButtonProps>`
-  background-color: ${(props) => (props.modified ? "#7A7A7A" : "#E6E6E6")};
-  color: ${(props) => (props.modified ? "#fff" : "#fff")};
-  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: ${(props) => (props.modified == "true" ? "#7A7A7A" : "#E6E6E6")};
+  color: ${(props) => (props.modified == "true" ? "#fff" : "#333")};
+  padding: 10px 20px;
+  margin-right: 10px;
+  align-self: flex-end;
+  width: 100px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -120,17 +126,8 @@ export const SaveButton = styled.button<SaveButtonProps>`
 
   &:hover {
     background-color: ${(props) =>
-      props.modified ? "#616161" : "#DADADA"}; /* Change color on hover */
+      props.modified == "true" ? "#616161" : "#DADADA"}; /* Change color on hover */
   }
-`;
-
-export const ButtonBox = styled.div`
-  width: 31%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  margin-left: auto;
-  gap: 20px;
 `;
 
 export const TitleContainer = styled.div`

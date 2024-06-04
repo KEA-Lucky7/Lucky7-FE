@@ -1,37 +1,21 @@
 import styled from "styled-components";
 
 interface SaveButtonProps {
-  modified: boolean;
+  modified: string;
 }
 
-export const Title = styled.div`
-  width: 90%;
-  height: 100%;
-  font-size: 28px;
+export const profileTitle = styled.div`
+  font-size: 20px;
   font-weight: bold;
-  border-bottom: 1px solid grey;
   padding-bottom: 30px;
 `;
 
-export const profileTitle = styled(Title)`
-  width: 100%;
-  height: 100%;
-  font-size: 20px;
-  border: none;
-`;
-
-export const AccountBox = styled.div`
+export const profileBox = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 20px;
-  border: 1px solid blue;
-`;
-
-export const profileBox = styled(AccountBox)`
   margin-top: 100px;
-  padding: 20px;
 `;
 
 export const profileContentBox = styled.div`
@@ -47,6 +31,12 @@ export const profileContentBox = styled.div`
 export const Img = styled.img`
   width: 190px;
   height: 190px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+export const ImgInput = styled.input`
+  display: none;
 `;
 
 export const InputContainer = styled.div`
@@ -66,30 +56,30 @@ export const InputTitle = styled.div`
 export const NameInput = styled.input`
   margin: 7px 0px 7px 0px;
   padding: 0px 20px 0px 20px;
-  border: 1px solid #f5f5f5;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  height: 30px;
+  height: 30px;    
   display: flex;
   justify-content: center;
   align-items: center;
   &:focus {
-    border: 1px solid #ccc;
-    outline: none;
+      border: 1px solid #bbb;
+      outline: none;
   }
 `;
 
 export const IntroInput = styled.textarea`
   margin: 7px 0px 7px 0px;
   padding: 0px 20px 0px 20px;
-  border: 1px solid #f5f5f5;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  height: 100px;
+  height: 100px;    
   display: flex;
   justify-content: center;
   align-items: center;
   &:focus {
-    border: 1px solid #ccc;
-    outline: none;
+      border: 1px solid #bbb;
+      outline: none;
   }
 `;
 
@@ -99,20 +89,21 @@ export const CharCount = styled.span`
   text-align: right;
 `;
 
-export const SaveButton = styled.button`
-  background-color: #E6E6E6;
-  margin-right: 0px;
-  width: 100px;
-  color: #fff;
+export const SaveButton = styled.button<SaveButtonProps>`
+  background-color: ${(props) => (props.modified == "true" ? "#7A7A7A" : "#E6E6E6")};
+  color: ${(props) => (props.modified == "true" ? "#fff" : "#333")};
   padding: 10px 20px;
+  margin-right: 10px;
+  align-self: flex-end;
+  width: 100px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 14px;
-  align-self: flex-end;
 
   &:hover {
-    background-color: #616161;
+    background-color: ${(props) =>
+      props.modified == "true" ? "#616161" : "#DADADA"};
   }
 `;
