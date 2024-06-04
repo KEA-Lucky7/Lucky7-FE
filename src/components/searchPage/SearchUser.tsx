@@ -3,18 +3,18 @@ import axios from "axios";
 import { useLocation } from 'react-router-dom';
 
 import basicImg from '../../../src/assets/profile/profile.png';
-import * as S from './styles/SearchBlogStyle';
+import * as S from './styles/SearchUserStyle';
 
-interface Blog {
-  blogId: number;
-  blogName: string;
-  blogAbout: string;
-  blogOwnerName: string;
-  blogOwnerImageUrl: string;
+interface User {
+  memberId: number,
+  blogId: number,
+  memberNickname: string,
+  memberAbout: string,
+  memberImageUrl: string
 }
 
-interface BlogResponse {
-  content: Blog[];
+interface UserResponse {
+  content: User[];
 }
 
 function getQuery() {
@@ -26,7 +26,7 @@ export default function SearchUser() {
   const keyword = query.get('q');
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -52,18 +52,19 @@ export default function SearchUser() {
   const fetchPosts = async (page: number) => {
     setLoading(true);
     try {
-      const response = await axios.get<BlogResponse>(`${serverUrl}/search/blog`, {
+      const response = await axios.get<UserResponse>(`${serverUrl}/search/member`, {
         params: { value: keyword, page, size: 6 }
       });
-      const newBlogs = response.data.content;
+      const newUsers = response.data.content;
+      console.log(newUsers)
 
-      setBlogs((prevBlogs) => {
-        const postIdSet = new Set(prevBlogs.map(blog => blog.blogId));
-        const filteredNewBlogs = newBlogs.filter(blog => !postIdSet.has(blog.blogId));
-        return [...prevBlogs, ...filteredNewBlogs];
+      setUsers((prevUsers) => {
+        const userIdSet = new Set(prevUsers.map(user => user.memberId));
+        const filteredNewUsers = newUsers.filter(user => !userIdSet.has(user.memberId));
+        return [...prevUsers, ...filteredNewUsers];
       });
-      console.log(blogs)
-      setHasMore(newBlogs.length > 0);
+      console.log(users)
+      setHasMore(newUsers.length > 0);
     } catch (error) {
       window.alert('Error:' + error);
     }
@@ -76,21 +77,17 @@ export default function SearchUser() {
 
   return (
     <S.SearchContainer>
-      {blogs.map((blog) => (
-        <S.BlogCard key={blog.blogId}>
-          <S.BlogContent>
-            <S.BlogTitle>{blog.blogName}</S.BlogTitle>
-            <S.BlogDescription>{blog.blogAbout}</S.BlogDescription>
-            <S.UserInfo>
-              <S.UserImage 
-                src={blog.blogOwnerImageUrl} 
-                alt={blog.blogOwnerName} 
-                onError={(e: any) => { e.currentTarget.src = basicImg; }} 
-              />
-              <S.UserName>{blog.blogOwnerName}</S.UserName>
-            </S.UserInfo>
-          </S.BlogContent>
-        </S.BlogCard>
+      {users.map((user) => (
+        <S.UserCard key={user.memberId}>
+          <S.UserImage 
+            src={user.memberImageUrl} 
+            alt={user.memberNickname} 
+            onError={(e: any) => { e.currentTarget.src = basicImg; }} 
+            />       <S.UserContent>
+          <S.UserName>{user.memberNickname}</S.UserName>
+          <S.UserDescription>{user.memberAbout}</S.UserDescription>
+        </S.UserContent>
+      </S.UserCard>
       ))}
       {hasMore ? (
         <div>
