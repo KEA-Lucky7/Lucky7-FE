@@ -5,11 +5,10 @@ import { ListSubheader } from '@mui/material';
 import Button from '@mui/material/Button';
 
 interface TemporarySaveModalProps {
-    temporarySaves: string[];
     closeModal: () => void;
 }
 
-export const TemporarySaveModal: React.FC<TemporarySaveModalProps> = ({ temporarySaves, closeModal }) => {
+export const TemporarySaveModal: React.FC<TemporarySaveModalProps> = ({ closeModal }) => {
     const [posts, setPosts] = React.useState<any[]>([]);
     const isMountedRef = React.useRef<boolean>(true);
 

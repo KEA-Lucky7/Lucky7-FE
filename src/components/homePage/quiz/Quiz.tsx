@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as S from "../styles/QuizStyle";
 import quizbackground from "../../../assets/quiz/quizbackground.png";
-import quizObutton from "../../../assets/quiz/quizObutton.png";
-import quizXbuttton from "../../../assets/quiz/quizXbuttton.png";
 
 interface QuizData {
     id: number;
@@ -18,7 +16,6 @@ interface QuizData {
 export default function Quiz() {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [quizData, setQuizData] = useState<QuizData | null>(null);
-    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null); // 선택된 답변
 
     const handleOpenModal = () => {
         setIsModalVisible(true);
@@ -40,7 +37,7 @@ export default function Quiz() {
                     console.log('Quiz data:', data.data);
                 } else {
                     console.error('No quiz data received:', data);
-                    //alert("퀴즈 데이터를 불러오는 중 오류가 발생했습니다.");
+                    alert("퀴즈 데이터를 불러오는 중 오류가 발생했습니다.");
                 }
             } catch (error) {
                 console.error('Error fetching quiz data:', error);
@@ -52,8 +49,6 @@ export default function Quiz() {
     }, []);
 
     const handleAnswer = async (selectedOption: number) => {
-        setSelectedAnswer(selectedOption); // 선택된 답변 저장
-
         // 정답 여부를 확인하는 API 호출
         try {
             const response = await fetch('https://vision-necktitude.shop/quiz/grade', {
@@ -62,14 +57,13 @@ export default function Quiz() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    selected_answer: selectedOption
+                    selectedAnswer: selectedOption
                 })
             });
             const data = await response.json();
-            console.log(selectedOption);
-            console.log(quizData.quizAnswer);
-            // 선택한 답변이 정답인지 확인
-            if (selectedOption === quizData.quizAnswer) {
+            console.log('Grade API response:', data);
+
+            if (data.data.correct) {
                 alert("정답입니다!");
             } else {
                 alert("틀렸습니다!");

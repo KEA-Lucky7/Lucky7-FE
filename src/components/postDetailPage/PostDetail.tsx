@@ -24,7 +24,7 @@ interface Post {
   about: string;
   title: string;
   content: string;
-  preview: string | null;
+  preview: string;
   thumbnail: string;
   postType: string;
   mainHashtag: string;
@@ -66,17 +66,9 @@ interface Post {
 }
 
 
-interface WalletItem {
-  consumedDate: string;
-  memo: string;
-  amount: number;
-  walletType: string;
-}
-
 export default function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
-  const [post, setPost] = useState<Post>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [post, setPost] = useState<Post>({} as Post);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isCommentVisible, setIsCommentVisible] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(0);
@@ -111,7 +103,7 @@ export default function PostDetail() {
         const data: Post = await response.json();
         setPost(data);
       } catch (error) {
-        setError(error.message);
+        console.log(error);
       }
     };
     fetchPost();
@@ -165,32 +157,6 @@ export default function PostDetail() {
     });
   };
 
-  // Function to handle changes in input fields
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number, field?: string) => {
-    const { name, value } = e.target;
-    if (name === "hashtagList") {
-      const newHashtagList = [...editedPost.hashtagList];
-      newHashtagList[index!] = value;
-      setEditedPost((prev) => ({
-        ...prev,
-        hashtagList: newHashtagList,
-      }));
-    } else if (name === "walletList") {
-      const newWalletList = [...editedPost.walletList];
-      if (field) {
-        newWalletList[index!][field] = value;
-      }
-      setEditedPost((prev) => ({
-        ...prev,
-        walletList: newWalletList,
-      }));
-    } else {
-      setEditedPost((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
 
   const handleEditSubmit = async () => {
     try {
@@ -264,7 +230,6 @@ export default function PostDetail() {
       {isEditing ? (
         <EditPostForm
           editedPost={editedPost}
-          onChange={handleEditChange}
           onSubmit={handleEditSubmit}
           onCancel={() => setIsEditing(false)}
           isEditing={isEditing}

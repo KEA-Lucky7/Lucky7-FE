@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as S from "../styles/CreatepostCss";
 import moaboa from "../../../assets/header/moaboa.png";
-import Menu from "../../../assets/header/Menu.png";
 import { useNavigate } from "react-router-dom";
 import { TemporarySaveModal } from "../createPostItems/TemporarySaveModal";
 
@@ -12,12 +11,7 @@ interface Props {
 export default function CreatePostHeader({ setShowSideMenu }: Props) {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [temporarySaves, setTemporarySaves] = useState<string[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
-
-  const changeSideMenuState = () => {
-    setShowSideMenu((prevState) => !prevState);
-  };
 
   function goHomePage() {
     navigate("/");
@@ -61,7 +55,6 @@ export default function CreatePostHeader({ setShowSideMenu }: Props) {
 
       {isModalVisible && (
         <TemporarySaveModal
-          temporarySaves={temporarySaves}
           closeModal={toggleModal}
         />
       )}

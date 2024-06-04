@@ -26,40 +26,19 @@ enum PostCategory {
   가계부 = "가계부",
 }
 
-interface Props {
-  setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 export default function CreatePost() {
-  const [backgroundImageUrl, setBackgroundImageUrl] =
-    useState<string>(postDetailbackground);
-  const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createEmpty()
-  );
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>(postDetailbackground);
+  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
   const [tags, setTags] = useState<Tag[]>([]);
   const [subtags, setSubtags] = useState<SubTag[]>([]);
-
   const [tagInput, setTagInput] = useState<string>("");
   const [subtagInput, setSubtagInput] = useState<string>("");
-
   const [postCategory, setPostCategory] = useState<PostCategory | null>(null);
-
   const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]); // 입력된 값들을 저장할 배열 상태
   const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [temporarySaves, setTemporarySaves] = useState<string[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
-  const [showSideMenu, setShowSideMenu] = useState(false);
-
-  const changeSideMenuState = () => {
-    setShowSideMenu((prevState) => !prevState);
-  };
-
-  function goHomePage() {
-    navigate("/");
-    setShowSideMenu(false);
-  }
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -69,7 +48,6 @@ export default function CreatePost() {
     setEditorState(editorState);
   };
 
-
   const handleTagInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTagInput(e.target.value);
   };
@@ -77,10 +55,6 @@ export default function CreatePost() {
   const handleSubTagInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSubtagInput(e.target.value);
   };
-
-  // const handleBackgroundImageUrl = () => {
-  //   setBackgroundImageUrl("/");
-  // };
 
   const handleAddTag = () => {
     if (tagInput.trim() !== "" && tags.length < 5) {
@@ -162,17 +136,7 @@ export default function CreatePost() {
     }
   };
 
-  const handleSaveAccountBook = (index: number) => {
-    // 해당 입력란의 값들을 가져옵니다.
-    const input = accountBookInputs[index];
-
-    // 여기서 입력된 값들을 사용하여 작업을 수행하면 됩니다.
-    // 예: API 호출 등
-    console.log("저장된 가계부:", input);
-  };
-
   const handleAddAccountBookInput = () => {
-    // 입력된 값이 숫자인지 확인하고, 숫자로 변환하여 새로운 객체를 추가합니다.
     setAccountBookInputs([...accountBookInputs, { consumedDate: "", memo: "", amount: 0, walletType: "" }]);
   };
 
@@ -189,13 +153,11 @@ export default function CreatePost() {
   };
 
   const urlToBlob = (url: string): Promise<Blob> => {
-    return fetch(url)
-      .then(response => response.blob());
+    return fetch(url).then(response => response.blob());
   };
 
-  // Function to resize image Blob
   const resizeImage = (file: Blob): Promise<string> => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
         150, // Max width
@@ -211,7 +173,6 @@ export default function CreatePost() {
     });
   };
 
-  //글작성 API 
   const handleSubmit = async () => {
     const contentRaw = convertToRaw(editorState.getCurrentContent());
     const content = JSON.stringify(contentRaw);
@@ -238,7 +199,6 @@ export default function CreatePost() {
       walletList: accountBookInputs,
     };
 
-    // Console log payload for debugging
     console.log('Payload:', payload);
     console.log(accountBookInputs);
     try {
@@ -251,7 +211,6 @@ export default function CreatePost() {
     }
   };
 
-  //글 임시저장 API
   const handleTemporarySubmit = async () => {
     const contentRaw = convertToRaw(editorState.getCurrentContent());
     const content = JSON.stringify(contentRaw);
@@ -278,7 +237,6 @@ export default function CreatePost() {
       walletList: accountBookInputs,
     };
 
-    // Console log payload for debugging
     console.log('Payload:', payload);
 
     try {
@@ -311,7 +269,10 @@ export default function CreatePost() {
         <S.LeftContainer>
           <img
             src={moaboa}
-            onClick={goHomePage}
+            onClick={() => {
+              navigate("/");
+              setIsModalVisible(false);
+            }}
             alt="로고"
             width={"130px"}
             height={"27px"}
@@ -328,21 +289,15 @@ export default function CreatePost() {
 
         {isModalVisible && (
           <TemporarySaveModal
-            temporarySaves={temporarySaves}
             closeModal={toggleModal}
           />
         )}
       </S.Header>
-      {/* 빌드간 오류 해결용*/}
       <S.Picturecontainer
         imageUrl={backgroundImageUrl}
-      //onClick={handleBackgroundImageUrl}
       >
         <S.TitleContainer>
           <S.SubTitleBox
-            // onChange={(e) =>
-            //   handleSelectCategory(e.target.value as PostCategory)
-            // }
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleSelectCategory(e.target.value as PostCategory)
             }
@@ -352,7 +307,6 @@ export default function CreatePost() {
               <option value={PostCategory.자유글}>자유글</option>
               <option value={PostCategory.가계부}>가계부</option>
             </select>
-            {/* <img src={selectPost} alt='선택' style={{ width: '14px', height: '6px', marginLeft: '5px' }} /> */}
           </S.SubTitleBox>
           <S.TitleInput
             placeholder="제목을 입력하세요."
@@ -379,32 +333,21 @@ export default function CreatePost() {
       <S.NewPostInputContainer>
         <S.TextEditBox>
           <Editor
-            // 에디터와 툴바 모두에 적용되는 클래스
             wrapperClassName="wrapper-class"
-            // 에디터 주변에 적용된 클래스
             editorClassName="editor"
-            // 툴바 주위에 적용된 클래스
             toolbarClassName="toolbar-class"
-            // 툴바 설정
             toolbar={{
-              // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
-              //list: { inDropdown: true },
-              //textAlign: { inDropdown: true },
               link: { inDropdown: true },
               history: { inDropdown: false },
             }}
             placeholder="내용을 작성해주세요."
-            // 한국어 설정
             localization={{
               locale: "ko",
             }}
-            // 초기값 설정
             editorState={editorState}
-            // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
             onEditorStateChange={onEditorStateChange}
           />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {/* accountBookInputs 상태에 따라 보여줄 내용을 설정합니다. */}
             {accountBookInputs.map((input, index) => (
               <S.InputBox key={index}>
                 <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', margin: '15px 20px 15px 0px' }}>
@@ -422,7 +365,6 @@ export default function CreatePost() {
                   </select>
                 </div>
                 <div>
-                  {/* <button onClick={() => handleSaveAccountBook(index)}>저장</button> */}
                   <S.DeleteButton onClick={() => handleDeleteAccountBookInput(index)}>삭제</S.DeleteButton>
                 </div>
               </S.InputBox>
@@ -435,7 +377,6 @@ export default function CreatePost() {
       <S.AccountBookContainer onClick={handleAddAccountBookInput}>
         가계부 생성하기
       </S.AccountBookContainer>
-      {/* 대표태그 input */}
       <S.TagBox>
         <S.RepresentativeTagBox>
           <S.RepresentativeTagTitle>대표태그</S.RepresentativeTagTitle>
@@ -443,7 +384,7 @@ export default function CreatePost() {
             <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               <S.TagInput
                 type="text"
-                placeholder="대표 태그를 입력해주세요(최대 1개)" //최대 5개 희망함
+                placeholder="대표 태그를 입력해주세요(최대 1개)"
                 value={tagInput}
                 onChange={handleTagInputChange}
               />
@@ -453,9 +394,7 @@ export default function CreatePost() {
               {tags.map((tag) => (
                 <S.TagItem key={tag.id}>
                   #{tag.name}
-                  <S.DeleteTagButton onClick={() => handleDeleteTag(tag.id)}>
-                    X
-                  </S.DeleteTagButton>
+                  <S.DeleteTagButton onClick={() => handleDeleteTag(tag.id)}>X</S.DeleteTagButton>
                 </S.TagItem>
               ))}
             </div>
@@ -463,7 +402,6 @@ export default function CreatePost() {
         </S.RepresentativeTagBox>
       </S.TagBox>
 
-      {/* 서브태그 input 자리 */}
       <S.TagBox>
         <S.RepresentativeSubTagBox>
           <S.RepresentativeTagTitle>태그</S.RepresentativeTagTitle>
@@ -471,7 +409,7 @@ export default function CreatePost() {
             <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
               <S.TagInput
                 type="text"
-                placeholder="세부 태그를 입력해주세요(최대 5개)" //최대 10개 희망함
+                placeholder="세부 태그를 입력해주세요(최대 5개)"
                 value={subtagInput}
                 onChange={handleSubTagInputChange}
               />
@@ -488,11 +426,7 @@ export default function CreatePost() {
               {subtags.map((subtag) => (
                 <S.TagItem key={subtag.id}>
                   #{subtag.name}
-                  <S.DeleteTagButton
-                    onClick={() => handleDeleteSubTag(subtag.id)}
-                  >
-                    X
-                  </S.DeleteTagButton>
+                  <S.DeleteTagButton onClick={() => handleDeleteSubTag(subtag.id)}>X</S.DeleteTagButton>
                 </S.TagItem>
               ))}
             </div>
