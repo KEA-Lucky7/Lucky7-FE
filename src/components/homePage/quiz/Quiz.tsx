@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as S from "../styles/QuizStyle";
 import quizbackground from "../../../assets/quiz/quizbackground.png";
-import quizObutton from "../../../assets/quiz/quizObutton.png";
-import quizXbuttton from "../../../assets/quiz/quizXbuttton.png";
 
 interface QuizData {
     id: number;
