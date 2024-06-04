@@ -26,17 +26,19 @@ const HomePostList: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get<Post[]>(`${serverUrl}/posts/home-list`, {
-        params: { page, pageSize: 6 }
+        params: { page, pageSize: 6 },
       });
       const newPosts = response.data;
 
       // 중복 체크를 통해 새로운 게시물 추가
       setPosts((prevPosts) => {
-        const postIdSet = new Set(prevPosts.map(post => post.postId));
-        const filteredNewPosts = newPosts.filter(post => !postIdSet.has(post.postId));
+        const postIdSet = new Set(prevPosts.map((post) => post.postId));
+        const filteredNewPosts = newPosts.filter(
+          (post) => !postIdSet.has(post.postId)
+        );
         return [...prevPosts, ...filteredNewPosts];
       });
-      console.log(posts.length)
+      console.log(posts.length);
 
       // 새로운 게시물이 없는 경우 hasMore를 false로 설정
       setHasMore(posts.length <= 0);
@@ -69,7 +71,10 @@ const HomePostList: React.FC = () => {
   }, []);
 
   // 가장 긴 제목을 가진 아이템의 인덱스를 찾는 함수
-  const findLongestTitleIndex = (startIndex: number, endIndex: number): number => {
+  const findLongestTitleIndex = (
+    startIndex: number,
+    endIndex: number
+  ): number => {
     let maxLength = 0;
     let longestIndex = startIndex;
     for (let i = startIndex; i < endIndex; i++) {
@@ -104,36 +109,31 @@ const HomePostList: React.FC = () => {
                 }}
               >
                 <S.ListItemBoxContents>
-                  <div>{post.title}</div>
-                  {hoverItem === post.postId && <div>{post.preview}</div>}
+                  <S.TextContainer>
+                    <div>{post.title}</div>
+                    {hoverItem === post.postId && <div>{post.preview}</div>}
+                  </S.TextContainer>
                 </S.ListItemBoxContents>
               </S.ListItemBox>
-
               <S.ItemInfoContainer>
-                <S.ItemInfoLeft>
-                  <S.ItemTitle>
-                    <S.Writer>{post.nickname}</S.Writer>
-                    님의 일기
-                  </S.ItemTitle>
-                  <S.Date>작성일: {post.createdAt}</S.Date>
-                </S.ItemInfoLeft>
-                <S.ItemInfoRight>
-                  <S.Tag>#{post.mainHashtag}</S.Tag>
-                </S.ItemInfoRight>
+                <S.ItemTitle>
+                  <S.Writer>{post.nickname}</S.Writer>
+                  님의 일기
+                </S.ItemTitle>
+                <S.Tag>#{post.mainHashtag}</S.Tag>
+                <S.Date>작성일: {post.createdAt}</S.Date>
               </S.ItemInfoContainer>
             </S.ListItemContainer>
           );
         })}
       </S.ListContainer>
       {hasMore ? (
-        <div>
-        왜안되는데말좀해봐
-        </div>
+        <div>왜안되는데말좀해봐</div>
       ) : (
         <div>인기글 목록을 전부 불러왔습니다.</div>
       )}
       {loading && <div>로딩 중...</div>}
-        <div id="observer" style={{ height: "10px" }}></div>
+      <div id="observer" style={{ height: "10px" }}></div>
     </S.PostListContainer>
   );
 };

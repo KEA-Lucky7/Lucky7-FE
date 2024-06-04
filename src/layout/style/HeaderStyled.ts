@@ -9,7 +9,7 @@ export const Header = styled.header`
   align-items: center;
   position: sticky;
   top: 0px;
-  background: white;
+  background: #fffef9;
   z-index: 1;
   // border: 1px solid blue;
 `;

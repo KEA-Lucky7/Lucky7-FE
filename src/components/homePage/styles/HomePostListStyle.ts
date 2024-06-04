@@ -38,7 +38,7 @@ export const ListItemBox = styled.div`
     display: flex;
     justify-contents: center:
     align-items: center;
-    border-radius: 12px;
+    border-radius: 5px;
 `;
 
 export const ListItemBoxContents = styled.div`
@@ -49,6 +49,10 @@ export const ListItemBoxContents = styled.div`
   width: 80%;
 `;
 
+export const TextContainer = styled.div`
+  z-index: 1;
+`;
+
 export const ListItemContainer = styled.div`
   margin-bottom: 10px;
 `;
@@ -57,7 +61,10 @@ export const ItemInfoContainer = styled.div`
   margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 55px;
+  // border: 1px solid red;
 `;
 export const ItemInfoLeft = styled.div`
   margin-right: 10px;
@@ -65,7 +72,6 @@ export const ItemInfoLeft = styled.div`
 
 export const ItemTitle = styled.div`
   display: flex;
-  margin-bottom: 6px;
 `;
 
 export const Writer = styled.div`
@@ -74,16 +80,10 @@ export const Writer = styled.div`
 
 export const Date = styled.div`
   font-size: 14px;
-  color: gray;
+  color: #434343;
 `;
-
-export const ItemInfoRight = styled.div``;
-
 export const Tag = styled.span`
-  background-color: #eaeaea;
-  border-radius: 7px;
-  padding: 0px 3px 0px 3px;
-  color: #49519e;
+  color: #4566e3;
 `;
 
 export const Button = styled.div`
