@@ -12,7 +12,7 @@ import InputComment from "./comment/InputComment";
 import axios from "axios";
 import deletebutton from "../../assets/postDetail/deletebutton.png";
 import postEdit from "../../assets/postDetail/postEdit.png";
-import ConfirmModal from './ConfirmModal';
+import ConfirmModal from "./ConfirmModal";
 import { useNavigate } from "react-router-dom";
 import EditPostForm from "./EditPostForm";
 
@@ -65,7 +65,6 @@ interface Post {
   }[];
 }
 
-
 export default function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post>({} as Post);
@@ -75,19 +74,19 @@ export default function PostDetail() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedPost, setEditedPost] = useState({
-    title: '',
-    content: '',
-    preview: '',
-    thumbnail: '',
-    mainHashtag: '',
-    postType: '',
+    title: "",
+    content: "",
+    preview: "",
+    thumbnail: "",
+    mainHashtag: "",
+    postType: "",
     hashtagList: [] as string[],
     walletList: [] as {
       consumedDate: string;
       memo: string;
       amount: number;
       walletType: string;
-    }[]
+    }[],
   });
 
   const navigate = useNavigate();
@@ -96,7 +95,9 @@ export default function PostDetail() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`);
+        const response = await fetch(
+          `https://vision-necktitude.shop/posts/${postId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
@@ -114,7 +115,7 @@ export default function PostDetail() {
     try {
       await axios.post(`https://vision-necktitude.shop/posts/${postId}/like`);
       setLikeCount(likeCount + 1); // 좋아요 증가
-      alert('좋아요를 눌렀습니다.');
+      alert("좋아요를 눌렀습니다.");
     } catch (error) {
       console.error("Error liking the post:", error);
     }
@@ -123,24 +124,26 @@ export default function PostDetail() {
   //글 삭제 API
   const handleDelete = async () => {
     try {
-      const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `https://vision-necktitude.shop/posts/${postId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
-        alert('성공적으로 삭제되었습니다.');
-        navigate('/myblog');
+        alert("성공적으로 삭제되었습니다.");
+        navigate("/myblog");
         // Redirect or update the UI as needed
       } else {
-        alert('삭제에 실패하였습니다.');
+        alert("삭제에 실패하였습니다.");
       }
     } catch (error) {
-      console.error('Error deleting the post:', error);
-      alert('삭제를 하는 과정 중 에러가 발생하였습니다.');
+      console.error("Error deleting the post:", error);
+      alert("삭제를 하는 과정 중 에러가 발생하였습니다.");
     } finally {
       setIsModalVisible(false);
     }
   };
-
 
   // 글 수정 API
   const handleEditClick = () => {
@@ -157,42 +160,49 @@ export default function PostDetail() {
     });
   };
 
-
   const handleEditSubmit = async () => {
     try {
       // Translate the postType value before sending the request
       const translatedPost = {
         ...editedPost,
-        postType: editedPost.postType === "자유글" ? "FREE" : editedPost.postType === "가계부" ? "WALLET" : editedPost.postType
+        postType:
+          editedPost.postType === "자유글"
+            ? "FREE"
+            : editedPost.postType === "가계부"
+            ? "WALLET"
+            : editedPost.postType,
       };
 
       // Log the edited post data before sending it
-      console.log('Edited Post Data:', translatedPost);
+      console.log("Edited Post Data:", translatedPost);
 
-      const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(translatedPost),
-      });
+      const response = await fetch(
+        `https://vision-necktitude.shop/posts/${postId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(translatedPost),
+        }
+      );
 
       if (response.ok) {
         const updatedPost = await response.json();
         setPost(updatedPost);
 
         // Log the updated post data received from the server
-        console.log('Updated Post Data from Server:', updatedPost);
+        console.log("Updated Post Data from Server:", updatedPost);
 
         //setIsEditing(false);
-        alert('글이 성공적으로 수정되었습니다.');
+        alert("글이 성공적으로 수정되었습니다.");
         //setIsDropdownVisible(false);
       } else {
-        alert('글 수정에 실패하였습니다.');
+        alert("글 수정에 실패하였습니다.");
       }
     } catch (error) {
-      console.error('Error updating the post:', error);
-      alert('글 수정 과정 중 에러가 발생하였습니다.');
+      console.error("Error updating the post:", error);
+      alert("글 수정 과정 중 에러가 발생하였습니다.");
     }
   };
 
@@ -223,7 +233,7 @@ export default function PostDetail() {
     });
   };
 
-  const handleCommentSubmit = () => { };
+  const handleCommentSubmit = () => {};
 
   return (
     <>
@@ -264,7 +274,7 @@ export default function PostDetail() {
                 <img
                   src={seeMore}
                   alt="더보기"
-                  style={{ width: "3px", height: "15px", cursor: 'pointer' }}
+                  style={{ width: "3px", height: "15px", cursor: "pointer" }}
                   onClick={toggleDropdown}
                 />
                 {/* 드롭다운 메뉴 내용 */}
@@ -279,7 +289,7 @@ export default function PostDetail() {
                       borderRadius: "5px",
                       padding: "10px",
                       zIndex: 1000,
-                      columnGap: "10px"
+                      columnGap: "10px",
                     }}
                   >
                     {/* 신고버튼 */}
@@ -292,7 +302,7 @@ export default function PostDetail() {
                         alignItems: "center",
                         width: "100px",
                         cursor: "pointer",
-                        marginBottom: '10px'
+                        marginBottom: "10px",
                       }}
                     >
                       <img
@@ -314,7 +324,7 @@ export default function PostDetail() {
                         alignItems: "center",
                         width: "100px",
                         cursor: "pointer",
-                        marginBottom: '10px'
+                        marginBottom: "10px",
                       }}
                     >
                       <img
@@ -334,7 +344,7 @@ export default function PostDetail() {
                         justifyContent: "left",
                         alignItems: "center",
                         width: "100px",
-                        cursor: "pointer"
+                        cursor: "pointer",
                       }}
                       onClick={() => setIsModalVisible(true)}
                     >
@@ -384,7 +394,9 @@ export default function PostDetail() {
             <S.TagBox>
               <S.FirstTag>#{post.mainHashtag}</S.FirstTag>
               {post.hashtagList && post.hashtagList.length > 0 && (
-                <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "10px" }}
+                >
                   {post.hashtagList.map((tag, index) => (
                     <S.SecondTag key={index}>#{tag}</S.SecondTag>
                   ))}
@@ -427,7 +439,7 @@ export default function PostDetail() {
                   <img
                     src={postHeart}
                     alt="하트"
-                    style={{ width: "25px", height: "22px", cursor: 'pointer' }}
+                    style={{ width: "25px", height: "22px", cursor: "pointer" }}
                     onClick={handleLikeClick}
                   />
                   <div>{post.likeCnt}</div>
@@ -437,7 +449,8 @@ export default function PostDetail() {
                 <InputComment
                   className="custom-input"
                   placeholder="댓글을 입력하세요..."
-                  onClick={handleCommentSubmit}
+                  postId={post.postId}
+                  onClick={handleCommentSubmit} // 추가된 부분
                 />
               )}
             </S.CommentBox>

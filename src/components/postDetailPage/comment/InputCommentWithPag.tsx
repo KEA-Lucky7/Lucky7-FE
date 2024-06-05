@@ -1,17 +1,30 @@
-// import React from 'react';
-import styled from 'styled-components';
-
-import InputComment from './InputComment';
-import CommonButton from './CommomButton';
+import styled from "styled-components";
+import InputComment from "./InputComment";
+import CommonButton from "./CommomButton";
 
 type InputCommentProps = {
   className: string;
   onClick: () => void;
   placeholder: string;
+  postId: number; // 추가된 부분
 };
-const InputCommentWithPage = ({ className, onClick, placeholder }: InputCommentProps) => {
+
+const InputCommentWithPage = ({
+  className,
+  onClick,
+  placeholder,
+  postId,
+}: InputCommentProps) => {
+  // postId 추가
   return (
-    <InputCommentWrapper className={className} placeholder={placeholder} onClick={onClick}>
+    <InputCommentWrapper
+      className={className}
+      placeholder={placeholder}
+      onClick={onClick}
+      postId={postId}
+    >
+      {" "}
+      {/* postId 추가 */}
       <InputPageWrapper>
         <span>책 페이지</span>
         <InputPage className="pageInput">
@@ -41,6 +54,7 @@ const InputPageWrapper = styled.div`
     font-weight: ${(props) => props.theme.fontWeight.bold};
   }
 `;
+
 const InputPage = styled(CommonButton)`
   padding: 12px 16px;
   border: 1px solid ${(props) => props.theme.colors.grey4};

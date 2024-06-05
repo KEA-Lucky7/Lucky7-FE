@@ -33,14 +33,12 @@ export const TitleContainer = styled.div`
 
 export const TitleBox = styled.div`
   font-size: 28px;
-  background-color: none;
   color: white;
+  margin-bottom: 5px;
 `;
 
 export const SubTitleBox = styled(TitleBox)`
   font-size: 14px;
-  top: 90%;
-  left: 8%;
 `;
 
 export const PostContainer = styled.div`
