@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 export const MyblogWidgetContainer = styled.div`
-  width: 100%;
+  width: 90%;
   height: 180px;
+  // border: 1px solid red;
+`;
+
+export const Profilecontainer = styled.div`
   // border: 1px solid blue;
   display: flex;
   justify-content: space-evenly;
@@ -10,8 +14,8 @@ export const MyblogWidgetContainer = styled.div`
 `;
 
 export const Picturecontainer = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background-color: #d9d9d9;
   border-radius: 100%;
   margin-top: 10px;
@@ -22,7 +26,7 @@ export const UserInfoContainer = styled.div`
   height: 90px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 export const UserNickname = styled.div`
   width: 100%;
@@ -30,6 +34,7 @@ export const UserNickname = styled.div`
   font-weight: 600;
   color: #585858;
   font-size: 18px;
+  margin: 3px;
 `;
 
 export const UserId = styled.div`
@@ -37,12 +42,13 @@ export const UserId = styled.div`
   // border: 1px solid green;
   color: #9c9c9c;
   font-size: 13px;
+  margin: 3px;
 `;
 
 export const CreateNewpostButtonContainer = styled.div`
-  width: 92px;
+  width: 100%;
   height: 30px;
-  background-color: grey;
+  background-color: #4566e3;
   color: #fff;
   border-radius: 100px;
   text-decoration: none;

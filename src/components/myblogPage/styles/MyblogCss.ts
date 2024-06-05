@@ -10,6 +10,8 @@ export const MyBlogContainer = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
+  background: #fffef9;
+  // background: black;
 `;
 
 export const Picturecontainer = styled.div<PictureContainerProps>`
@@ -49,11 +51,11 @@ export const PostContainer = styled.div`
   // border: 1px solid black;
   margin-top: 10px;
   display: flex;
-  flex-direction: row;
+  // flex-direction: row;
 `;
 
 export const LeftSection = styled.div`
-  width: 30%;
+  width: 25%;
   height: 90%;
   display: flex;
   flex-direction: column;
