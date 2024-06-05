@@ -50,7 +50,7 @@ const MyblogPostList: React.FC = () => {
       try {
         const response = await axios.get('https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0', {
           headers: {
-            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
           }
         });
         setBlogPosts(response.data.postList || []);

@@ -1,131 +1,159 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface EditPostFormProps {
-    editedPost: EditedPost;
-    onSubmit: (updatedPost: EditedPost) => void;
-    onCancel: () => void;
-    isEditing: boolean;
-}
-
-interface EditedPost {
+  post: {
+    postId: number;
     title: string;
     content: string;
     preview: string;
-    thumbnail: string | null;
+    thumbnail: string;
     mainHashtag: string;
     postType: string;
     hashtagList: string[];
-    walletList: WalletEntry[];
+    walletList: {
+      consumedDate: string;
+      walletType: string;
+      memo: string;
+      amount: number;
+    }[];
+  };
+  onCancel: () => void;
+  onSubmit: (updatedPost: any) => void;
 }
 
-interface WalletEntry {
-    consumedDate: string;
-    memo: string;
-    amount: number;
-    walletType: string;
-}
+const EditPostForm: React.FC<EditPostFormProps> = ({ post, onCancel, onSubmit }) => {
+  const [editedPost, setEditedPost] = useState(post);
+  const navigate = useNavigate();
 
-const EditPostForm: React.FC<EditPostFormProps> = ({ editedPost, onSubmit, onCancel, isEditing }) => {
-    const [editedValues, setEditedValues] = useState<EditedPost>({
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setEditedPost((prevPost) => ({
+      ...prevPost,
+      [name]: value,
+    }));
+  };
+
+  const handleWalletListChange = (index: number, key: string, value: string | number) => {
+    const updatedWalletList = [...editedPost.walletList];
+    (updatedWalletList[index] as any)[key] = value;
+    setEditedPost((prevPost) => ({
+      ...prevPost,
+      walletList: updatedWalletList,
+    }));
+  };
+
+  const handleEditSubmit = async () => {
+    try {
+      const translatedPost = {
         ...editedPost,
-        postType: editedPost.postType === "FREE" ? "자유글" : editedPost.postType === "WALLET" ? "가계부" : editedPost.postType,
-    });
+        postType: editedPost.postType === "자유글" ? "FREE" : editedPost.postType === "가계부" ? "WALLET" : editedPost.postType
+      };
 
-    useEffect(() => {
-        console.log("Setting editedValues:", editedPost);
-        setEditedValues({
-            ...editedPost,
-            postType: editedPost.postType === "FREE" ? "자유글" : editedPost.postType === "WALLET" ? "가계부" : editedPost.postType
-        });
-    }, [editedPost]);
-
-    const handleEditChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-        index?: number,
-        field?: string
-    ) => {
-        const { name, value } = e.target;
-
-        const postTypeTranslations: { [key: string]: string } = {
-            '자유글': 'FREE',
-            '가계부': 'WALLET'
-        };
-
-        const translatedValue = postTypeTranslations[value] || value;
-
-        if (index !== undefined && field) {
-            const updatedList = editedValues[name as keyof EditedPost] as WalletEntry[];
-            updatedList[index] = {
-                ...updatedList[index],
-                [field]: value
-            };
-            setEditedValues((prev) => ({
-                ...prev,
-                [name]: updatedList
-            }));
-        } else {
-            setEditedValues((prev) => ({
-                ...prev,
-                [name]: translatedValue
-            }));
+      const response = await axios.patch(`https://vision-necktitude.shop/posts/${post.postId}`, translatedPost, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
         }
-    };
+      });
 
-    const handleFormSubmit = () => {
-        const translatedPost = {
-            ...editedValues,
-            postType: editedValues.postType === "자유글" ? "FREE" : editedValues.postType === "가계부" ? "WALLET" : editedValues.postType
-        };
-        onSubmit(translatedPost);
-    };
+      if (response.status === 200) {
+        onSubmit(response.data);
+        alert('글이 성공적으로 수정되었습니다.');
+        navigate('/myblog');
+      } else {
+        alert('글 수정에 실패하였습니다.');
+      }
+    } catch (error) {
+      console.error('Error updating the post:', error);
+      alert('글 수정 과정 중 에러가 발생하였습니다.');
+    }
+  };
 
-    useEffect(() => {
-        console.log("Post Type value in editedValues:", editedValues.postType);
-    }, [editedValues]);
-
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', width: '33vw', margin: '0 auto', gap: '20px' }}>
-            <label>Title:</label>
-            <input type="text" value={editedValues.title} onChange={(e) => handleEditChange(e)} name="title" />
-            <label>Content:</label>
-            <textarea value={editedValues.content} onChange={(e) => handleEditChange(e)} name="content" />
-            <label>Preview:</label>
-            <input type="text" value={editedValues.preview} onChange={(e) => handleEditChange(e)} name="preview" />
-            <label>Main Hashtag:</label>
-            <input type="text" value={editedValues.mainHashtag} onChange={(e) => handleEditChange(e)} name="mainHashtag" />
-            <label>Post Type:</label>
-            <select value={editedValues.postType} onChange={(e) => handleEditChange(e)} name="postType">
-                <option value="">Select Post Type</option>
-                <option value="자유글">자유글</option>
-                <option value="가계부">가계부</option>
-            </select>
-            <label>Hashtag List:</label>
-            {editedValues.hashtagList.map((tag, index) => (
-                <div key={index}>
-                    <input type="text" value={tag} onChange={(e) => handleEditChange(e, index, "hashtagList")} name="hashtagList" />
-                </div>
-            ))}
-            <label>Wallet List:</label>
-            {editedValues.walletList.map((walletItem, index) => (
-                <div key={index}>
-                    <input type="text" value={walletItem.consumedDate} onChange={(e) => handleEditChange(e, index, "consumedDate")} name="walletList" />
-                    <input type="text" value={walletItem.memo} onChange={(e) => handleEditChange(e, index, "memo")} name="walletList" />
-                    <input type="number" value={walletItem.amount} onChange={(e) => handleEditChange(e, index, "amount")} name="walletList" />
-                    <select value={walletItem.walletType} onChange={(e) => handleEditChange(e, index, "walletType")} name="walletList">
-                        <option value="">타입 선택</option>
-                        <option value="FOOD">FOOD</option>
-                        <option value="TRAFFIC">TRAFFIC</option>
-                        <option value="LEISURE">LEISURE</option>
-                        <option value="EDUCATION">EDUCATION</option>
-                        <option value="LIFE">LIFE</option>
-                        <option value="FINANCE">FINANCE</option>
-                    </select>
-                </div>
-            ))}
-            <button onClick={handleFormSubmit}>수정</button>
-            {isEditing && <button onClick={onCancel}>취소</button>}
+  return (
+    <div style={{ margin: '0 auto', display: 'flex', flexDirection: 'column', width: '33vw', gap: '40px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <label>Title</label>
+        <input
+          type="text"
+          name="title"
+          value={editedPost.title}
+          onChange={handleChange}
+          placeholder="Title"
+        />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <label>Content</label>
+        <textarea
+          name="content"
+          value={editedPost.content}
+          onChange={handleChange}
+          placeholder="Content"
+        />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <label>Main Hashtag</label>
+        <input
+          type="text"
+          name="mainHashtag"
+          value={editedPost.mainHashtag}
+          onChange={handleChange}
+          placeholder="Main Hashtag"
+        />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <label>Post Type</label>
+        <select
+          name="postType"
+          value={editedPost.postType}
+          onChange={handleChange}
+        >
+          <option value="자유글">자유글</option>
+          <option value="가계부">가계부</option>
+        </select>
+      </div>
+      {editedPost.walletList.map((walletItem, index) => (
+        <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <label>Consumed Date</label>
+          <input
+            type="text"
+            value={walletItem.consumedDate}
+            onChange={(e) => handleWalletListChange(index, 'consumedDate', e.target.value)}
+            placeholder="Consumed Date"
+          />
+          <label>Memo</label>
+          <input
+            type="text"
+            value={walletItem.memo}
+            onChange={(e) => handleWalletListChange(index, 'memo', e.target.value)}
+            placeholder="Memo"
+          />
+          <label>Amount</label>
+          <input
+            type="number"
+            value={walletItem.amount}
+            onChange={(e) => handleWalletListChange(index, 'amount', parseInt(e.target.value))}
+            placeholder="Amount"
+          />
+          <label>Wallet Type</label>
+          <select
+            value={walletItem.walletType}
+            onChange={(e) => handleWalletListChange(index, 'walletType', e.target.value)}
+          >
+            <option value="FOOD">FOOD</option>
+            <option value="TRAFFIC">TRAFFIC</option>
+            <option value="LEISURE">LEISURE</option>
+            <option value="EDUCATION">EDUCATION</option>
+            <option value="LIFE">LIFE</option>
+            <option value="FINANCE">FINANCE</option>
+          </select>
         </div>
-    );
+      ))}
+      <button onClick={handleEditSubmit}>Save</button>
+      <button onClick={onCancel}>Cancel</button>
+    </div>
+  );
 };
 
 export default EditPostForm;

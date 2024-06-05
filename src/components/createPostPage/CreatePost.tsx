@@ -173,9 +173,17 @@ export default function CreatePost() {
     });
   };
 
-  const handleSubmit = async () => {
+  // Convert editor state to text
+  const extractTextFromEditorState = (editorState: EditorState): string => {
     const contentRaw = convertToRaw(editorState.getCurrentContent());
-    const content = JSON.stringify(contentRaw);
+    const blocks = contentRaw.blocks;
+    const text = blocks.map(block => block.text).join('\n');
+    return text;
+  };
+
+  // 글작성 API
+  const handleSubmit = async () => {
+    const content = extractTextFromEditorState(editorState);
     const preview = content.slice(0, 50);
     const postType = postCategory === '자유글' ? 'FREE' : 'WALLET';
 
@@ -201,8 +209,13 @@ export default function CreatePost() {
 
     console.log('Payload:', payload);
     console.log(accountBookInputs);
+
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/0', payload);
+      const response = await axios.post('https://vision-necktitude.shop/posts/0', payload, {
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+        }
+      });
       console.log('Response:', response.data);
       alert('글 작성이 완료 되었습니다.');
       navigate('/myblog');
@@ -211,9 +224,9 @@ export default function CreatePost() {
     }
   };
 
+  //글 임시저장 API
   const handleTemporarySubmit = async () => {
-    const contentRaw = convertToRaw(editorState.getCurrentContent());
-    const content = JSON.stringify(contentRaw);
+    const content = extractTextFromEditorState(editorState);
     const preview = content.slice(0, 50);
     const postType = postCategory === '자유글' ? 'FREE' : 'WALLET';
 
@@ -240,7 +253,11 @@ export default function CreatePost() {
     console.log('Payload:', payload);
 
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload);
+      const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload, {
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+        }
+      });
       console.log('Response:', response.data);
       alert('임시 저장이 완료 되었습니다.');
       location.reload();
@@ -252,7 +269,11 @@ export default function CreatePost() {
   useEffect(() => {
     const fetchTemporaryPosts = async () => {
       try {
-        const response = await fetch('https://vision-necktitude.shop/posts/temp-list');
+        const response = await fetch('https://vision-necktitude.shop/posts/temp-list', {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+          }
+        });
         const data = await response.json();
         setPosts(data);
       } catch (error) {
