@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style/SideMenuStyle";
 import Cookies from "js-cookie";
+import { useUserStore } from '../components/homePage/login/state';
 import MemberInfo from "./SideMenuMemberInfo";
 import FinancialLuck from "../components/financialLuck/FinancialLuck";
 import moaboa from "../../src/assets/header/moaboa.png";
@@ -32,11 +33,12 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, label, onClick }) => (
 const SideMenu: React.FC<Props> = ({ setShowSideMenu }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showFortuneModal, setShowFortuneModal] = useState(false);
+  const { userInfo } = useUserStore();
   const navigate = useNavigate();
+  const memberCookie = Cookies.get("login");
 
   useEffect(() => {
-    const memberCookie = Cookies.get("member");
-    if (memberCookie) {
+    if (memberCookie == "true" && userInfo) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -50,27 +52,59 @@ const SideMenu: React.FC<Props> = ({ setShowSideMenu }) => {
     setShowSideMenu(false);
   };
 
+  const goWritePage = () => {
+    if (memberCookie == "true" && userInfo){
+      handleNavigation("/write")
+    } else {
+      window.alert("로그인 후 이용해주세요.")
+    }
+  }
+
+  const goBlogPage = () => {
+    if (memberCookie == "true" && userInfo){
+      handleNavigation("/myblog")
+    } else {
+      window.alert("로그인 후 이용해주세요.")
+    }
+  }
+
+  const goFollowPage = () => {
+    if (memberCookie == "true" && userInfo){
+      handleNavigation("/")
+    } else {
+      window.alert("로그인 후 이용해주세요.")
+    }
+  }
+
+  const goLikePage = () => {
+    if (memberCookie == "true" && userInfo){
+      handleNavigation("/like?page=1")
+    } else {
+      window.alert("로그인 후 이용해주세요.")
+    }
+  }
+
   return (
     <S.MenuOverlay onClick={toggleSideMenu}>
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
         <S.TitleImg src={moaboa} alt="titleImg" />
-        <MemberInfo isLoggedIn={isLoggedIn} />
+        <MemberInfo isLoggedIn={isLoggedIn} storedUserInfo={userInfo} />
         <S.MenuList>
           <MenuItem
             icon={Write}
             label="글쓰기"
-            onClick={() => handleNavigation("/write")}
+            onClick={goWritePage}
           />
           <MenuItem
             icon={Myblog}
             label="내블로그"
-            onClick={() => handleNavigation("/myblog")}
+            onClick={goBlogPage}
           />
-          <MenuItem icon={Liked} label="내 팔로우" onClick={() => {}} />
+          <MenuItem icon={Liked} label="내 팔로우" onClick={goFollowPage} />
           <MenuItem
             icon={Luck}
             label="좋아요한 글"
-            onClick={() => handleNavigation("/like?page=1")}
+            onClick={goLikePage}
           />
           {showFortuneModal && (
             <FinancialLuck setShowFortuneModal={setShowFortuneModal} />
