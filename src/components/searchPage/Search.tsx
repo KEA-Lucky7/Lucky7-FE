@@ -190,7 +190,7 @@ const Search: React.FC = () => {
       </S.SearchMenuContainer>
       <S.FlexContainer>
         <S.SearchDesc>{keyword}에 대한 검색결과 입니다.</S.SearchDesc>
-        {tab !== 'user' && (
+        {tab === 'post' && (
           <S.SortContainer>
             <S.SortMenu
               onClick={() => handleSortChange('likeDESC')}
@@ -204,7 +204,7 @@ const Search: React.FC = () => {
             >
               최신순
             </S.SortMenu>
-            {tab === 'post' && (
+
               <>
                 <S.SortMenu onClick={togglePeriodMenu} selected={periodMenuOpen}>
                   { period === 'all' && <div> 기간 전체 </div>}
@@ -241,7 +241,6 @@ const Search: React.FC = () => {
                   </S.PeriodContainer>
                 )}
               </>
-            )}
           </S.SortContainer>
         )}
       </S.FlexContainer>
