@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 export const MyblogWidgetContainer = styled.div`
-  width: 100%;
-  height: 180px;
+  width: 90%;
+  margin-bottom: 20px;
+  // border: 1px solid red;
+`;
+
+export const Profilecontainer = styled.div`
   // border: 1px solid blue;
   display: flex;
   justify-content: space-evenly;
@@ -10,8 +14,8 @@ export const MyblogWidgetContainer = styled.div`
 `;
 
 export const Picturecontainer = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background-color: #d9d9d9;
   border-radius: 100%;
   margin-top: 10px;
@@ -22,7 +26,7 @@ export const UserInfoContainer = styled.div`
   height: 90px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 export const UserNickname = styled.div`
   width: 100%;
@@ -30,6 +34,7 @@ export const UserNickname = styled.div`
   font-weight: 600;
   color: #585858;
   font-size: 18px;
+  margin: 3px;
 `;
 
 export const UserId = styled.div`
@@ -37,12 +42,13 @@ export const UserId = styled.div`
   // border: 1px solid green;
   color: #9c9c9c;
   font-size: 13px;
+  margin: 3px;
 `;
 
 export const CreateNewpostButtonContainer = styled.div`
-  width: 92px;
+  width: 100%;
   height: 30px;
-  background-color: grey;
+  background-color: #4566e3;
   color: #fff;
   border-radius: 100px;
   text-decoration: none;
@@ -54,10 +60,9 @@ export const CreateNewpostButtonContainer = styled.div`
 //===========================카테고리 위젯 css===========================
 
 export const MyblogCategoryWidgetContainer = styled.div`
-  width: 80%;
+  width: 90%;
   // height: 300px;
   // border: 1px solid green;
-  margin: 0 auto;
 `;
 
 export const Title = styled.div`
@@ -68,20 +73,15 @@ export const Title = styled.div`
 `;
 
 export const ContentTitle = styled.div`
-  width: 100%;
-  height: 40px;
-  margin: 0 auto;
-  // border: 1px solid red;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   flex-direction: row;
+  margin: 10px;
 `;
 
 export const Section = styled.div`
   width: 100%;
   // border: solid 1px red;
-  margin-left: -60px;
-  padding-left: -60px;
 `;
 
 export const Circle = styled.div`
@@ -115,4 +115,42 @@ export const Tag = styled.div`
   gap: 5px;
   // border: 1px solid red;
   vertical-align: middle;
+`;
+
+export const Dropdown = styled.div`
+  background-color: #fffef9;
+  // border: 1px solid #ddd;
+  border-radius: 4px;
+
+  padding: 0px 10px 0px 10px;
+`;
+
+export const DropdownItem = styled.div`
+  padding: 5px 0;
+  cursor: pointer;
+  &:hover {
+    background-color: #fffef9;
+  }
+  font-weight: 100;
+`;
+
+export const ListItemButton = styled.div`
+  height: 20px;
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 0px 10px 0px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; /* 애니메이션 추가 */
+  &:hover {
+    background-color: #f0f0f0; /* 배경색 변경 */
+  }
+`;
+
+export const ListItemText = styled.div`
+  font-size: 16px;
+  // margin-left: 10px;
 `;

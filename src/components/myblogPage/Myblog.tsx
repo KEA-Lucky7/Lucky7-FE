@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import * as S from "../myblogPage/styles/MyblogCss";
-import Titlebackground from "../../assets/myblog/Titlebackground.png";
+import Titlebackground from "../../assets/myblog/Titlebackground.jpg";
 import MyblogWidget from "./MyblogWidget";
 import AccountBook from "./AccountBook";
 import MyblogPostList from "./MyblogPostList";
@@ -15,12 +15,15 @@ export default function myblog() {
     useState<string>(Titlebackground);
 
   const backgroundImgUrlHandler = () => {
-    setBackgroundImageUrl("/")
-  }
+    setBackgroundImageUrl("/");
+  };
 
   return (
     <S.MyBlogContainer>
-      <S.Picturecontainer imageUrl={backgroundImageUrl} onClick={backgroundImgUrlHandler}>
+      <S.Picturecontainer
+        imageUrl={backgroundImageUrl}
+        onClick={backgroundImgUrlHandler}
+      >
         <S.TitleContainer>
           <S.TitleBox>나의 일상을 담은 일기장</S.TitleBox>
           <S.SubTitleBox>my happy life</S.SubTitleBox>
