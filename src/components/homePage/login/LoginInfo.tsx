@@ -54,7 +54,7 @@ const LoginInfo = () => {
   const createBlog = async () => {
     setBlogLoading(true)
     try {
-      const response = await axios.post(`${serverUrl}/post/${accessToken}`);
+      const response = await axios.post(`${serverUrl}/blog/sign-in/${accessToken}`);
       console.log(response.data)
       if(response.data){
         getUserInfo()
@@ -73,6 +73,7 @@ const LoginInfo = () => {
       const strJson = JSON.stringify({id: data.id, nickname: data.nickname, about: data.about})
       setUserInfo(strJson);
       setCallUserLoading(false)
+      console.log(strJson)
       window.alert("로그인이 완료됐습니다.")
     } catch (error) {
       window.alert('Error:' + error);
