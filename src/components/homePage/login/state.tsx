@@ -34,3 +34,20 @@ export const useUserStore = create(
     },
   ),
 );
+
+interface BlogStore { 
+  blogInfo: string,
+  setBlogInfo: ( blogInfo: string ) => void;
+}
+
+export const useBlogStore = create(
+  persist<BlogStore>(
+    (set) => ({
+      blogInfo: window.localStorage.getItem('blogInfo') || "{}",
+      setBlogInfo: (blogInfo) => set({ blogInfo }),
+    }),
+    {
+      name: 'blogInfo'
+    },
+  ),
+);
