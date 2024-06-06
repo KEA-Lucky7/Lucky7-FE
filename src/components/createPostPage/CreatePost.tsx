@@ -2,7 +2,7 @@ import * as S from "./styles/CreatepostCss";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 import { stateFromHTML } from "draft-js-import-html";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
@@ -40,7 +40,6 @@ export default function CreatePost() {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [posts, setPosts] = useState<any[]>([]);
-  const [selectedPost, setSelectedPost] = useState<any | null>(null);
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -278,7 +277,6 @@ export default function CreatePost() {
         }
       });
       const data = await response.json();
-      setSelectedPost(data);
       setTitle(data.title);
       setEditorState(EditorState.createWithContent(stateFromHTML(data.content)));
       setTags(data.hashtagList.slice(0, 1).map((tag: string, index: number) => ({ id: index + 1, name: tag }))); // 메인 해시태그
