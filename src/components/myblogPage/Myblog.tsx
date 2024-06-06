@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import * as S from "../myblogPage/styles/MyblogCss";
 import Titlebackground from "../../assets/myblog/Titlebackground.jpg";
 import MyblogWidget from "./MyblogWidget";
@@ -7,12 +6,28 @@ import AccountBook from "./AccountBook";
 import MyblogPostList from "./MyblogPostList";
 import MyblogCategoryWidget from "./MyblogCategoryWidget";
 import Report from "../reportPage/Report";
+import { useBlogStore } from "../homePage/login/state";
 
-export default function myblog() {
+export default function Myblog() {
   const [contents, setContents] = useState<string>("postList");
   //"postList", "accountBook", "report"
-  let [backgroundImageUrl, setBackgroundImageUrl] =
+  const [backgroundImageUrl, setBackgroundImageUrl] =
     useState<string>(Titlebackground);
+
+  const { blogInfo } = useBlogStore();
+
+  useEffect(() => {
+    if (blogInfo) {
+      const storedBlogInfo = JSON.parse(blogInfo);
+      console.log("Blog Name:", storedBlogInfo.blogName);
+      console.log("About:", storedBlogInfo.about);
+      console.log("Header Image:", storedBlogInfo.headerImage);
+
+      if (storedBlogInfo.headerImage) {
+        setBackgroundImageUrl(storedBlogInfo.headerImage);
+      }
+    }
+  }, [blogInfo]);
 
   const backgroundImgUrlHandler = () => {
     setBackgroundImageUrl("/");

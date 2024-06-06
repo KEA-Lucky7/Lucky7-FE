@@ -4,13 +4,14 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
 import { stateFromHTML } from "draft-js-import-html";
-import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
+import postDetailbackground from "../../assets/postDetail/postDetailbackground.jpeg";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
+import down from "../../assets/createPost/down.png";
 import axios from "axios";
 import moaboa from "../../assets/header/moaboa.png";
 import { useNavigate } from "react-router-dom";
 import { TemporarySaveModal } from "./createPostItems/TemporarySaveModal";
-import Resizer from 'react-image-file-resizer';
+import Resizer from "react-image-file-resizer";
 import { useStore } from "../homePage/login/state";
 
 interface Tag {
@@ -29,14 +30,19 @@ enum PostCategory {
 }
 
 export default function CreatePost() {
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>(postDetailbackground);
-  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
+  const [backgroundImageUrl, setBackgroundImageUrl] =
+    useState<string>(postDetailbackground);
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.createEmpty()
+  );
   const [tags, setTags] = useState<Tag[]>([]);
   const [subtags, setSubtags] = useState<SubTag[]>([]);
   const [tagInput, setTagInput] = useState<string>("");
   const [subtagInput, setSubtagInput] = useState<string>("");
   const [postCategory, setPostCategory] = useState<PostCategory | null>(null);
-  const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]);
+  const [accountBookInputs, setAccountBookInputs] = useState<
+    { consumedDate: string; memo: string; amount: number; walletType: string }[]
+  >([]);
   const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -124,14 +130,14 @@ export default function CreatePost() {
             }
           }
 
-          const canvas = document.createElement('canvas');
+          const canvas = document.createElement("canvas");
           canvas.width = width;
           canvas.height = height;
 
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext("2d");
           ctx?.drawImage(img, 0, 0, width, height);
 
-          setBackgroundImageUrl(canvas.toDataURL('image/png'));
+          setBackgroundImageUrl(canvas.toDataURL("image/png"));
         };
       };
       reader.readAsDataURL(file);
@@ -139,10 +145,17 @@ export default function CreatePost() {
   };
 
   const handleAddAccountBookInput = () => {
-    setAccountBookInputs([...accountBookInputs, { consumedDate: "", memo: "", amount: 0, walletType: "" }]);
+    setAccountBookInputs([
+      ...accountBookInputs,
+      { consumedDate: "", memo: "", amount: 0, walletType: "" },
+    ]);
   };
 
-  const handleInputChange = (index: number, key: string, value: string | number) => {
+  const handleInputChange = (
+    index: number,
+    key: string,
+    value: string | number
+  ) => {
     const updatedInputs = [...accountBookInputs];
     (updatedInputs[index] as any)[key] = value;
     setAccountBookInputs(updatedInputs);
@@ -155,7 +168,7 @@ export default function CreatePost() {
   };
 
   const urlToBlob = (url: string): Promise<Blob> => {
-    return fetch(url).then(response => response.blob());
+    return fetch(url).then((response) => response.blob());
   };
 
   const resizeImage = (file: Blob): Promise<string> => {
@@ -164,13 +177,13 @@ export default function CreatePost() {
         file,
         150,
         150,
-        'JPEG',
+        "JPEG",
         100,
         0,
         (uri) => {
           resolve(uri as string);
         },
-        'base64'
+        "base64"
       );
     });
   };
@@ -178,7 +191,7 @@ export default function CreatePost() {
   const extractTextFromEditorState = (editorState: EditorState): string => {
     const contentRaw = convertToRaw(editorState.getCurrentContent());
     const blocks = contentRaw.blocks;
-    const text = blocks.map(block => block.text).join('\n');
+    const text = blocks.map((block) => block.text).join("\n");
     return text;
   };
 
@@ -186,15 +199,15 @@ export default function CreatePost() {
   const handleSubmit = async () => {
     const content = extractTextFromEditorState(editorState);
     const preview = content.slice(0, 50);
-    const postType = postCategory === '자유글' ? 'FREE' : 'WALLET';
+    const postType = postCategory === "자유글" ? "FREE" : "WALLET";
 
-    let resizedThumbnail: string = '';
+    let resizedThumbnail: string = "";
 
     try {
       const imageBlob = await urlToBlob(backgroundImageUrl);
       resizedThumbnail = await resizeImage(imageBlob);
     } catch (error) {
-      console.error('Error resizing image:', error);
+      console.error("Error resizing image:", error);
     }
 
     const payload = {
@@ -202,26 +215,30 @@ export default function CreatePost() {
       content,
       preview,
       thumbnail: resizedThumbnail,
-      mainHashtag: tags.length > 0 ? tags[0].name : '',
+      mainHashtag: tags.length > 0 ? tags[0].name : "",
       postType,
-      hashtagList: subtags.map(tag => tag.name),
+      hashtagList: subtags.map((tag) => tag.name),
       walletList: accountBookInputs,
     };
 
-    console.log('Payload:', payload);
+    console.log("Payload:", payload);
     console.log(accountBookInputs);
 
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/0', payload, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
+      const response = await axios.post(
+        "https://vision-necktitude.shop/posts/0",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      });
-      console.log('Response:', response.data);
-      alert('글 작성이 완료 되었습니다.');
-      navigate('/myblog');
+      );
+      console.log("Response:", response.data);
+      alert("글 작성이 완료 되었습니다.");
+      navigate("/myblog");
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
     }
   };
 
@@ -229,15 +246,15 @@ export default function CreatePost() {
   const handleTemporarySubmit = async () => {
     const content = extractTextFromEditorState(editorState);
     const preview = content.slice(0, 50);
-    const postType = postCategory === '자유글' ? 'FREE' : 'WALLET';
+    const postType = postCategory === "자유글" ? "FREE" : "WALLET";
 
-    let resizedThumbnail: string = '';
+    let resizedThumbnail: string = "";
 
     try {
       const imageBlob = await urlToBlob(backgroundImageUrl);
       resizedThumbnail = await resizeImage(imageBlob);
     } catch (error) {
-      console.error('Error resizing image:', error);
+      console.error("Error resizing image:", error);
     }
 
     const payload = {
@@ -245,63 +262,87 @@ export default function CreatePost() {
       content,
       preview,
       thumbnail: resizedThumbnail,
-      mainHashtag: tags.length > 0 ? tags[0].name : '',
+      mainHashtag: tags.length > 0 ? tags[0].name : "",
       postType,
-      hashtagList: subtags.map(tag => tag.name),
+      hashtagList: subtags.map((tag) => tag.name),
       walletList: accountBookInputs,
     };
 
-    console.log('Payload:', payload);
+    console.log("Payload:", payload);
 
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
+      const response = await axios.post(
+        "https://vision-necktitude.shop/posts/temp/0",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      });
-      console.log('Response:', response.data);
+      );
+      console.log("Response:", response.data);
       const { postId } = response.data; // Get postId from response
       // Fetch the temporary post after saving it
       handlePostSelect(postId);
-      console.log(postId);// postId 찍히는거 확인함.
-      alert('임시 저장이 완료 되었습니다.');
+      console.log(postId); // postId 찍히는거 확인함.
+      alert("임시 저장이 완료 되었습니다.");
       location.reload();
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
     }
   };
 
   const handlePostSelect = async (postId: number) => {
     try {
-      const response = await fetch(`https://vision-necktitude.shop/posts/temp/${postId}`, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
+      const response = await fetch(
+        `https://vision-necktitude.shop/posts/temp/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      });
+      );
       const data = await response.json();
       setTitle(data.title);
-      setEditorState(EditorState.createWithContent(stateFromHTML(data.content)));
-      setTags(data.hashtagList.slice(0, 1).map((tag: string, index: number) => ({ id: index + 1, name: tag }))); // 메인 해시태그
-      setSubtags(data.hashtagList.slice(1).map((tag: string, index: number) => ({ id: index + 1, name: tag }))); // 서브 해시태그
+      setEditorState(
+        EditorState.createWithContent(stateFromHTML(data.content))
+      );
+      setTags(
+        data.hashtagList
+          .slice(0, 1)
+          .map((tag: string, index: number) => ({ id: index + 1, name: tag }))
+      ); // 메인 해시태그
+      setSubtags(
+        data.hashtagList
+          .slice(1)
+          .map((tag: string, index: number) => ({ id: index + 1, name: tag }))
+      ); // 서브 해시태그
       setAccountBookInputs(data.walletList);
-      setPostCategory(data.postType === "소비 일기" ? PostCategory.가계부 : PostCategory.자유글);
+      setPostCategory(
+        data.postType === "소비 일기"
+          ? PostCategory.가계부
+          : PostCategory.자유글
+      );
     } catch (error) {
-      console.error('Error fetching temporary post:', error);
+      console.error("Error fetching temporary post:", error);
     }
   };
 
   useEffect(() => {
     const fetchTemporaryPosts = async () => {
       try {
-        const response = await fetch('https://vision-necktitude.shop/posts/temp-list', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
+        const response = await fetch(
+          "https://vision-necktitude.shop/posts/temp-list",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
-        });
+        );
         const data = await response.json();
         setPosts(data);
       } catch (error) {
-        console.error('Error fetching temporary posts:', error);
+        console.error("Error fetching temporary posts:", error);
       }
     };
 
@@ -339,24 +380,27 @@ export default function CreatePost() {
           />
         )}
       </S.Header>
-      <S.Picturecontainer
-        imageUrl={backgroundImageUrl}
-      >
+      <S.Picturecontainer imageUrl={backgroundImageUrl}>
         <S.TitleContainer>
           <S.SubTitleBox
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleSelectCategory(e.target.value as PostCategory)
             }
           >
-            <select>
-              <option value="">게시판을 선택해주세요</option>
-              <option value={PostCategory.자유글}>자유글</option>
-              <option value={PostCategory.가계부}>가계부</option>
-            </select>
+            <S.SelectWrapper>
+              <S.Select>
+                <S.Option value="">게시판을 선택해주세요</S.Option>
+                <S.Option value="자유글">자유글</S.Option>
+                <S.Option value="가계부">가계부</S.Option>
+              </S.Select>
+              <S.SelectArrow>
+                <img src={down} style={{ scale: "30%" }} />
+              </S.SelectArrow>
+            </S.SelectWrapper>
           </S.SubTitleBox>
           <S.TitleInput
             placeholder="제목을 입력하세요."
-            style={{ fontSize: "24px", color: 'white' }}
+            style={{ fontSize: "24px", color: "white" }}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -393,14 +437,54 @@ export default function CreatePost() {
             editorState={editorState}
             onEditorStateChange={onEditorStateChange}
           />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          >
             {accountBookInputs.map((input, index) => (
               <S.InputBox key={index}>
-                <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', margin: '15px 20px 15px 0px' }}>
-                  <S.Input type="text" placeholder="2024.05.31" value={input.consumedDate} onChange={(e) => handleInputChange(index, 'consumedDate', e.target.value)} />
-                  <S.Input type="text" placeholder="메모" value={input.memo} onChange={(e) => handleInputChange(index, 'memo', e.target.value)} />
-                  <S.Input type="number" placeholder="금액" value={input.amount} onChange={(e) => handleInputChange(index, 'amount', parseInt(e.target.value))} />
-                  <select value={input.walletType} onChange={(e) => handleInputChange(index, 'walletType', e.target.value)}>
+                <div
+                  key={index}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "10px",
+                    margin: "15px 20px 15px 0px",
+                  }}
+                >
+                  <S.Input
+                    type="text"
+                    placeholder="2024.05.31"
+                    value={input.consumedDate}
+                    onChange={(e) =>
+                      handleInputChange(index, "consumedDate", e.target.value)
+                    }
+                  />
+                  <S.Input
+                    type="text"
+                    placeholder="메모"
+                    value={input.memo}
+                    onChange={(e) =>
+                      handleInputChange(index, "memo", e.target.value)
+                    }
+                  />
+                  <S.Input
+                    type="number"
+                    placeholder="금액"
+                    value={input.amount}
+                    onChange={(e) =>
+                      handleInputChange(
+                        index,
+                        "amount",
+                        parseInt(e.target.value)
+                      )
+                    }
+                  />
+                  <select
+                    value={input.walletType}
+                    onChange={(e) =>
+                      handleInputChange(index, "walletType", e.target.value)
+                    }
+                  >
                     <option value="">타입 선택</option>
                     <option value="FOOD">FOOD</option>
                     <option value="TRAFFIC">TRAFFIC</option>
@@ -411,7 +495,11 @@ export default function CreatePost() {
                   </select>
                 </div>
                 <div>
-                  <S.DeleteButton onClick={() => handleDeleteAccountBookInput(index)}>삭제</S.DeleteButton>
+                  <S.DeleteButton
+                    onClick={() => handleDeleteAccountBookInput(index)}
+                  >
+                    삭제
+                  </S.DeleteButton>
                 </div>
               </S.InputBox>
             ))}
@@ -439,7 +527,9 @@ export default function CreatePost() {
               {tags.map((tag) => (
                 <S.TagItem key={tag.id}>
                   #{tag.name}
-                  <S.DeleteTagButton onClick={() => handleDeleteTag(tag.id)}>X</S.DeleteTagButton>
+                  <S.DeleteTagButton onClick={() => handleDeleteTag(tag.id)}>
+                    X
+                  </S.DeleteTagButton>
                 </S.TagItem>
               ))}
             </div>
@@ -471,7 +561,11 @@ export default function CreatePost() {
               {subtags.map((subtag) => (
                 <S.TagItem key={subtag.id}>
                   #{subtag.name}
-                  <S.DeleteTagButton onClick={() => handleDeleteSubTag(subtag.id)}>X</S.DeleteTagButton>
+                  <S.DeleteTagButton
+                    onClick={() => handleDeleteSubTag(subtag.id)}
+                  >
+                    X
+                  </S.DeleteTagButton>
                 </S.TagItem>
               ))}
             </div>
