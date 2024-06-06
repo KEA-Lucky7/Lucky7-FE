@@ -28,7 +28,7 @@ export default function SettingInfo() {
         nickname,
         birth: "2001-01-01",
         profileImage,
-        introduce
+        about: introduce
       });
       console.log(response.data)
       const data = response.data.data;
