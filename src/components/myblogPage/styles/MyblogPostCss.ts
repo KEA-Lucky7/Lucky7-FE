@@ -290,7 +290,7 @@ export const ListTitle = styled.div`
 `;
 
 export const ListTag = styled.div`
-  width: 10%;
+  width: 20%;
   height: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -365,4 +365,11 @@ export const PictureListContent = styled.div`
   font-size: 18px;
   text-align: left;
   line-height: 20px;
+`;
+
+export const NoPostsMessage = styled.div`
+  text-align: center;
+  margin: 20px 0;
+  font-size: 18px;
+  color: #999;
 `;

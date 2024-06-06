@@ -3,6 +3,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
+import { stateFromHTML } from "draft-js-import-html";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
 import axios from "axios";
@@ -34,7 +35,7 @@ export default function CreatePost() {
   const [tagInput, setTagInput] = useState<string>("");
   const [subtagInput, setSubtagInput] = useState<string>("");
   const [postCategory, setPostCategory] = useState<PostCategory | null>(null);
-  const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]); // 입력된 값들을 저장할 배열 상태
+  const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]);
   const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -104,12 +105,11 @@ export default function CreatePost() {
         const img = new Image();
         img.src = reader.result as string;
         img.onload = () => {
-          const maxWidth = 500; // 원하는 최대 너비
-          const maxHeight = 400; // 원하는 최대 높이
+          const maxWidth = 500;
+          const maxHeight = 400;
           let width = img.width;
           let height = img.height;
 
-          // 이미지 비율 유지하면서 최대 크기로 조정
           if (width > height) {
             if (width > maxWidth) {
               height *= maxWidth / width;
@@ -160,8 +160,8 @@ export default function CreatePost() {
     return new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        150, // Max width
-        150, // Max height
+        150,
+        150,
         'JPEG',
         100,
         0,
@@ -173,9 +173,16 @@ export default function CreatePost() {
     });
   };
 
-  const handleSubmit = async () => {
+  const extractTextFromEditorState = (editorState: EditorState): string => {
     const contentRaw = convertToRaw(editorState.getCurrentContent());
-    const content = JSON.stringify(contentRaw);
+    const blocks = contentRaw.blocks;
+    const text = blocks.map(block => block.text).join('\n');
+    return text;
+  };
+
+  // 글작성 API
+  const handleSubmit = async () => {
+    const content = extractTextFromEditorState(editorState);
     const preview = content.slice(0, 50);
     const postType = postCategory === '자유글' ? 'FREE' : 'WALLET';
 
@@ -201,8 +208,13 @@ export default function CreatePost() {
 
     console.log('Payload:', payload);
     console.log(accountBookInputs);
+
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/0', payload);
+      const response = await axios.post('https://vision-necktitude.shop/posts/0', payload, {
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
+        }
+      });
       console.log('Response:', response.data);
       alert('글 작성이 완료 되었습니다.');
       navigate('/myblog');
@@ -211,9 +223,9 @@ export default function CreatePost() {
     }
   };
 
+  // 글 임시저장 API
   const handleTemporarySubmit = async () => {
-    const contentRaw = convertToRaw(editorState.getCurrentContent());
-    const content = JSON.stringify(contentRaw);
+    const content = extractTextFromEditorState(editorState);
     const preview = content.slice(0, 50);
     const postType = postCategory === '자유글' ? 'FREE' : 'WALLET';
 
@@ -240,8 +252,16 @@ export default function CreatePost() {
     console.log('Payload:', payload);
 
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload);
+      const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload, {
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
+        }
+      });
       console.log('Response:', response.data);
+      const { postId } = response.data; // Get postId from response
+      // Fetch the temporary post after saving it
+      handlePostSelect(postId);
+      console.log(postId);// postId 찍히는거 확인함.
       alert('임시 저장이 완료 되었습니다.');
       location.reload();
     } catch (error) {
@@ -249,10 +269,33 @@ export default function CreatePost() {
     }
   };
 
+  const handlePostSelect = async (postId: number) => {
+    try {
+      const response = await fetch(`https://vision-necktitude.shop/posts/temp/${postId}`, {
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
+        }
+      });
+      const data = await response.json();
+      setTitle(data.title);
+      setEditorState(EditorState.createWithContent(stateFromHTML(data.content)));
+      setTags(data.hashtagList.slice(0, 1).map((tag: string, index: number) => ({ id: index + 1, name: tag }))); // 메인 해시태그
+      setSubtags(data.hashtagList.slice(1).map((tag: string, index: number) => ({ id: index + 1, name: tag }))); // 서브 해시태그
+      setAccountBookInputs(data.walletList);
+      setPostCategory(data.postType === "소비 일기" ? PostCategory.가계부 : PostCategory.자유글);
+    } catch (error) {
+      console.error('Error fetching temporary post:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchTemporaryPosts = async () => {
       try {
-        const response = await fetch('https://vision-necktitude.shop/posts/temp-list');
+        const response = await fetch('https://vision-necktitude.shop/posts/temp-list', {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
+          }
+        });
         const data = await response.json();
         setPosts(data);
       } catch (error) {
@@ -290,6 +333,7 @@ export default function CreatePost() {
         {isModalVisible && (
           <TemporarySaveModal
             closeModal={toggleModal}
+            onPostSelect={handlePostSelect} // Pass handlePostSelect to TemporarySaveModal
           />
         )}
       </S.Header>
@@ -371,7 +415,6 @@ export default function CreatePost() {
             ))}
           </div>
         </S.TextEditBox>
-
       </S.NewPostInputContainer>
 
       <S.AccountBookContainer onClick={handleAddAccountBookInput}>

@@ -36,12 +36,14 @@ const MyblogPostList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://vision-necktitude.shop/posts/1/post-list?postType=ALL&hashtag=ALL&page=0"
-        );
+        const response = await axios.get('https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0', {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+          }
+        });
         setBlogPosts(response.data.postList);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -96,26 +98,10 @@ const MyblogPostList: React.FC = () => {
                 }}
               >
                 <div>{post.createdAt}</div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "5px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img
-                    src={comment}
-                    alt="댓글"
-                    style={{ width: "21px", height: "21px" }}
-                  />
+                <div style={{ display: "flex", flexDirection: "row", gap: "5px", justifyContent: "center", alignItems: "center" }}>
+                  <img src={comment} alt="댓글" style={{ width: "21px", height: "21px" }} />
                   <div>{post.commentCnt}</div>
-                  <img
-                    src={heart}
-                    alt="좋아요"
-                    style={{ width: "18px", height: "18px" }}
-                  />
+                  <img src={heart} alt="좋아요" style={{ width: "18px", height: "18px" }} />
                   <div>{post.likeCnt}</div>
                 </div>
               </div>
@@ -198,7 +184,12 @@ const MyblogPostList: React.FC = () => {
           />
         </S.IconBox>
       </S.SubTitleContainer>
-      {selectedTab === "article" ? renderArticleList() : renderPictureList()}
+      {/* 글 리스트 */}
+      {blogPosts.length === 0 ? (
+        <S.NoPostsMessage>게시글이 없습니다.</S.NoPostsMessage>
+      ) : (
+        selectedTab === "article" ? renderArticleList() : renderPictureList()
+      )}
     </S.MyblogPostContainer>
   );
 };
