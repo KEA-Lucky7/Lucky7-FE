@@ -35,7 +35,7 @@ export default function Report() {
         sameDayThisMonthReportList: [
           { amount: 306000, type: "식비" },
           { amount: 100700, type: "교통" },
-          { amount: 115000, type: "여가" },
+          { amount: 215000, type: "여가" },
           { amount: 39900, type: "교육" },
           { amount: 100100, type: "생활" },
           { amount: 101000, type: "금융" },
@@ -92,9 +92,9 @@ export default function Report() {
         <S.AIReporContainer>
           <S.AILogo>AI</S.AILogo>
           <S.AIContent>
-            최정환님은 지난 달에 비해 이번 달 식비가 -% 증가했네요. 앞으로는 식비
+            지난 달에 비해 이번 달 여가 관련 지출이 약 48.28% 증가했네요. 앞으로는 여가
             예산을 미리 설정하고 계획적으로 지출하면 좀 더 경제적으로 여유를
-            가질 수 있을 거예요 ...
+            가질 수 있을 거예요.
           </S.AIContent>
         </S.AIReporContainer>
       </S.AIBox>
