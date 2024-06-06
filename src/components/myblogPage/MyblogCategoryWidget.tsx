@@ -17,16 +17,47 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
   const [freetextCategoryOpen, setFreetextCategoryOpen] = useState(false);
   const [freeList, setFreeList] = useState<string[]>([]);
   const [walletList, setWalletList] = useState<string[]>([]);
+  const [blogData, setBlogData] = useState<{
+    postCnt: number;
+    postList: any[];
+  }>({ postCnt: 0, postList: [] });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://vision-necktitude.shop/posts/1/hashtag-list"
+          "https://vision-necktitude.shop/posts/3/hashtag-list",
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU",
+            },
+          }
         );
         const { freeList, walletList } = response.data;
         setFreeList(freeList);
         setWalletList(walletList);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0",
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU",
+            },
+          }
+        );
+        setBlogData(response.data || { postCnt: 0, postList: [] });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -58,8 +89,11 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
         alt="category"
         style={{ marginLeft: "-5px", transform: "scale(0.75)" }}
       />
-      {/* <S.ContentTitle>전체(89)</S.ContentTitle> */}
       <div>
+        <S.ContentTitle>
+          <S.Circle />
+          전체({blogData.postCnt})
+        </S.ContentTitle>
         <S.Section>
           <S.ListItemButton
             onClick={() =>
