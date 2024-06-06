@@ -31,7 +31,7 @@ const LoginInfo = () => {
   const [userLoading, setUserLoading] = useState<boolean>(false);
   
   const handleLoginAction = async () => {
-    if (!isValidBirthInput) {
+    if (!isValidBirthInput()) {
       window.alert("올바르지 않은 날짜 형식입니다.")
       return
     }
