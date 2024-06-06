@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as S from "../myblogPage/styles/MyblogCss";
 import Titlebackground from "../../assets/myblog/Titlebackground.jpg";
 import MyblogWidget from "./MyblogWidget";
@@ -11,8 +11,7 @@ import { useBlogStore } from "../homePage/login/state";
 export default function Myblog() {
   const [contents, setContents] = useState<string>("postList");
   //"postList", "accountBook", "report"
-  const [backgroundImageUrl, setBackgroundImageUrl] =
-    useState<string>(Titlebackground);
+  let backgroundImageUrl = Titlebackground;
 
   const { blogInfo } = useBlogStore();
 
@@ -24,21 +23,14 @@ export default function Myblog() {
       console.log("Header Image:", storedBlogInfo.headerImage);
 
       if (storedBlogInfo.headerImage) {
-        setBackgroundImageUrl(storedBlogInfo.headerImage);
+        backgroundImageUrl = storedBlogInfo.headerImage;
       }
     }
   }, [blogInfo]);
 
-  const backgroundImgUrlHandler = () => {
-    setBackgroundImageUrl("/");
-  };
-
   return (
     <S.MyBlogContainer>
-      <S.Picturecontainer
-        imageUrl={backgroundImageUrl}
-        onClick={backgroundImgUrlHandler}
-      >
+      <S.Picturecontainer imageUrl={backgroundImageUrl}>
         <S.TitleContainer>
           <S.TitleBox>나의 일상을 담은 일기장</S.TitleBox>
           <S.SubTitleBox>my happy life</S.SubTitleBox>

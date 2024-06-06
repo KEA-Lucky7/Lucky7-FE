@@ -5,9 +5,9 @@ import { useEffect } from "react";
 import axios from "axios";
 
 export default function MyblogWidget() {
-  // 훅을 컴포넌트 내부에서 호출합니다.
-  const { accessToken, setAccessToken } = useStore();
-  const { userInfo, setUserInfo } = useUserStore();
+  // 사용하지 않는 변수는 언더스코어로 무시합니다.
+  const { accessToken, setAccessToken: _ } = useStore();
+  const { userInfo, setUserInfo: _setUserInfo } = useUserStore();
 
   // userInfo를 파싱합니다.
   const storedUserInfo = JSON.parse(userInfo);

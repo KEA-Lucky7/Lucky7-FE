@@ -23,7 +23,7 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
   }>({ postCnt: 0, postList: [] });
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchHashtagList = async () => {
       try {
         const response = await axios.get(
           "https://vision-necktitude.shop/posts/3/hashtag-list",
@@ -35,18 +35,18 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
           }
         );
         const { freeList, walletList } = response.data;
-        setFreeList(freeList);
-        setWalletList(walletList);
+        setFreeList(freeList || []);
+        setWalletList(walletList || []);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching hashtag list:", error);
       }
     };
 
-    fetchData();
+    fetchHashtagList();
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPostList = async () => {
       try {
         const response = await axios.get(
           "https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0",
@@ -59,11 +59,11 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
         );
         setBlogData(response.data || { postCnt: 0, postList: [] });
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching post list:", error);
       }
     };
 
-    fetchData();
+    fetchPostList();
   }, []);
 
   const handleCategoryClick = (
