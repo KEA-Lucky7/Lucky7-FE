@@ -138,7 +138,7 @@ export const ContentBox = styled.div`
 `;
 
 export const FirstTag = styled.div`
-  width: 20%;
+  width: 30%;
   height: 30px;
   border-radius: 7px;
   background-color: #eaeaea;
