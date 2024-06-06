@@ -24,7 +24,6 @@ export default function SettingInfo() {
 
   const modifyUser = async () => {
     try {
-      console.log(introduce)
       const response = await axios.patch(`${serverUrl}/member/${accessToken}`, {
         nickname,
         birth: "2001-01-01",
