@@ -15,6 +15,7 @@ import postEdit from "../../assets/postDetail/postEdit.png";
 import ConfirmModal from './ConfirmModal';
 import { useNavigate } from "react-router-dom";
 import EditPostForm from "./EditPostForm";
+import { useStore } from "../homePage/login/state";
 
 interface Post {
   postId: number;
@@ -65,7 +66,6 @@ interface Post {
   }[];
 }
 
-
 export default function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post>({} as Post);
@@ -74,34 +74,24 @@ export default function PostDetail() {
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedPost, setEditedPost] = useState({
-    title: '',
-    content: '',
-    preview: '',
-    thumbnail: '',
-    mainHashtag: '',
-    postType: '',
-    hashtagList: [] as string[],
-    walletList: [] as {
-      consumedDate: string;
-      memo: string;
-      amount: number;
-      walletType: string;
-    }[]
-  });
-
   const navigate = useNavigate();
+  const { accessToken, setAccessToken } = useStore();
 
   //글 상세조회 API
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`);
+        const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
         const data: Post = await response.json();
         setPost(data);
+        console.log(accessToken);
       } catch (error) {
         console.log(error);
       }
@@ -112,7 +102,11 @@ export default function PostDetail() {
   //좋아요 누르는 API
   const handleLikeClick = async () => {
     try {
-      await axios.post(`https://vision-necktitude.shop/posts/${postId}/like`);
+      await axios.post(`https://vision-necktitude.shop/posts/${postId}/like`, null, {
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+        }
+      });
       setLikeCount(likeCount + 1); // 좋아요 증가
       alert('좋아요를 눌렀습니다.');
     } catch (error) {
@@ -125,11 +119,13 @@ export default function PostDetail() {
     try {
       const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+        }
       });
       if (response.ok) {
         alert('성공적으로 삭제되었습니다.');
         navigate('/myblog');
-        // Redirect or update the UI as needed
       } else {
         alert('삭제에 실패하였습니다.');
       }
@@ -141,59 +137,14 @@ export default function PostDetail() {
     }
   };
 
-
   // 글 수정 API
   const handleEditClick = () => {
     setIsEditing(true);
-    setEditedPost({
-      title: post.title,
-      content: post.content,
-      preview: post.preview,
-      thumbnail: post.thumbnail,
-      mainHashtag: post.mainHashtag,
-      postType: post.postType,
-      hashtagList: [...post.hashtagList],
-      walletList: [...post.walletList],
-    });
   };
 
-
-  const handleEditSubmit = async () => {
-    try {
-      // Translate the postType value before sending the request
-      const translatedPost = {
-        ...editedPost,
-        postType: editedPost.postType === "자유글" ? "FREE" : editedPost.postType === "가계부" ? "WALLET" : editedPost.postType
-      };
-
-      // Log the edited post data before sending it
-      console.log('Edited Post Data:', translatedPost);
-
-      const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(translatedPost),
-      });
-
-      if (response.ok) {
-        const updatedPost = await response.json();
-        setPost(updatedPost);
-
-        // Log the updated post data received from the server
-        console.log('Updated Post Data from Server:', updatedPost);
-
-        //setIsEditing(false);
-        alert('글이 성공적으로 수정되었습니다.');
-        //setIsDropdownVisible(false);
-      } else {
-        alert('글 수정에 실패하였습니다.');
-      }
-    } catch (error) {
-      console.error('Error updating the post:', error);
-      alert('글 수정 과정 중 에러가 발생하였습니다.');
-    }
+  const handleEditSubmit = (updatedPost: Post) => {
+    setPost(updatedPost);
+    setIsEditing(false);
   };
 
   const toggleCommentVisibility = () => {
@@ -229,10 +180,9 @@ export default function PostDetail() {
     <>
       {isEditing ? (
         <EditPostForm
-          editedPost={editedPost}
+          post={post}
           onSubmit={handleEditSubmit}
           onCancel={() => setIsEditing(false)}
-          isEditing={isEditing}
         />
       ) : (
         <>
