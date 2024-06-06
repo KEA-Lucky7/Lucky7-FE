@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import CommonButton from "./CommomButton";
@@ -8,6 +8,7 @@ type InputProps = {
   placeholder: string;
   postId: number;
   children?: ReactNode;
+  onClick?: () => void;  // 추가된 부분
 };
 
 const InputComment = ({
@@ -15,6 +16,7 @@ const InputComment = ({
   placeholder,
   postId,
   children,
+  onClick,  // 추가된 부분
 }: InputProps) => {
   const [comment, setComment] = useState("");
 
@@ -30,6 +32,9 @@ const InputComment = ({
       .then((response) => {
         console.log("댓글 제출 성공: ", response.data);
         setComment("");
+        if (onClick) {
+          onClick();  // 추가된 부분: onClick이 제공된 경우 호출
+        }
       })
       .catch((error) => {
         console.error("댓글 제출 실패: ", error);

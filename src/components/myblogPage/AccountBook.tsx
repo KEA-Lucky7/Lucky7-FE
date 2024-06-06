@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import * as S from "./styles/AccountBook";
 
@@ -9,11 +9,12 @@ interface ExpenseData {
 
 const AccountBook = () => {
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
-  const [value, setValue] = useState<Date>(new Date());
+  // const [value, setValue] = useState<Date>(new Date());
   const [startDate, setStartDate] = useState<string>("2024.04.04");
   const [endDate, setEndDate] = useState<string>(
     new Date().toISOString().split("T")[0].replace(/-/g, ".")
   );
+  const value = new Date();
 
   useEffect(() => {
     const fetchExpenses = async () => {
