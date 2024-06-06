@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useStore, useUserStore, useBlogStore } from './state';
+import { useStore, useBlogIdStore, useUserStore, useBlogStore } from './state';
 import axios from "axios";
 import Cookies from "js-cookie";
 import * as S from "../styles/LoginInfoStyle";
@@ -19,6 +19,7 @@ const LoginInfo = () => {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const navigate = useNavigate();
   const { accessToken } = useStore();
+  const { myBlogId, setMyBlogId } = useBlogIdStore();
   const { setUserInfo } = useUserStore();
   const { setBlogInfo } = useBlogStore();
 
@@ -30,9 +31,13 @@ const LoginInfo = () => {
   const [userLoading, setUserLoading] = useState<boolean>(false);
   
   const handleLoginAction = async () => {
-    setUserLoading(true);
+    if (!isValidBirthInput) {
+      window.alert("올바르지 않은 날짜 형식입니다.")
+      return
+    }
     try {
       console.log("토큰: " + accessToken);
+      setUserLoading(true);
       const createUserResponse = await axios.patch(`${serverUrl}/member/sign-in/${accessToken}`, {
         nickname,
         birth,
@@ -43,22 +48,28 @@ const LoginInfo = () => {
       
       if (createUserResponse.data) {
         const createBlogResponse = await axios.post(`${serverUrl}/blog/sign-in/${accessToken}`, {
-          blogName: createUserResponse.data  + "님의 블로그",
+          name: createUserResponse.data  + "님의 블로그",
           about : createUserResponse.data + "님의 블로그입니다.",
           headerImage : " "
         });
         console.log(createBlogResponse.data);
-        
+        if (parseInt(createBlogResponse.data.data)) {
+          setMyBlogId(parseInt(createBlogResponse.data.data));
+        }
+        console.log("블로그 아이디: " + myBlogId)
+
         if (createBlogResponse.data) {
           const getUserInfoResponse = await axios.get<User>(`${serverUrl}/member/${accessToken}`);
           const data = getUserInfoResponse.data.data;
-          const strJson = JSON.stringify({id: data.id, nickname: data.nickname, about: data.about});
+          const strUserJson = JSON.stringify({id: data.id, nickname: data.nickname, about: data.about});
           const strBlogJson = JSON.stringify({blogName: data.nickname + "님의 블로그", about : data.nickname + "님의 블로그입니다.", headerImage : ""});
-          setUserInfo(strJson);
+          
+          setUserInfo(strUserJson);
           setBlogInfo(strBlogJson);
-          console.log(strJson, strBlogJson);
+          console.log(strUserJson, strBlogJson);
           Cookies.set('login', 'true', { expires: 7 });
           window.alert("로그인이 완료됐습니다.");
+          navigate("/")
         }
       }
       setUserLoading(false);
@@ -66,6 +77,11 @@ const LoginInfo = () => {
       window.alert('Error:' + error);
     }
   };
+
+  const isValidBirthInput = () => {
+    const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateFormatRegex.test(birth);
+  }
 
   const hideLoginModal = () => {
     const hide = window.confirm("회원가입을 그만두시겠습니까? 입력한 정보가 삭제됩니다.");
@@ -89,7 +105,7 @@ const LoginInfo = () => {
         <S.LoginContents>
           생년월일
           <S.LoginInputContainer
-            placeholder="0000/00/00"
+            placeholder="0000-00-00"
             value={birth}
             onChange={(e) => setBirth(e.target.value)}
           />
