@@ -56,14 +56,6 @@ const MyblogPostList: React.FC = () => {
 
   const toggleTab = (tab: "article" | "picture") => setSelectedTab(tab);
 
-  const renderDropdownItems = (items: string[]) => (
-    <S.Dropdown>
-      {items.map((item, index) => (
-        <S.DropdownItem key={index}>{`ㄴ ${item}`}</S.DropdownItem>
-      ))}
-    </S.Dropdown>
-  );
-
   const renderPagination = () => (
     <S.PaginationBox>
       {[...Array(Math.ceil(blogPosts.length / postsPerPage)).keys()].map(
@@ -204,7 +196,6 @@ const MyblogPostList: React.FC = () => {
               opacity: selectedTab === "article" ? 1 : 0.5,
             }}
           />
-          {/* <S.DropDownMenu></S.DropDownMenu> */}
         </S.IconBox>
       </S.SubTitleContainer>
       {selectedTab === "article" ? renderArticleList() : renderPictureList()}

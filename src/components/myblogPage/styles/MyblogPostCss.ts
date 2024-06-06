@@ -212,6 +212,21 @@ export const PictureBox = styled.div`
   // width: 30%;
 `;
 
+export const Dropdown = styled.div`
+  background-color: #fffef9;
+  border-radius: 4px;
+  padding: 0px 10px 10px 10px;
+`;
+
+export const DropdownItem = styled.div`
+  padding: 5px 0;
+  cursor: pointer;
+  &:hover {
+    background-color: #fffef9;
+  }
+  font-weight: 100;
+`;
+
 export const FirstLine = styled.div`
   // width: 30%;
   // height: 50px;
