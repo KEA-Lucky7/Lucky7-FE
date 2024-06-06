@@ -6,6 +6,7 @@ import pictureList from "../../assets/myblog/pictureList.png";
 import comment from "../../assets/myblog/comment.png";
 import heart from "../../assets/myblog/heart.png";
 import axios from "axios";
+import { useStore, useUserStore } from "../homePage/login/state";
 
 interface Post {
   id: number;
@@ -32,16 +33,21 @@ const MyblogPostList: React.FC = () => {
   );
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
   const postsPerPage = 15;
+  const { accessToken, setAccessToken } = useStore();
+  const { userInfo, setUserInfo } = useUserStore();
+  const storedUserInfo = JSON.parse(userInfo);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0', {
+        const response = await axios.get(`https://vision-necktitude.shop/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`, {
           headers: {
-            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+            'Authorization': `Bearer ${accessToken}`
           }
         });
-        setBlogPosts(response.data.postList);
+        setBlogPosts(response.data.postList || []); // Ensure it is an array
+        console.log(storedUserInfo);
+        console.log(accessToken);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

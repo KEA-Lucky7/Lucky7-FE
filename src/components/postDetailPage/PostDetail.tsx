@@ -15,6 +15,7 @@ import postEdit from "../../assets/postDetail/postEdit.png";
 import ConfirmModal from './ConfirmModal';
 import { useNavigate } from "react-router-dom";
 import EditPostForm from "./EditPostForm";
+import { useStore } from "../homePage/login/state";
 
 interface Post {
   postId: number;
@@ -74,6 +75,7 @@ export default function PostDetail() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
+  const { accessToken, setAccessToken } = useStore();
 
   //글 상세조회 API
   useEffect(() => {
@@ -81,7 +83,7 @@ export default function PostDetail() {
       try {
         const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
           headers: {
-            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
+            'Authorization': `Bearer ${accessToken}`
           }
         });
         if (!response.ok) {
@@ -89,6 +91,7 @@ export default function PostDetail() {
         }
         const data: Post = await response.json();
         setPost(data);
+        console.log(accessToken);
       } catch (error) {
         console.log(error);
       }
