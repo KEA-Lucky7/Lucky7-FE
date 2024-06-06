@@ -23,6 +23,7 @@ const Img = styled.img`
 const Title = styled.div`
   font-size: 18px;
   font-weight: bold;
+  text-align: center;
   //   margin-bottom: 20px;
 `;
 
@@ -73,16 +74,17 @@ const InputContainer = styled.div`
 `;
 
 export const FortuneOverlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  // border: 1px solid red;
+  top: 15vw;
+  left: 40vw;
+  // width: 100%;
+  // height: 100%;
+  // background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface Props {
@@ -91,7 +93,7 @@ interface Props {
 
 function FinancialLuck({ setShowFortuneModal }: Props) {
   const [userDate, setUserDate] = useState<string>("");
-  const [userGender, setUserGender] = useState<'male'|'female'>('male');
+  const [userGender, setUserGender] = useState<"male" | "female">("male");
   const [resultData, setResultData] = useState<string>("");
   const [showResult, setShowResult] = useState<boolean>(false);
 
@@ -110,11 +112,14 @@ function FinancialLuck({ setShowFortuneModal }: Props) {
   const fetchData = async () => {
     try {
       const currentDate = new Date().toISOString().split("T")[0];
-      const response = await axios.post("https://asia-northeast3-moaboa77.cloudfunctions.net/get-lucky-functions", {
-        birthDate: userDate.toString(),
-        gender: userGender,
-        today: currentDate.toString(),
-      });
+      const response = await axios.post(
+        "https://asia-northeast3-moaboa77.cloudfunctions.net/get-lucky-functions",
+        {
+          birthDate: userDate.toString(),
+          gender: userGender,
+          today: currentDate.toString(),
+        }
+      );
       setResultData(response.data);
       setShowResult(true);
     } catch (error) {
@@ -122,53 +127,53 @@ function FinancialLuck({ setShowFortuneModal }: Props) {
     }
   };
 
-  const hideFortuneModal = () =>{
+  const hideFortuneModal = () => {
     setShowFortuneModal(false);
-  } 
+  };
 
   return (
     <FortuneOverlay onClick={hideFortuneModal}>
-    <Container onClick={(e) => e.stopPropagation()}>
-      <Img src="/picture/img_coin.png" alt="FinancialLuck Img" />
-      {showResult ? (
-        <ResultContainer>
-          <Title>{resultData}</Title>
-          <SubmitButton onClick={showResultHandler}>{"아싸!🎊"}</SubmitButton>
-        </ResultContainer>
-      ) : (
-        <InputContainer>
-          <Title>오늘의 운세를 확인해 보세요!</Title>
-          <InputForm>
-            <Input
-              placeholder="생년월일 6자리를 입력하세요"
-              value={userDate}
-              onChange={userDateHandler}
-            ></Input>
-            <div>
-            <label>
+      <Container onClick={(e) => e.stopPropagation()}>
+        <Img src="/picture/img_coin.png" alt="FinancialLuck Img" />
+        {showResult ? (
+          <ResultContainer>
+            <Title>{resultData}</Title>
+            <SubmitButton onClick={showResultHandler}>{"아싸!🎊"}</SubmitButton>
+          </ResultContainer>
+        ) : (
+          <InputContainer>
+            <Title>오늘의 운세를 확인해 보세요!</Title>
+            <InputForm>
               <Input
-                type="radio"
-                id="male"
-                name="gender"
-                onChange={() => setUserGender('male')}
-              />
-              {"남자"}
-            </label>
-            <label>
-              <Input
-                type="radio"
-                id="female"
-                name="gender"
-                onChange={() => setUserGender('female')}
-              />
-              {"여자"}
-            </label>
-            </div>
-          </InputForm>
-          <SubmitButton onClick={fetchData}>확인하기</SubmitButton>
-        </InputContainer>
-      )}
-    </Container>
+                placeholder="생년월일 6자리를 입력하세요"
+                value={userDate}
+                onChange={userDateHandler}
+              ></Input>
+              <div>
+                <label>
+                  <Input
+                    type="radio"
+                    id="male"
+                    name="gender"
+                    onChange={() => setUserGender("male")}
+                  />
+                  {"남자"}
+                </label>
+                <label>
+                  <Input
+                    type="radio"
+                    id="female"
+                    name="gender"
+                    onChange={() => setUserGender("female")}
+                  />
+                  {"여자"}
+                </label>
+              </div>
+            </InputForm>
+            <SubmitButton onClick={fetchData}>확인하기</SubmitButton>
+          </InputContainer>
+        )}
+      </Container>
     </FortuneOverlay>
   );
 }
