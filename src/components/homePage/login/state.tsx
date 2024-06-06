@@ -18,6 +18,23 @@ export const useStore = create(
   ),
 );
 
+interface BlogIdStore { 
+  myBlogId: number;
+  setMyBlogId: (accessToken: number) => void;
+}
+
+export const useBlogIdStore = create(
+  persist<BlogIdStore>(
+    (set) => ({
+      myBlogId: Number(window.localStorage.getItem('myBlogId')) || 0,
+      setMyBlogId: (select) => set({ myBlogId: select })
+    }),
+    {
+      name: 'myBlogId'
+    },
+  ),
+);
+
 interface UserStore { 
   userInfo: string,
   setUserInfo: ( userInfo: string ) => void;
