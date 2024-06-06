@@ -81,7 +81,7 @@ export default function PostDetail() {
       try {
         const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
           headers: {
-            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
           }
         });
         if (!response.ok) {

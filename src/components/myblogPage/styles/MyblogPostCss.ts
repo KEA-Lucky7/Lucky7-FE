@@ -269,7 +269,7 @@ export const ListTitle = styled.div`
 `;
 
 export const ListTag = styled.div`
-  width: 10%;
+  width: 20%;
   height: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -308,7 +308,7 @@ export const CheckField = styled.div`
 `;
 
 export const PictureListCategory = styled.div`
-  width: 50%;
+  width: 70%;
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -321,7 +321,7 @@ export const PictureListCategory = styled.div`
 `;
 
 export const PictureListTag = styled.div`
-  width: 50%;
+  width: 100%;
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -329,7 +329,7 @@ export const PictureListTag = styled.div`
   border-radius: 10px;
   background-color: #eaeaea;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   display: flex;
   justify-content: center;

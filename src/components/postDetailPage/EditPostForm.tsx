@@ -54,7 +54,7 @@ const EditPostForm: React.FC<EditPostFormProps> = ({ post, onCancel, onSubmit })
       const response = await axios.patch(`https://vision-necktitude.shop/posts/${post.postId}`, translatedPost, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
         }
       });
 
@@ -137,17 +137,12 @@ const EditPostForm: React.FC<EditPostFormProps> = ({ post, onCancel, onSubmit })
             placeholder="Amount"
           />
           <label>Wallet Type</label>
-          <select
+          <input
+            type="text"
             value={walletItem.walletType}
             onChange={(e) => handleWalletListChange(index, 'walletType', e.target.value)}
-          >
-            <option value="FOOD">FOOD</option>
-            <option value="TRAFFIC">TRAFFIC</option>
-            <option value="LEISURE">LEISURE</option>
-            <option value="EDUCATION">EDUCATION</option>
-            <option value="LIFE">LIFE</option>
-            <option value="FINANCE">FINANCE</option>
-          </select>
+            placeholder="(FOOD, TRAFFIC, LEISURE, EDUCATION, LIFE, FINANCE)"
+          />
         </div>
       ))}
       <button onClick={handleEditSubmit}>Save</button>

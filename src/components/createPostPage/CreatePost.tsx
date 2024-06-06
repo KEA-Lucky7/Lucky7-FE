@@ -2,7 +2,8 @@ import * as S from "./styles/CreatepostCss";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
+import { stateFromHTML } from "draft-js-import-html";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.png";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
 import axios from "axios";
@@ -34,11 +35,12 @@ export default function CreatePost() {
   const [tagInput, setTagInput] = useState<string>("");
   const [subtagInput, setSubtagInput] = useState<string>("");
   const [postCategory, setPostCategory] = useState<PostCategory | null>(null);
-  const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]); // 입력된 값들을 저장할 배열 상태
+  const [accountBookInputs, setAccountBookInputs] = useState<{ consumedDate: string, memo: string, amount: number, walletType: string }[]>([]);
   const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [posts, setPosts] = useState<any[]>([]);
+  const [selectedPost, setSelectedPost] = useState<any | null>(null);
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -104,12 +106,11 @@ export default function CreatePost() {
         const img = new Image();
         img.src = reader.result as string;
         img.onload = () => {
-          const maxWidth = 500; // 원하는 최대 너비
-          const maxHeight = 400; // 원하는 최대 높이
+          const maxWidth = 500;
+          const maxHeight = 400;
           let width = img.width;
           let height = img.height;
 
-          // 이미지 비율 유지하면서 최대 크기로 조정
           if (width > height) {
             if (width > maxWidth) {
               height *= maxWidth / width;
@@ -160,8 +161,8 @@ export default function CreatePost() {
     return new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        150, // Max width
-        150, // Max height
+        150,
+        150,
         'JPEG',
         100,
         0,
@@ -173,7 +174,6 @@ export default function CreatePost() {
     });
   };
 
-  // Convert editor state to text
   const extractTextFromEditorState = (editorState: EditorState): string => {
     const contentRaw = convertToRaw(editorState.getCurrentContent());
     const blocks = contentRaw.blocks;
@@ -213,7 +213,7 @@ export default function CreatePost() {
     try {
       const response = await axios.post('https://vision-necktitude.shop/posts/0', payload, {
         headers: {
-          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
         }
       });
       console.log('Response:', response.data);
@@ -224,7 +224,7 @@ export default function CreatePost() {
     }
   };
 
-  //글 임시저장 API
+  // 글 임시저장 API
   const handleTemporarySubmit = async () => {
     const content = extractTextFromEditorState(editorState);
     const preview = content.slice(0, 50);
@@ -255,14 +255,37 @@ export default function CreatePost() {
     try {
       const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload, {
         headers: {
-          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
         }
       });
       console.log('Response:', response.data);
+      const { postId } = response.data; // Get postId from response
+      // Fetch the temporary post after saving it
+      handlePostSelect(postId);
+      console.log(postId);// postId 찍히는거 확인함.
       alert('임시 저장이 완료 되었습니다.');
       location.reload();
     } catch (error) {
       console.error('Error posting data:', error);
+    }
+  };
+
+  const handlePostSelect = async (postId: number) => {
+    try {
+      const response = await fetch(`https://vision-necktitude.shop/posts/temp/${postId}`, {
+        headers: {
+          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+        }
+      });
+      const data = await response.json();
+      setSelectedPost(data);
+      setTitle(data.title);
+      setEditorState(EditorState.createWithContent(stateFromHTML(data.content)));
+      setTags(data.hashtagList.map((tag: string, index: number) => ({ id: index + 1, name: tag })));
+      setAccountBookInputs(data.walletList);
+      setPostCategory(data.postType === "소비 일기" ? PostCategory.가계부 : PostCategory.자유글);
+    } catch (error) {
+      console.error('Error fetching temporary post:', error);
     }
   };
 
@@ -271,7 +294,7 @@ export default function CreatePost() {
       try {
         const response = await fetch('https://vision-necktitude.shop/posts/temp-list', {
           headers: {
-            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU'
+            'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
           }
         });
         const data = await response.json();
@@ -311,6 +334,7 @@ export default function CreatePost() {
         {isModalVisible && (
           <TemporarySaveModal
             closeModal={toggleModal}
+            onPostSelect={handlePostSelect} // Pass handlePostSelect to TemporarySaveModal
           />
         )}
       </S.Header>
@@ -392,7 +416,6 @@ export default function CreatePost() {
             ))}
           </div>
         </S.TextEditBox>
-
       </S.NewPostInputContainer>
 
       <S.AccountBookContainer onClick={handleAddAccountBookInput}>
