@@ -59,6 +59,7 @@ const LoginInfo = () => {
           console.log(strJson, strBlogJson);
           Cookies.set('login', 'true', { expires: 7 });
           window.alert("로그인이 완료됐습니다.");
+          navigate("/")
         }
       }
       setUserLoading(false);
