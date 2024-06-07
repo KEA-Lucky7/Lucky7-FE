@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../homePage/login/state";
+import { Link, useParams } from "react-router-dom";
 
 import * as S from "./styles/PostDetailCss";
 import seeMore from "../../assets/postDetail/seeMore.png";
@@ -10,13 +11,12 @@ import postComment from "../../assets/postDetail/postComment.png";
 import postHeart from "../../assets/postDetail/postHeart.png";
 import seeMoreComment from "../../assets/postDetail/seeMoreComment.png";
 import profileImage from "../../assets/postDetail/profileImage.png";
-import { Link, useParams } from "react-router-dom";
 import Top from "../../assets/postDetail/Top.png";
-import InputComment from "./comment/InputComment";
 import deletebutton from "../../assets/postDetail/deletebutton.png";
 import postEdit from "../../assets/postDetail/postEdit.png";
 import ConfirmModal from "./ConfirmModal";
 import EditPostForm from "./EditPostForm";
+import CommentComp from "./comment/CommentComp";
 
 
 interface Post {
@@ -95,6 +95,7 @@ export default function PostDetail() {
         const data: Post = await response.json();
         setPost(data);
         console.log(accessToken);
+        console.log(data.commentList)
       } catch (error) {
         console.log(error);
       }
@@ -107,7 +108,7 @@ export default function PostDetail() {
     try {
       await axios.post(`${serverUrl}/posts/${postId}/like`, null, {
         headers: {
-          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+          'Authorization': `Bearer ${accessToken}`
         }
       });
       setLikeCount(likeCount + 1); // 좋아요 증가
@@ -123,7 +124,7 @@ export default function PostDetail() {
       const response = await fetch(`${serverUrl}/posts/${postId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
+          'Authorization': `Bearer ${accessToken}`
         }
       });
       if (response.ok) {
@@ -151,7 +152,7 @@ export default function PostDetail() {
   };
 
   const toggleCommentVisibility = () => {
-    setIsCommentVisible(!isCommentVisible); // 상태를 반전시켜 댓글 보이기 여부를 토글합니다.
+    setIsCommentVisible(!isCommentVisible);
   };
 
   const toggleDropdown = () => {
@@ -159,7 +160,6 @@ export default function PostDetail() {
   };
 
   const handleCopyURL = () => {
-    // 페이지 URL을 클립보드에 복사하는 코드
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
@@ -176,8 +176,6 @@ export default function PostDetail() {
       behavior: "smooth", // 부드럽게 스크롤
     });
   };
-
-  const handleCommentSubmit = () => {};
 
   return (
     <>
@@ -379,6 +377,7 @@ export default function PostDetail() {
                     alignItems: "center",
                   }}
                 >
+                  여기가어디야
                   <img
                     src={postHeart}
                     alt="하트"
@@ -389,12 +388,7 @@ export default function PostDetail() {
                 </div>
               </S.Commment>
               {isCommentVisible && (
-                <InputComment
-                  className="custom-input"
-                  placeholder="댓글을 입력하세요..."
-                  onClick={handleCommentSubmit}
-                  postId={Number(postId)}
-                />
+                <CommentComp />
               )}
             </S.CommentBox>
           </S.PostContainer>

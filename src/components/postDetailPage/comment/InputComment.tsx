@@ -1,14 +1,15 @@
 import React, { ReactNode, useState } from "react";
-import styled from "styled-components";
 import axios from "axios";
+import styled from "styled-components";
 import CommonButton from "./CommomButton";
+import { useStore } from "../../homePage/login/state";
 
 type InputProps = {
   className: string;
   placeholder: string;
   postId: number;
   children?: ReactNode;
-  onClick?: () => void;  // 추가된 부분
+  onClick?: () => void;
 };
 
 const InputComment = ({
@@ -16,30 +17,33 @@ const InputComment = ({
   placeholder,
   postId,
   children,
-  onClick,  // 추가된 부분
+  onClick,
 }: InputProps) => {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
+  const { accessToken } = useStore();
   const [comment, setComment] = useState("");
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  const handleCommentSubmit = () => {
-    axios
-      .post(`${serverUrl}/posts/${postId}/comment`, {
-        content: comment,
-      })
-      .then((response) => {
-        console.log("댓글 제출 성공: ", response.data);
-        setComment("");
-        if (onClick) {
-          onClick();  // 추가된 부분: onClick이 제공된 경우 호출
-        }
-      })
-      .catch((error) => {
-        console.error("댓글 제출 실패: ", error);
-      });
+  const handleCommentSubmit = () => { 
+    axios.post(`${serverUrl}/posts/${postId}/comment`,  
+    {
+      content: comment, 
+    }, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }}).then((response) => {
+      console.log("댓글 제출 성공: ", response.data);
+      setComment("");
+      if (onClick) {
+        onClick(); 
+      }
+    })
+    .catch((error) => {
+      console.error("댓글 제출 실패: ", error);
+    });
   };
 
   return (

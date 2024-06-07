@@ -1,18 +1,19 @@
-import * as S from "./styles/CreatepostCss";
 import { useState, ChangeEvent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
 import { stateFromHTML } from "draft-js-import-html";
+import Resizer from "react-image-file-resizer";
+import axios from "axios";
+
+import * as S from "./styles/CreatepostCss";
+import { useStore } from "../homePage/login/state";
+import { TemporarySaveModal } from "./createPostItems/TemporarySaveModal";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.jpeg";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
 import down from "../../assets/createPost/down.png";
-import axios from "axios";
 import moaboa from "../../assets/header/moaboa.png";
-import { useNavigate } from "react-router-dom";
-import { TemporarySaveModal } from "./createPostItems/TemporarySaveModal";
-import Resizer from "react-image-file-resizer";
-import { useStore } from "../homePage/login/state";
 
 interface Tag {
   id: number;
@@ -48,9 +49,7 @@ export default function CreatePost() {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [posts, setPosts] = useState<any[]>([]);
-
-  // const { accessToken, setAccessToken } = useStore(); //빌드 에러나서 주석처리함.
-
+  
   const { accessToken } = useStore();
 
   const toggleModal = () => {
