@@ -16,10 +16,10 @@ export default function SettingInfo() {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
-    const storedUserInfo = JSON.parse(userInfo)
+    const storedUserInfo = JSON.parse(userInfo);
     console.log(storedUserInfo);
-    setNickname(storedUserInfo.nickname)
-    setIntroduce(storedUserInfo.about)
+    setNickname(storedUserInfo.nickname);
+    setIntroduce(storedUserInfo.about);
   }, [userInfo]);
 
   const modifyUser = async () => {
@@ -28,15 +28,19 @@ export default function SettingInfo() {
         nickname,
         birth: "2001-01-01",
         profileImage,
-        about: introduce
+        about: introduce,
       });
-      console.log(response.data)
+      console.log(response.data);
       const data = response.data.data;
-      const strJson = JSON.stringify({id: data.id, nickname: data.nickname, about: data.about})
+      const strJson = JSON.stringify({
+        id: data.id,
+        nickname: data.nickname,
+        about: data.about,
+      });
       setUserInfo(strJson);
-      console.log(strJson)
+      console.log(strJson);
     } catch (error) {
-      window.alert('Error:' + error);
+      window.alert("Error:" + error);
     }
   };
 
@@ -55,7 +59,7 @@ export default function SettingInfo() {
   };
 
   const handleSave = () => {
-    modifyUser()
+    modifyUser();
     alert("저장되었습니다.");
     setIsModified(false);
   };
@@ -70,7 +74,7 @@ export default function SettingInfo() {
       };
       reader.readAsDataURL(file);
     }
-    window.alert(profileImage)
+    window.alert(profileImage);
   };
 
   return (
@@ -94,12 +98,8 @@ export default function SettingInfo() {
             onChange={handleNicknameChange}
           />
           <S.CharCount>{`${charCount}/20`}</S.CharCount>
-
           <S.InputTitle>소개</S.InputTitle>
-          <S.IntroInput
-            value={introduce}
-            onChange={handleIntroduceChange}
-          />
+          <S.IntroInput type="text" value={introduce} onChange={handleIntroduceChange} />
           <S.CharCount>{`${subcharCount}/20`}</S.CharCount>
         </S.InputContainer>
       </S.profileContentBox>

@@ -1,16 +1,22 @@
-import * as S from "./styles/SettingStyle";
+import * as S from "./styles/SettingAccountStyle";
+import kakao from "../../assets/setting/kakao.png";
 
 export default function SettingAccount() {
-    return (
-        <S.AccountBox>
-            <S.FirstLine>
-            <S.Text>계정</S.Text>
-            <S.Text2> ㅣ 계정 관리</S.Text2>
-            </S.FirstLine>
-            <S.SecondLine>
-            <S.SecondText>구글</S.SecondText>
-            <S.EmailText>kiss970322@gmail.com</S.EmailText>
-            </S.SecondLine>
-      </S.AccountBox>
-    )
+  return (
+    <S.AccountContainer>
+      <S.AccountSettingSelection>
+        <S.Account>계정</S.Account>
+        <S.AccountSetting>계정 관리</S.AccountSetting>
+      </S.AccountSettingSelection>
+      <S.AccountList>
+        <S.AccountIcon>
+          <img
+            src={kakao}
+            style={{ scale: "40%", width: "20px", height: "20px" }}
+          />
+        </S.AccountIcon>
+        <S.AccountEmail>kiss970322@gmail.com</S.AccountEmail>
+      </S.AccountList>
+    </S.AccountContainer>
+  );
 }
