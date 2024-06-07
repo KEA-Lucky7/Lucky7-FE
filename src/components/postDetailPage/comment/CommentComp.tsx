@@ -139,7 +139,7 @@ const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId
             placeholder="답글을 입력하세요"
             onClick={() => {}}
             postId={postId}
-            commentId={reply.replyId}
+            commentId={activeCommentId}
             type="reply"
           />
         )}
