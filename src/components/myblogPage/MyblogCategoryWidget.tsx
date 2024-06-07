@@ -12,7 +12,7 @@ interface MyblogCategoryWidgetProps {
 const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
   setContents,
 }) => {
-  const [reportCategoryOpen, setReportCategoryOpen] = useState(false);
+  // const [reportCategoryOpen, setReportCategoryOpen] = useState(false); //보고서 한 페이지로 통합으로 인해 사용안함
   const [accountbookCategoryOpen, setAccountbookCategoryOpen] = useState(false);
   const [freetextCategoryOpen, setFreetextCategoryOpen] = useState(false);
   const [freeList, setFreeList] = useState<string[]>([]);
@@ -161,7 +161,7 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
 
         <S.Section>
           <S.ListItemButton
-            onClick={() => handleCategoryClick(setReportCategoryOpen, "report")}
+            // onClick={() => handleCategoryClick(setReportCategoryOpen, "report")}
           >
             <S.ListItemText>레포트</S.ListItemText>
           </S.ListItemButton>

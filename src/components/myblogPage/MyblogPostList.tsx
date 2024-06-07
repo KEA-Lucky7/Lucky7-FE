@@ -33,23 +33,28 @@ const MyblogPostList: React.FC = () => {
   );
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
   const postsPerPage = 15;
-  const { accessToken, setAccessToken } = useStore();
-  const { userInfo, setUserInfo } = useUserStore();
+  // const { accessToken, setAccessToken } = useStore();
+  const { accessToken } = useStore();
+  // const { userInfo, setUserInfo } = useUserStore();
+  const { userInfo } = useUserStore();
   const storedUserInfo = JSON.parse(userInfo);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://vision-necktitude.shop/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
+        const response = await axios.get(
+          `https://vision-necktitude.shop/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
-        });
+        );
         setBlogPosts(response.data.postList || []); // Ensure it is an array
         console.log(storedUserInfo);
         console.log(accessToken);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -104,10 +109,26 @@ const MyblogPostList: React.FC = () => {
                 }}
               >
                 <div>{post.createdAt}</div>
-                <div style={{ display: "flex", flexDirection: "row", gap: "5px", justifyContent: "center", alignItems: "center" }}>
-                  <img src={comment} alt="댓글" style={{ width: "21px", height: "21px" }} />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "5px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={comment}
+                    alt="댓글"
+                    style={{ width: "21px", height: "21px" }}
+                  />
                   <div>{post.commentCnt}</div>
-                  <img src={heart} alt="좋아요" style={{ width: "18px", height: "18px" }} />
+                  <img
+                    src={heart}
+                    alt="좋아요"
+                    style={{ width: "18px", height: "18px" }}
+                  />
                   <div>{post.likeCnt}</div>
                 </div>
               </div>
@@ -193,8 +214,10 @@ const MyblogPostList: React.FC = () => {
       {/* 글 리스트 */}
       {blogPosts.length === 0 ? (
         <S.NoPostsMessage>게시글이 없습니다.</S.NoPostsMessage>
+      ) : selectedTab === "article" ? (
+        renderArticleList()
       ) : (
-        selectedTab === "article" ? renderArticleList() : renderPictureList()
+        renderPictureList()
       )}
     </S.MyblogPostContainer>
   );

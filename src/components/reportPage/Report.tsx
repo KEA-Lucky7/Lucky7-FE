@@ -1,6 +1,6 @@
 import * as S from "./styles/ReportStyle";
 import VerticalBarChart from "./VerticalBarChart";
-import axios from "axios";
+// import axios from "axios";
 import { useState, useEffect } from "react";
 
 interface ReportData {
@@ -92,9 +92,9 @@ export default function Report() {
         <S.AIReporContainer>
           <S.AILogo>AI</S.AILogo>
           <S.AIContent>
-            지난 달에 비해 이번 달 여가 관련 지출이 약 48.28% 증가했네요. 앞으로는 여가
-            예산을 미리 설정하고 계획적으로 지출하면 좀 더 경제적으로 여유를
-            가질 수 있을 거예요.
+            지난 달에 비해 이번 달 여가 관련 지출이 약 48.28% 증가했네요.
+            앞으로는 여가 예산을 미리 설정하고 계획적으로 지출하면 좀 더
+            경제적으로 여유를 가질 수 있을 거예요.
           </S.AIContent>
         </S.AIReporContainer>
       </S.AIBox>
