@@ -9,7 +9,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import axios from 'axios';
 
 import * as S from "./styles/MyblogWidgetCss";
-import { useStore, useUserStore } from "../homePage/login/state";
+import { useStore, useBlogIdStore } from "../homePage/login/state";
 import { Dispatch } from "react";
 
 interface MyblogCategoryWidgetProps {
@@ -47,6 +47,7 @@ export default function MyblogPostCategory({
 }: MyblogCategoryWidgetProps) {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { accessToken } = useStore();
+  const { myBlogId } = useBlogIdStore();
   const [reportCategory, setReportCategory] = React.useState(true);
   const [accountbookCategory, setAccountbookCategory] = React.useState(true); //가계부 카테고리
   const [freetextCategory, setFreetextCategory] = React.useState(true); //자유글 카테고리
@@ -57,7 +58,7 @@ export default function MyblogPostCategory({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/posts/3/hashtag-list`, {
+        const response = await axios.get(`${serverUrl}/posts/${myBlogId}/hashtag-list`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           }
@@ -76,7 +77,7 @@ export default function MyblogPostCategory({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/posts/3/post-list?postType=ALL&hashtag=ALL&page=0`, {
+        const response = await axios.get(`${serverUrl}/posts/${myBlogId}/post-list?postType=ALL&hashtag=ALL&page=0`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           }

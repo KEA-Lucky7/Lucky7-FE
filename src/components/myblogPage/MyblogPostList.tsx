@@ -6,7 +6,7 @@ import pictureList from "../../assets/myblog/pictureList.png";
 import comment from "../../assets/myblog/comment.png";
 import heart from "../../assets/myblog/heart.png";
 import axios from "axios";
-import { useStore, useUserStore } from "../homePage/login/state";
+import { useStore, useBlogIdStore, useUserStore } from "../homePage/login/state";
 
 interface Post {
   id: number;
@@ -35,16 +35,15 @@ const MyblogPostList: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
   const postsPerPage = 15;
 
-  // const { accessToken, setAccessToken } = useStore();
   const { accessToken } = useStore();
-  // const { userInfo, setUserInfo } = useUserStore();
+  const { myBlogId } = useBlogIdStore()
   const { userInfo } = useUserStore();
   const storedUserInfo = JSON.parse(userInfo);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`, {
+        const response = await axios.get(`${serverUrl}/posts/${myBlogId}/post-list?postType=ALL&hashtag=ALL&page=0`, {
           headers: {
               Authorization: `Bearer ${accessToken}`,
             },
@@ -155,9 +154,11 @@ const MyblogPostList: React.FC = () => {
   const renderArticleList = () => (
     <S.PostListContainer>
       <S.FieldBox>
+        <S.ItemField>유형</S.ItemField>
+        <S.ItemField>해시태그</S.ItemField>
         <S.TitleField>제목</S.TitleField>
-        <S.DateField>작성일</S.DateField>
-        <S.CheckField>댓글</S.CheckField>
+        <S.ItemField>작성일</S.ItemField>
+        <S.ItemField>댓글</S.ItemField>
       </S.FieldBox>
       <div>
         {currentPosts.map((post) => (
@@ -170,8 +171,8 @@ const MyblogPostList: React.FC = () => {
               <S.ListCategory>{post.postType}</S.ListCategory>
               <S.ListTag>#{post.mainHashtag}</S.ListTag>
               <S.ListTitle>{post.title}</S.ListTitle>
-              <S.DateField>{post.createdAt}</S.DateField>
-              <S.CheckField>{post.commentCnt}</S.CheckField>
+              <S.ItemField>{post.createdAt}</S.ItemField>
+              <S.ItemField>{post.commentCnt}</S.ItemField>
             </S.ListBox>
           </Link>
         ))}
