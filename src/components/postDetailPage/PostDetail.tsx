@@ -15,12 +15,7 @@ import Top from "../../assets/postDetail/Top.png";
 import InputComment from "./comment/InputComment";
 import deletebutton from "../../assets/postDetail/deletebutton.png";
 import postEdit from "../../assets/postDetail/postEdit.png";
-<<<<<<< HEAD
-import ConfirmModal from './ConfirmModal';
-=======
 import ConfirmModal from "./ConfirmModal";
-import { useNavigate } from "react-router-dom";
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
 import EditPostForm from "./EditPostForm";
 
 
@@ -83,30 +78,17 @@ export default function PostDetail() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-<<<<<<< HEAD
-=======
-  // const { accessToken, setAccessToken } = useStore();
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
   const { accessToken } = useStore();
 
   //글 상세조회 API
   useEffect(() => {
     const fetchPost = async () => {
       try {
-<<<<<<< HEAD
         const response = await fetch(`${serverUrl}/posts/${postId}`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
-=======
-        const response = await fetch(
-          `https://vision-necktitude.shop/posts/${postId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
           }
-        );
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
@@ -123,22 +105,11 @@ export default function PostDetail() {
   //좋아요 누르는 API
   const handleLikeClick = async () => {
     try {
-<<<<<<< HEAD
       await axios.post(`${serverUrl}/posts/${postId}/like`, null, {
         headers: {
           'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
-=======
-      await axios.post(
-        `https://vision-necktitude.shop/posts/${postId}/like`,
-        null,
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc",
-          },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
         }
-      );
+      });
       setLikeCount(likeCount + 1); // 좋아요 증가
       alert("좋아요를 눌렀습니다.");
     } catch (error) {
@@ -149,23 +120,12 @@ export default function PostDetail() {
   //글 삭제 API
   const handleDelete = async () => {
     try {
-<<<<<<< HEAD
       const response = await fetch(`${serverUrl}/posts/${postId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
-=======
-      const response = await fetch(
-        `https://vision-necktitude.shop/posts/${postId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization:
-              "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc",
-          },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
         }
-      );
+      });
       if (response.ok) {
         alert("성공적으로 삭제되었습니다.");
         navigate("/myblog");
@@ -173,13 +133,8 @@ export default function PostDetail() {
         alert("삭제에 실패하였습니다.");
       }
     } catch (error) {
-<<<<<<< HEAD
-      console.error('Error deleting the post:', error);
-      window.alert('삭제를 하는 과정 중 에러가 발생하였습니다.');
-=======
       console.error("Error deleting the post:", error);
       alert("삭제를 하는 과정 중 에러가 발생하였습니다.");
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
     } finally {
       setIsModalVisible(false);
     }
