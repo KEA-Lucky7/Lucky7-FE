@@ -377,7 +377,6 @@ export default function PostDetail() {
                     alignItems: "center",
                   }}
                 >
-                  여기가어디야
                   <img
                     src={postHeart}
                     alt="하트"
@@ -388,7 +387,7 @@ export default function PostDetail() {
                 </div>
               </S.Commment>
               {isCommentVisible && (
-                <CommentComp />
+                <CommentComp commentList={post.commentList}/>
               )}
             </S.CommentBox>
           </S.PostContainer>

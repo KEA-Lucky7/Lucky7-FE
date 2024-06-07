@@ -8,6 +8,8 @@ type InputProps = {
   className: string;
   placeholder: string;
   postId: number;
+  commentId: number;
+  type: string;
   children?: ReactNode;
   onClick?: () => void;
 };
@@ -16,25 +18,36 @@ const InputComment = ({
   className,
   placeholder,
   postId,
+  commentId,
+  type,
   children,
   onClick,
 }: InputProps) => {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { accessToken } = useStore();
   const [comment, setComment] = useState("");
+  const [commentType] = useState(type)
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
   const handleCommentSubmit = () => { 
-    axios.post(`${serverUrl}/posts/${postId}/comment`,  
+    var url = "";
+    if (commentType == "comment") {
+      url = `${serverUrl}/posts/${postId}/comment`
+    }
+    else {
+      url = `${serverUrl}/posts/${postId}/comment/${commentId}/reply`
+    }
+    axios.post( url,  
     {
       content: comment, 
     }, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     }}).then((response) => {
+      console.log(url)
       console.log("댓글 제출 성공: ", response.data);
       setComment("");
       if (onClick) {
