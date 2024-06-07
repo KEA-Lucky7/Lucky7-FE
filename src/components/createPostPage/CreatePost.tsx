@@ -29,6 +29,7 @@ enum PostCategory {
 }
 
 export default function CreatePost() {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
   const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>(postDetailbackground);
   const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
   const [tags, setTags] = useState<Tag[]>([]);
@@ -41,7 +42,7 @@ export default function CreatePost() {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [posts, setPosts] = useState<any[]>([]);
-  const { accessToken, setAccessToken } = useStore();
+  const { accessToken } = useStore();
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -212,7 +213,7 @@ export default function CreatePost() {
     console.log(accountBookInputs);
 
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/0', payload, {
+      const response = await axios.post(`${serverUrl}/posts/0`, payload, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
@@ -254,7 +255,7 @@ export default function CreatePost() {
     console.log('Payload:', payload);
 
     try {
-      const response = await axios.post('https://vision-necktitude.shop/posts/temp/0', payload, {
+      const response = await axios.post(`${serverUrl}/posts/temp/0`, payload, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
@@ -273,7 +274,7 @@ export default function CreatePost() {
 
   const handlePostSelect = async (postId: number) => {
     try {
-      const response = await fetch(`https://vision-necktitude.shop/posts/temp/${postId}`, {
+      const response = await fetch(`${serverUrl}/posts/temp/${postId}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
@@ -293,7 +294,7 @@ export default function CreatePost() {
   useEffect(() => {
     const fetchTemporaryPosts = async () => {
       try {
-        const response = await fetch('https://vision-necktitude.shop/posts/temp-list', {
+        const response = await fetch(`${serverUrl}/posts/temp-list`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }

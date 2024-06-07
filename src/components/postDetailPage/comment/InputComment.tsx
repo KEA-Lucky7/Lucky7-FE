@@ -18,6 +18,7 @@ const InputComment = ({
   children,
   onClick,  // 추가된 부분
 }: InputProps) => {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
   const [comment, setComment] = useState("");
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -26,7 +27,7 @@ const InputComment = ({
 
   const handleCommentSubmit = () => {
     axios
-      .post(`https://vision-necktitude.shop/posts/${postId}/comment`, {
+      .post(`${serverUrl}/posts/${postId}/comment`, {
         content: comment,
       })
       .then((response) => {

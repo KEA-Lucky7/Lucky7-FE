@@ -67,6 +67,7 @@ interface Post {
 }
 
 export default function PostDetail() {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post>({} as Post);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -81,7 +82,7 @@ export default function PostDetail() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
+        const response = await fetch(`${serverUrl}/posts/${postId}`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
@@ -102,7 +103,7 @@ export default function PostDetail() {
   //좋아요 누르는 API
   const handleLikeClick = async () => {
     try {
-      await axios.post(`https://vision-necktitude.shop/posts/${postId}/like`, null, {
+      await axios.post(`${serverUrl}/posts/${postId}/like`, null, {
         headers: {
           'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'
         }
@@ -117,7 +118,7 @@ export default function PostDetail() {
   //글 삭제 API
   const handleDelete = async () => {
     try {
-      const response = await fetch(`https://vision-necktitude.shop/posts/${postId}`, {
+      const response = await fetch(`${serverUrl}/posts/${postId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc'

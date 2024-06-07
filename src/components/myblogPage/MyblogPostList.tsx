@@ -27,20 +27,21 @@ interface Post {
 }
 
 const MyblogPostList: React.FC = () => {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedTab, setSelectedTab] = useState<"article" | "picture">(
     "article"
   );
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
   const postsPerPage = 15;
-  const { accessToken, setAccessToken } = useStore();
-  const { userInfo, setUserInfo } = useUserStore();
+  const { accessToken } = useStore();
+  const { userInfo } = useUserStore();
   const storedUserInfo = JSON.parse(userInfo);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://vision-necktitude.shop/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`, {
+        const response = await axios.get(`${serverUrl}/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }

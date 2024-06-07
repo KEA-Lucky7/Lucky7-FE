@@ -14,8 +14,9 @@ interface QuizData {
 }
 
 export default function Quiz() {
-    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    const [quizData, setQuizData] = useState<QuizData | null>(null);
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [quizData, setQuizData] = useState<QuizData | null>(null);
 
   const handleOpenModal = () => {
     setIsModalVisible(true);
@@ -29,7 +30,7 @@ export default function Quiz() {
     const fetchQuizData = async () => {
       try {
         const response = await fetch(
-          "https://vision-necktitude.shop/quiz/quiz"
+          `${serverUrl}/quiz/quiz`
         );
         const data = await response.json();
         console.log("Full API response:", data);
@@ -53,7 +54,7 @@ export default function Quiz() {
     const handleAnswer = async (selectedOption: number) => {
         // 정답 여부를 확인하는 API 호출
         try {
-            const response = await fetch('https://vision-necktitude.shop/quiz/grade', {
+            const response = await fetch(`${serverUrl}/quiz/grade`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

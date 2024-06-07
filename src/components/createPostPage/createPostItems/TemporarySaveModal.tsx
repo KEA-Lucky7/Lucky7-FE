@@ -10,6 +10,7 @@ interface TemporarySaveModalProps {
 }
 
 export const TemporarySaveModal: React.FC<TemporarySaveModalProps> = ({ closeModal, onPostSelect }) => {
+    const serverUrl = import.meta.env.VITE_SERVER_URL;
     const [posts, setPosts] = React.useState<any[]>([]);
     const isMountedRef = React.useRef<boolean>(true);
 
@@ -22,7 +23,7 @@ export const TemporarySaveModal: React.FC<TemporarySaveModalProps> = ({ closeMod
     React.useEffect(() => {
         const fetchTemporaryPosts = async () => {
             try {
-                const response = await fetch('https://vision-necktitude.shop/posts/temp-list', {
+                const response = await fetch(`${serverUrl}/posts/temp-list`, {
                     headers: {
                         'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
                     }

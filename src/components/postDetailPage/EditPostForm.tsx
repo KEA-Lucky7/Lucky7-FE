@@ -24,6 +24,7 @@ interface EditPostFormProps {
 }
 
 const EditPostForm: React.FC<EditPostFormProps> = ({ post, onCancel, onSubmit }) => {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
   const [editedPost, setEditedPost] = useState(post);
   const navigate = useNavigate();
 
@@ -51,7 +52,7 @@ const EditPostForm: React.FC<EditPostFormProps> = ({ post, onCancel, onSubmit })
         postType: editedPost.postType === "자유글" ? "FREE" : editedPost.postType === "가계부" ? "WALLET" : editedPost.postType
       };
 
-      const response = await axios.patch(`https://vision-necktitude.shop/posts/${post.postId}`, translatedPost, {
+      const response = await axios.patch(`${serverUrl}/posts/${post.postId}`, translatedPost, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc2NDczODgsImV4cCI6MTcxNzY1NDU4OX0.BRPdNxV76iuujXpoaec8EtFqF3UFE5rqtvI7Jh4-kC8'
