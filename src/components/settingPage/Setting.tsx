@@ -6,13 +6,15 @@ import SettingInfo from "./SettingInfo";
 
 export default function Setting() {
   return (
-    <S.SettingContainer>
-      <S.Title>설정</S.Title>
-      <SettingAccount />
-      <SettingInfo />
-      <SettingBanner />
-      <Alert />
-      <S.Secede>탈퇴하기</S.Secede>
-    </S.SettingContainer>
+    <S.SettingBackGround>
+      <S.SettingContainer>
+        <S.Title>설정</S.Title>
+        <SettingAccount />
+        <SettingInfo />
+        <SettingBanner />
+        <Alert />
+        <S.Secede>탈퇴하기</S.Secede>
+      </S.SettingContainer>
+    </S.SettingBackGround>
   );
 }

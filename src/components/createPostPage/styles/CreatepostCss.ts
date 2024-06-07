@@ -4,101 +4,96 @@ interface PictureContainerProps {
   imageUrl: string;
 }
 
-
 export const NewPostInputContainer = styled.div`
-    width: 40%;
-    height: 100%;
-    margin: 0 auto;
-    border-bottom: 1px solid grey;
-    
+  width: 40%;
+  height: 100%;
+  margin: 0 auto;
+  border-bottom: 1px solid grey;
 `;
 
 export const TemporaryBox = styled.div`
-    width: 11%;
-    height: 50px;
-    float: right;
-    margin: 30px 100px 0px 50px;
-    line-height : 50px;
-    text-align: center;
-
+  width: 11%;
+  height: 50px;
+  float: right;
+  margin: 30px 100px 0px 50px;
+  line-height: 50px;
+  text-align: center;
 `;
 
-
 export const TextEditBox = styled.div`
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export const TitleInputBox = styled.div`
-    width: 100%;
-    height: 50px;
-    margin: 0 auto;
-    border: none;
-    font-size: 24px;
+  width: 100%;
+  height: 50px;
+  margin: 0 auto;
+  border: none;
+  font-size: 24px;
 `;
 export const TitleInput = styled.input`
-    width: 100%;
-    height: 50px;
-    outline: none;
-    background-color: transparent;
-    border: none;
-    &::placeholder { 
-        font-size: 20px;
-        color: white;
-    }
+  width: 100%;
+  height: 50px;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  &::placeholder {
+    font-size: 20px;
+    color: white;
+  }
 `;
 
 export const MainTextInput = styled.div`
-    width: 50%;
-    height: 50px;
-    margin: 0 auto;
+  width: 50%;
+  height: 50px;
+  margin: 0 auto;
 `;
 
 export const TagBox = styled.div`
-    width: 40%;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
+  width: 40%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
 `;
 
 export const RepresentativeTagBox = styled.div`
-    width: 100%;
-    height: 100px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 `;
 
 export const RepresentativeSubTagBox = styled.div`
-    width: 100%;
-    height: 200px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 `;
 
 export const RepresentativeTagTitle = styled.div`
-    width: 20%;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-  
+  width: 20%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 export const RepresentativeTagInputBox = styled.div`
-    width: 500px;
-    height: 200px;
+  width: 500px;
+  height: 200px;
 
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const TagItem = styled.div`
@@ -119,36 +114,35 @@ export const TagItem = styled.div`
 `;
 
 export const TagInput = styled.input`
-    width: 100%;
-    height: 50px;
-    border: 1px solid #EAEAEA;
-    border-radius: 20px;
-    outline: none;
-    font-size: 20px;
-    &::placeholder { 
-        font-size: 14px;
-        color: grey;
-        padding-left: 5px;
-    }
+  width: 100%;
+  height: 50px;
+  border: 1px solid #eaeaea;
+  border-radius: 20px;
+  outline: none;
+  font-size: 20px;
+  &::placeholder {
+    font-size: 14px;
+    color: grey;
+    padding-left: 5px;
+  }
 `;
 
 export const Input = styled.input`
-    width: 100%;
-    height: 20px;
-    border: 1px solid #EAEAEA;
-    border-radius: 5px;
-    outline: none;
+  width: 100%;
+  height: 20px;
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+  outline: none;
+  font-size: 12px;
+  &::placeholder {
     font-size: 12px;
-    &::placeholder { 
-        font-size: 12px;
-        color: grey;
-    }
+    color: grey;
+  }
 
-    &:hover { 
-      border: 1px solid #00A5FF;
-    }
+  &:hover {
+    border: 1px solid #00a5ff;
+  }
 `;
-
 
 export const Header = styled.div`
   width: 67vw;
@@ -194,14 +188,13 @@ export const TemporaryButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #D7D7D7;
+  background-color: #d7d7d7;
   cursor: pointer;
 `;
 
 export const PostButton = styled(TemporaryButton)`
-  background-color: #7A7A7A;
+  background-color: #4566e3;
   color: white;
-
 `;
 
 export const Picturecontainer = styled.div<PictureContainerProps>`
@@ -239,14 +232,12 @@ export const AccountBookContainer = styled.div`
   position: absolute;
   bottom: 0px;
   top: 500px;
-  right:  300px;
+  right: 300px;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 `;
-
-
 
 export const TitleBox = styled.div`
   font-size: 28px;
@@ -268,7 +259,7 @@ export const CreateTag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #D7D7D7;
+  background-color: #d7d7d7;
   margin-top: 10px;
 `;
 
@@ -278,7 +269,6 @@ export const DeleteTagButton = styled.div`
   font-weight: bold;
   text-align: right;
   align-items: right;
-
 `;
 
 export const InputBox = styled.div`
@@ -291,10 +281,9 @@ export const InputBox = styled.div`
   border: 1px solid #dcdcdc;
   display: flex;
   flex-direction: row;
-  margin:0 auto;
+  margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
-
 
 export const DeleteButton = styled.div`
   width: 65px;
@@ -307,10 +296,9 @@ export const DeleteButton = styled.div`
   color: white;
   font-size: 14px;
   cursor: pointer;
-  &:hover { 
+  &:hover {
     background-color: rgba(22, 119, 255, 0.8);
-    }
-
+  }
 `;
 
 export const ModalOverlay = styled.div`
@@ -338,4 +326,45 @@ export const ModalContent = styled.div`
 
 export const CloseButton = styled.div`
   margin-top: 10px;
+`;
+
+export const SelectWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 200px; /* Adjust width as needed */
+`;
+
+export const Select = styled.select`
+  appearance: none; /* Remove default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f5f5f5; /* Light gray background color */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 3px; /* Rounded corners */
+  padding-left: 10px; /* Padding for inner spacing */
+  font-size: 16px; /* Font size */
+  color: #000; /* Text color */
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in width */
+  height: 30px;
+  &:focus {
+    border-color: #66afe9; /* Light blue border on focus */
+    outline: none; /* Remove default outline */
+  }
+`;
+
+export const SelectArrow = styled.div`
+  content: "▼"; /* Unicode for down arrow */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #000;
+`;
+
+export const Option = styled.option`
+  padding: 10px; /* Padding for options */
+  background-color: #fff; /* White background for options */
+  color: #000; /* Text color for options */
 `;

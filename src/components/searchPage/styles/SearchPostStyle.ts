@@ -11,7 +11,7 @@ export const PostCard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: #fffef9;
   margin: 10px 0;
   padding: 20px;
   width: 100%;

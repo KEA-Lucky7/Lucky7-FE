@@ -84,6 +84,14 @@ const SideMenu: React.FC<Props> = ({ setShowSideMenu }) => {
     }
   }
 
+  const handleLogout = () => {
+    const action = window.confirm("로그아웃 하시겠습니까?");
+    if (action) {
+      Cookies.set('login', 'false', { expires: 7 });
+      window.location.reload()
+    }
+  }
+
   return (
     <S.MenuOverlay onClick={toggleSideMenu}>
       <S.SideContainer onClick={(e) => e.stopPropagation()}>
@@ -126,7 +134,7 @@ const SideMenu: React.FC<Props> = ({ setShowSideMenu }) => {
               <MenuItem
                 icon={LogInOut}
                 label="로그아웃"
-                onClick={() => handleNavigation("/setting")}
+                onClick={handleLogout}
               />
             </>
           ) : (

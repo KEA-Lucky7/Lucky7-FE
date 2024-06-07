@@ -1,18 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styles/SettingBannerStyle";
 import bannerImg from "../../assets/setting/BannerImage.png";
+import { useStore, useBlogStore } from "../homePage/login/state";
+import axios from "axios";
 
 export default function SettingBanner() {
     
   // const [backgroundimageurl, setBackgroundimageurl] = useState<string>(bannerImage);
   // const backgroundimageurl = bannerImage;
 
-  const [blogTitle, setBlogTitle] = useState("나의 일상을 담은 일기장");
+  const [blogTitle, setBlogTitle] = useState("블로그 타이틀");
   const [charCount, setCharCount] = useState(blogTitle.length);
-  const [blogIntroduce, setBlogIntroduce] = useState("my happy life ");
+  const [blogIntroduce, setBlogIntroduce] = useState("블로그 소개");
   const [subcharCount, setSubcharCount] = useState(blogIntroduce.length);
   const [isModified, setIsModified] = useState(false);
   const [bannerImage, setBannerImage] = useState(bannerImg);
+  const { accessToken } = useStore();
+  const { blogInfo, setBlogInfo } = useBlogStore();
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
+  useEffect(() => {
+    const storedBlogInfo = JSON.parse(blogInfo)
+    console.log(storedBlogInfo);
+    setBlogTitle(storedBlogInfo.blogName)
+    setBlogIntroduce(storedBlogInfo.about)
+  }, [blogInfo]);
+
+  const modifyBlog = async () => {
+    try {
+      const response = await axios.patch(`${serverUrl}/blog/${accessToken}`, {
+        name: blogTitle,
+        about: blogIntroduce,
+        bannerImage
+      });
+      console.log(response.data)
+      const strJson = JSON.stringify({blogName: blogTitle, about : blogIntroduce, headerImage : bannerImage})
+      setBlogInfo(strJson);
+      console.log(strJson)
+    } catch (error) {
+      window.alert('Error:' + error);
+    }
+  };
 
   const handleblogTitleChange = (e: { target: { value: any } }) => {
     const inputText = e.target.value;
@@ -42,6 +70,7 @@ export default function SettingBanner() {
   };
 
   const handleSave = () => {
+    modifyBlog()
     alert("저장되었습니다.");
     setIsModified(false);
   };

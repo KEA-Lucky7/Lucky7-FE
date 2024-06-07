@@ -1,14 +1,17 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SearchContainer = styled.div`
   width: 67vw;
   height: 100%;
   margin: 0 auto;
+  // border: 1px solid red;
+  background: #fffef9;
 `;
 
 export const SearchKeyword = styled.div`
-  margin: 60px 0px 0px 0px;
+  padding: 60px 0px 0px 0px;
   font-size: 27px;
+  background: #fffef9;
 `;
 
 export const SearchMenuContainer = styled.div`
@@ -17,8 +20,8 @@ export const SearchMenuContainer = styled.div`
   margin: 30px 0px 0px 0px;
   border-bottom: 1px solid #aaa;
   position: sticky;
-  top: 80px;
-  background: white;
+  top: 55px;
+  background: #fffef9;
   z-index: 10;
 `;
 
@@ -28,10 +31,11 @@ export const SearchMenu = styled.div<{ selected: boolean }>`
   padding: 10px;
   width: 12vw;
   color: ${({ selected }) => (selected ? "black" : "#aaa")};
-  border-bottom: 2px solid ${({ selected }) => (selected ? 'gray' : 'transparent')};
+  border-bottom: 2px solid
+    ${({ selected }) => (selected ? "gray" : "transparent")};
   &:hover {
     color: ${({ selected }) => (selected ? "black" : "gray")};
-    border-bottom: 2px solid ${({ selected }) => (selected ? 'gray' : '#aaa')};
+    border-bottom: 2px solid ${({ selected }) => (selected ? "gray" : "#aaa")};
   }
 `;
 
@@ -41,8 +45,8 @@ export const FlexContainer = styled.div`
   align-items: center;
   margin: 0px 0px;
   position: sticky;
-  top: 119px;
-  background: white;
+  top: 95px;
+  background: #fffef9;
   z-index: 10;
   padding: 10px 0;
 `;
@@ -69,7 +73,7 @@ export const SearchDesc = styled.div`
 export const PeriodContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background: white;
+  background: #fffef9;
   border: 1px solid #ccc;
   padding: 10px 0px 10px 0px;
   border-radius: 10px;
@@ -83,14 +87,14 @@ export const PeriodOption = styled.div`
   padding: 10px 20px 10px 20px;
   cursor: pointer;
   &:hover {
-    background: #f0f0f0;
+    background: #fffef9;
   }
 `;
 
 export const PeriodInput = styled.input`
     margin: 7px 0px 7px 0px;
     padding: 0px 10px 0px 10px;
-    background-color: #f5f5f5;
+    background-color: #fffef9;
     border: 1px solid #f5f5f5;
     border-radius: 10px;
     margin: 5px 10px 0px 10px;
