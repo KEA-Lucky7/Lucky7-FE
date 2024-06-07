@@ -34,31 +34,20 @@ const MyblogPostList: React.FC = () => {
   );
   const [blogPosts, setBlogPosts] = useState<Post[]>([]);
   const postsPerPage = 15;
-<<<<<<< HEAD
-  const { accessToken } = useStore();
-=======
+
   // const { accessToken, setAccessToken } = useStore();
   const { accessToken } = useStore();
   // const { userInfo, setUserInfo } = useUserStore();
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
   const { userInfo } = useUserStore();
   const storedUserInfo = JSON.parse(userInfo);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-<<<<<<< HEAD
         const response = await axios.get(`${serverUrl}/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`, {
           headers: {
-            'Authorization': `Bearer ${accessToken}`
-=======
-        const response = await axios.get(
-          `https://vision-necktitude.shop/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`,
-          {
-            headers: {
               Authorization: `Bearer ${accessToken}`,
             },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
           }
         );
         setBlogPosts(response.data.postList || []); // Ensure it is an array

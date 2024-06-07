@@ -30,17 +30,12 @@ enum PostCategory {
 }
 
 export default function CreatePost() {
-<<<<<<< HEAD
   const serverUrl = import.meta.env.VITE_SERVER_URL;
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>(postDetailbackground);
-  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
-=======
   const [backgroundImageUrl, setBackgroundImageUrl] =
     useState<string>(postDetailbackground);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
   const [tags, setTags] = useState<Tag[]>([]);
   const [subtags, setSubtags] = useState<SubTag[]>([]);
   const [tagInput, setTagInput] = useState<string>("");
@@ -53,10 +48,9 @@ export default function CreatePost() {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [posts, setPosts] = useState<any[]>([]);
-<<<<<<< HEAD
-=======
+
   // const { accessToken, setAccessToken } = useStore(); //빌드 에러나서 주석처리함.
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
+
   const { accessToken } = useStore();
 
   const toggleModal = () => {
@@ -235,19 +229,13 @@ export default function CreatePost() {
     console.log(accountBookInputs);
 
     try {
-<<<<<<< HEAD
-      const response = await axios.post(`${serverUrl}/posts/0`, payload, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-=======
       const response = await axios.post(
-        "https://vision-necktitude.shop/posts/0",
+        `${serverUrl}/posts/0`,
         payload,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
         }
       );
       console.log("Response:", response.data);
@@ -287,19 +275,10 @@ export default function CreatePost() {
     console.log("Payload:", payload);
 
     try {
-<<<<<<< HEAD
       const response = await axios.post(`${serverUrl}/posts/temp/0`, payload, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-=======
-      const response = await axios.post(
-        "https://vision-necktitude.shop/posts/temp/0",
-        payload,
-        {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
         }
       );
       console.log("Response:", response.data);
@@ -316,18 +295,10 @@ export default function CreatePost() {
 
   const handlePostSelect = async (postId: number) => {
     try {
-<<<<<<< HEAD
       const response = await fetch(`${serverUrl}/posts/temp/${postId}`, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-=======
-      const response = await fetch(
-        `https://vision-necktitude.shop/posts/temp/${postId}`,
-        {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
         }
       );
       const data = await response.json();
@@ -359,18 +330,10 @@ export default function CreatePost() {
   useEffect(() => {
     const fetchTemporaryPosts = async () => {
       try {
-<<<<<<< HEAD
         const response = await fetch(`${serverUrl}/posts/temp-list`, {
           headers: {
-            'Authorization': `Bearer ${accessToken}`
-=======
-        const response = await fetch(
-          "https://vision-necktitude.shop/posts/temp-list",
-          {
-            headers: {
               Authorization: `Bearer ${accessToken}`,
             },
->>>>>>> 15ade76ef9513b41d1b0f13d6075df6334e1d2ae
           }
         );
         const data = await response.json();
