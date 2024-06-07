@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "../homePage/login/state";
+
 import * as S from "./styles/PostDetailCss";
 import seeMore from "../../assets/postDetail/seeMore.png";
 import report from "../../assets/postDetail/report.png";
@@ -9,13 +13,11 @@ import profileImage from "../../assets/postDetail/profileImage.png";
 import { Link, useParams } from "react-router-dom";
 import Top from "../../assets/postDetail/Top.png";
 import InputComment from "./comment/InputComment";
-import axios from "axios";
 import deletebutton from "../../assets/postDetail/deletebutton.png";
 import postEdit from "../../assets/postDetail/postEdit.png";
 import ConfirmModal from './ConfirmModal';
-import { useNavigate } from "react-router-dom";
 import EditPostForm from "./EditPostForm";
-import { useStore } from "../homePage/login/state";
+
 
 interface Post {
   postId: number;
@@ -76,7 +78,7 @@ export default function PostDetail() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-  const { accessToken, setAccessToken } = useStore();
+  const { accessToken } = useStore();
 
   //글 상세조회 API
   useEffect(() => {
@@ -132,7 +134,7 @@ export default function PostDetail() {
       }
     } catch (error) {
       console.error('Error deleting the post:', error);
-      alert('삭제를 하는 과정 중 에러가 발생하였습니다.');
+      window.alert('삭제를 하는 과정 중 에러가 발생하였습니다.');
     } finally {
       setIsModalVisible(false);
     }

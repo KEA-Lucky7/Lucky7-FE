@@ -1,8 +1,9 @@
 import * as React from 'react';
-import * as S from "../styles/CreatepostCss";
 import { ListItemText } from '@mui/material';
 import { ListSubheader } from '@mui/material';
 import Button from '@mui/material/Button';
+
+import * as S from "../styles/CreatepostCss";
 
 interface TemporarySaveModalProps {
     closeModal: () => void;
