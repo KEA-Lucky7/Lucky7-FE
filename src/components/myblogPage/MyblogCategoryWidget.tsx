@@ -4,6 +4,7 @@ import category from "../../assets/myblog/category.png";
 import up from "../../assets/myblog/up.png";
 import down from "../../assets/myblog/down.png";
 import * as S from "./styles/MyblogWidgetCss";
+import { useStore } from "../homePage/login/state";
 
 interface MyblogCategoryWidgetProps {
   setContents: React.Dispatch<React.SetStateAction<string>>;
@@ -12,7 +13,6 @@ interface MyblogCategoryWidgetProps {
 const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
   setContents,
 }) => {
-  // const [reportCategoryOpen, setReportCategoryOpen] = useState(false); //보고서 한 페이지로 통합으로 인해 사용안함
   const [accountbookCategoryOpen, setAccountbookCategoryOpen] = useState(false);
   const [freetextCategoryOpen, setFreetextCategoryOpen] = useState(false);
   const [freeList, setFreeList] = useState<string[]>([]);
@@ -22,6 +22,9 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
     postList: any[];
   }>({ postCnt: 0, postList: [] });
 
+  // useStore 훅을 사용하여 accessToken 가져오기
+  const { accessToken } = useStore();
+
   useEffect(() => {
     const fetchHashtagList = async () => {
       try {
@@ -29,8 +32,7 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
           "https://vision-necktitude.shop/posts/3/hashtag-list",
           {
             headers: {
-              Authorization:
-                "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU",
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
@@ -42,8 +44,10 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
       }
     };
 
-    fetchHashtagList();
-  }, []);
+    if (accessToken) {
+      fetchHashtagList();
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     const fetchPostList = async () => {
@@ -52,8 +56,7 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
           "https://vision-necktitude.shop/posts/3/post-list?postType=ALL&hashtag=ALL&page=0",
           {
             headers: {
-              Authorization:
-                "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1NjQ4OTYsImV4cCI6MTcxNzU3MjA5Nn0.wpCsUMFH--FRZDvfwSIfoD0SExvrJAOhWUd7FRFm2IU",
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
@@ -63,8 +66,10 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
       }
     };
 
-    fetchPostList();
-  }, []);
+    if (accessToken) {
+      fetchPostList();
+    }
+  }, [accessToken]);
 
   const handleCategoryClick = (
     setCategoryOpen: React.Dispatch<React.SetStateAction<boolean>>,
@@ -160,9 +165,7 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
         </S.Section>
 
         <S.Section>
-          <S.ListItemButton
-            // onClick={() => handleCategoryClick(setReportCategoryOpen, "report")}
-          >
+          <S.ListItemButton onClick={() => setContents("report")}>
             <S.ListItemText>레포트</S.ListItemText>
           </S.ListItemButton>
         </S.Section>

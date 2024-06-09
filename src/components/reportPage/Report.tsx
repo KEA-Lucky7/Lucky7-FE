@@ -1,7 +1,8 @@
 import * as S from "./styles/ReportStyle";
 import VerticalBarChart from "./VerticalBarChart";
-// import axios from "axios";
+import axios from "axios";
 import { useState, useEffect } from "react";
+import { useStore } from "../homePage/login/state";
 
 interface ReportData {
   sameDayLastMonthReportList: { amount: number; type: string }[];
@@ -20,60 +21,53 @@ export default function Report() {
   const [lastMonthTotal, setLastMonthTotal] = useState<number>(0);
   const [thisMonthTotal, setThisMonthTotal] = useState<number>(0);
 
+  // useStore 훅을 사용하여 accessToken을 가져옵니다.
+  const { accessToken } = useStore();
+
   useEffect(() => {
     const fetchData = async () => {
-      // 더미 데이터 생성
-      const dummyData: ReportData = {
-        sameDayLastMonthReportList: [
-          { amount: 296000, type: "식비" },
-          { amount: 96700, type: "교통" },
-          { amount: 145000, type: "여가" },
-          { amount: 59900, type: "교육" },
-          { amount: 130000, type: "생활" },
-          { amount: 123000, type: "금융" },
-        ],
-        sameDayThisMonthReportList: [
-          { amount: 306000, type: "식비" },
-          { amount: 100700, type: "교통" },
-          { amount: 215000, type: "여가" },
-          { amount: 39900, type: "교육" },
-          { amount: 100100, type: "생활" },
-          { amount: 101000, type: "금융" },
-        ],
-        sameDayLastMonthAmount:
-          296000 + 96700 + 145000 + 59900 + 130000 + 123000,
-        sameDayThisMonthAmount:
-          306000 + 100700 + 115000 + 39900 + 100100 + 101000,
-      };
-
       try {
-        // 실제 데이터 fetch를 대신하여 더미 데이터를 사용
-        // const response = await axios.get<ReportData>(
-        //   "https://vision-necktitude.shop/reports/compare"
-        // );
-        // setLastMonthData(response.data.sameDayLastMonthReportList);
-        // setThisMonthData(response.data.sameDayThisMonthReportList);
-        // setLastMonthTotal(response.data.sameDayLastMonthAmount);
-        // setThisMonthTotal(response.data.sameDayThisMonthAmount);
+        console.log("Access Token:", accessToken); // 토큰 확인
 
-        setLastMonthData(dummyData.sameDayLastMonthReportList);
-        setThisMonthData(dummyData.sameDayThisMonthReportList);
-        setLastMonthTotal(dummyData.sameDayLastMonthAmount);
-        setThisMonthTotal(dummyData.sameDayThisMonthAmount);
-
-        console.error("데이터를 불러왔습니다.");
-        console.error(
-          dummyData.sameDayLastMonthReportList,
-          dummyData.sameDayThisMonthReportList,
-          dummyData.sameDayLastMonthAmount,
-          dummyData.sameDayThisMonthAmount
+        const response = await axios.get<ReportData>(
+          "https://vision-necktitude.shop/reports/compare",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // Bearer 추가
+            },
+          }
         );
-      } catch (error) {
-        console.error("데이터를 불러오는데 실패했습니다.", error);
+        setLastMonthData(response.data.sameDayLastMonthReportList);
+        setThisMonthData(response.data.sameDayThisMonthReportList);
+        setLastMonthTotal(response.data.sameDayLastMonthAmount);
+        setThisMonthTotal(response.data.sameDayThisMonthAmount);
+
+        console.log("데이터를 불러왔습니다.");
+        console.log(
+          response.data.sameDayLastMonthReportList,
+          response.data.sameDayThisMonthReportList,
+          response.data.sameDayLastMonthAmount,
+          response.data.sameDayThisMonthAmount
+        );
+      } catch (error: any) {
+        if (error.response) {
+          // 서버 응답이 있는 경우
+          console.error("Error response data:", error.response.data);
+          console.error("Error status:", error.response.status);
+          console.error("Error headers:", error.response.headers);
+        } else if (error.request) {
+          // 요청이 만들어졌으나 응답이 없는 경우
+          console.error("Error request:", error.request);
+        } else {
+          // 요청을 설정하는 중에 에러가 발생한 경우
+          console.error("Error message:", error.message);
+        }
+        console.error("Error config:", error.config);
       }
     };
+
     fetchData();
-  }, []);
+  }, [accessToken]);
 
   return (
     <S.Container>
