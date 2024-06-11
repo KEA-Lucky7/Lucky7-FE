@@ -13,6 +13,7 @@ interface QuizData {
 }
 
 export default function Quiz() {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [quizData, setQuizData] = useState<QuizData | null>(null);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -27,7 +28,7 @@ export default function Quiz() {
     const fetchQuizData = async () => {
       try {
         const response = await fetch(
-          "https://vision-necktitude.shop/quiz/quiz"
+          `${serverUrl}/quiz/quiz`
         );
         const data = await response.json();
 
@@ -52,7 +53,7 @@ export default function Quiz() {
 
     try {
       const response = await fetch(
-        "https://vision-necktitude.shop/quiz/grade",
+        `${serverUrl}/quiz/grade`,
         {
           method: "POST",
           headers: {

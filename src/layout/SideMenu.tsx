@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style/SideMenuStyle";
 import Cookies from "js-cookie";
-import { useUserStore } from '../components/homePage/login/state';
+import { useBlogIdStore, useUserStore } from '../components/homePage/login/state';
+
 import MemberInfo from "./SideMenuMemberInfo";
 import FinancialLuck from "../components/financialLuck/FinancialLuck";
 import moaboa from "../../src/assets/header/moaboa.png";
@@ -36,6 +37,7 @@ const SideMenu: React.FC<Props> = ({ setShowSideMenu }) => {
   const { userInfo } = useUserStore();
   const navigate = useNavigate();
   const memberCookie = Cookies.get("login");
+  const { myBlogId } = useBlogIdStore()
 
   useEffect(() => {
     if (memberCookie == "true" && userInfo) {
@@ -62,7 +64,7 @@ const SideMenu: React.FC<Props> = ({ setShowSideMenu }) => {
 
   const goBlogPage = () => {
     if (memberCookie == "true" && userInfo){
-      handleNavigation("/myblog")
+      handleNavigation("/blog/" + myBlogId)
     } else {
       window.alert("로그인 후 이용해주세요.")
     }

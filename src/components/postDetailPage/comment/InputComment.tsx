@@ -1,44 +1,64 @@
 import React, { ReactNode, useState } from "react";
-import styled from "styled-components";
 import axios from "axios";
+import styled from "styled-components";
 import CommonButton from "./CommomButton";
+import { useStore } from "../../homePage/login/state";
 
 type InputProps = {
   className: string;
   placeholder: string;
   postId: number;
+  commentId: number;
+  type: string;
   children?: ReactNode;
-  onClick?: () => void;  // 추가된 부분
+  onClick?: () => void;
 };
 
 const InputComment = ({
   className,
   placeholder,
   postId,
+  commentId,
+  type,
   children,
-  onClick,  // 추가된 부분
+  onClick,
 }: InputProps) => {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+  const { accessToken } = useStore();
   const [comment, setComment] = useState("");
+  const [commentType] = useState(type)
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  const handleCommentSubmit = () => {
-    axios
-      .post(`https://vision-necktitude.shop/posts/${postId}/comment`, {
-        content: comment,
-      })
-      .then((response) => {
-        console.log("댓글 제출 성공: ", response.data);
-        setComment("");
-        if (onClick) {
-          onClick();  // 추가된 부분: onClick이 제공된 경우 호출
-        }
-      })
-      .catch((error) => {
-        console.error("댓글 제출 실패: ", error);
-      });
+  const handleCommentSubmit = () => { 
+    var url = "";
+    if (commentType == "comment") {
+      url = `${serverUrl}/posts/${postId}/comment`
+    }
+    else {
+      url = `${serverUrl}/posts/${postId}/comment/${commentId}/reply`
+    }
+    axios.post( url,  
+    {
+      content: comment, 
+    }, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }}).then((response) => {
+      console.log(url)
+      console.log("댓글 제출 성공: ", response.data);
+      setComment("");
+      window.alert("댓글을 작성하였습니다.")
+      location.reload()
+      if (onClick) {
+        onClick(); 
+      }
+    })
+    .catch((error) => {
+      console.error("댓글 제출 실패: ", error);
+    });
   };
 
   return (
@@ -51,7 +71,7 @@ const InputComment = ({
       />
       <InputButtonWrapper>
         <InputButton className={className} onClick={handleCommentSubmit}>
-          댓글등록
+          등록
         </InputButton>
       </InputButtonWrapper>
     </InputWrapper>
@@ -66,11 +86,11 @@ const InputWrapper = styled.div`
   min-height: 110px;
   padding: 20px;
   border: grey;
-  border-radius: 8px;
   position: relative;
   box-sizing: border-box;
   border: 1px solid black;
-  margin-top: 10px;
+  margin: 0px 0px 30px 0px;
+  background-color: #fff;
 `;
 
 const InputArea = styled.textarea`
@@ -81,6 +101,7 @@ const InputArea = styled.textarea`
   outline: none;
   border: none;
   overflow-y: visible;
+  background-color: #fff;
 `;
 
 const InputButtonWrapper = styled.div`

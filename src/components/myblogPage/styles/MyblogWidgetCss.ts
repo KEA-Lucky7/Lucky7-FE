@@ -81,8 +81,9 @@ export const ContentTitle = styled.div`
 
 export const Section = styled.div`
   width: 100%;
-  // border: solid 1px red;
-`;
+  //border: solid 1px red;
+  background-color: #fffef9;
+  `;
 
 export const Circle = styled.div`
   width: 16px;
@@ -104,6 +105,7 @@ export const TagBox = styled.div`
   margin: 0 auto;
   // border: 1px solid red;
   vertical-align: middle;
+  background-color: #fffef9;
 `;
 
 export const Tag = styled.div`
@@ -115,13 +117,13 @@ export const Tag = styled.div`
   gap: 5px;
   // border: 1px solid red;
   vertical-align: middle;
+  background-color: #fffef9;
 `;
 
 export const Dropdown = styled.div`
   background-color: #fffef9;
   // border: 1px solid #ddd;
   border-radius: 4px;
-
   padding: 0px 10px 0px 10px;
 `;
 
