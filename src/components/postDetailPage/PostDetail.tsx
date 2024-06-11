@@ -335,20 +335,31 @@ export default function PostDetail() {
 
             {/* Wallet List */}
             <div>
-              <S.WalletListBox>
-                {post.walletList && post.walletList.length > 0 && (
-                  <div>
+            <S.WalletListBox>
+              <div>{"이 글의 소비 내역: "}</div>
+              {post.walletList && post.walletList.length > 0 && (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>날짜</th>
+                      <th>메모</th>
+                      <th>금액</th>
+                      <th>타입</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                     {post.walletList.map((walletItem, index) => (
-                      <S.WalletItem key={index}>
-                        <div>날짜: {walletItem.consumedDate}</div>
-                        <div>메모: {walletItem.memo}</div>
-                        <div>금액: {walletItem.amount}</div>
-                        <div>타입: {walletItem.walletType}</div>
-                      </S.WalletItem>
+                      <tr key={index}>
+                        <td>{walletItem.consumedDate}</td>
+                        <td>{walletItem.memo}</td>
+                        <td>{walletItem.amount}</td>
+                        <td>{walletItem.walletType}</td>
+                      </tr>
                     ))}
-                  </div>
-                )}
-              </S.WalletListBox>
+                  </tbody>
+                </table>
+              )}
+            </S.WalletListBox>
             </div>
 
             {/* 태그 내용 */}

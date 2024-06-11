@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import * as S from "../homePage/styles/HomePostListStyle";
+import { useNavigate } from "react-router-dom";
 
 interface Post {
   postId: number;
@@ -20,6 +21,7 @@ const HomePostList: React.FC = () => {
   const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   const fetchPosts = async (page: number) => {
     setLoading(true);
@@ -54,6 +56,10 @@ const HomePostList: React.FC = () => {
       setPage((prevPage) => prevPage + 1);
     }
   };
+
+  const goPostPage = (id: number) => {
+    //navigate("/myblog/" + id)
+  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
@@ -94,7 +100,7 @@ const HomePostList: React.FC = () => {
           );
           const gridColumn = index === longestTitleIndex ? "span 3" : "span 2";
           return (
-            <S.ListItemContainer key={post.postId} style={{ gridColumn }}>
+            <S.ListItemContainer key={post.postId} style={{ gridColumn }} onClick={goPostPage(post.postId)}>
               <S.ListItemBox
                 onMouseEnter={() => setHoveredItemId(post.postId)}
                 onMouseLeave={() => setHoveredItemId(0)}
