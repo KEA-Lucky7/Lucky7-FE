@@ -176,28 +176,10 @@ export default function MyblogPostCategory({
           </Collapse>
         </S.Section>
 
-        {/* 세 번째 메뉴 */}
-        <S.Section onClick={setContentsReport}>
-          <ListItemButton onClick={reportCategoryClick}>
-            <ListItemIcon></ListItemIcon>
-            <S.SubCircle />
-            <ListItemText primary="레포트" />
-            {reportCategory ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-
-          {/* 눌렀을 때 나오는 하위 메뉴 */}
-          <Collapse in={reportCategory} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon></ListItemIcon>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <ListItemText primary="ㄴ #레포트태그1" />
-                  <ListItemText primary="ㄴ #레포트태그2" />
-                  <ListItemText primary="ㄴ #레포트태그3" />
-                </div>
-              </ListItemButton>
-            </List>
-          </Collapse>
+        <S.Section>
+          <S.ListItemButton onClick={() => setContents("report")}>
+            <S.ListItemText>레포트</S.ListItemText>
+          </S.ListItemButton>
         </S.Section>
       </List>
     </S.MyblogCategoryWidgetContainer>

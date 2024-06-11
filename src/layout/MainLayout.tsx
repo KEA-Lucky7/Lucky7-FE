@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import SideMenu from "./SideMenu";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 // import SettingHeader from "../components/settingPage/settingItems/SettingHeader";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 export default function MainLayout({ children }: Props) {
   const [showSideMenu, setShowSideMenu] = useState(false);
-  const location = useLocation();
+  // const location = useLocation();
   // const isWritePage = location.pathname.includes("write");
   // const isSettingPage = location.pathname.includes("setting");
   // useEffect(() => {

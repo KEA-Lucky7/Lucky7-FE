@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import * as S from "./styles/AccountBook";
+import { useStore } from "../homePage/login/state";
 
 interface ExpenseData {
   date: Date;
@@ -22,82 +23,53 @@ const AccountBook = () => {
       .toString()
       .padStart(2, "0")}`
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const value = new Date();
+
+  // useStore 훅을 사용하여 accessToken 가져오기
+  const { accessToken } = useStore();
 
   useEffect(() => {
     const fetchExpenses = async () => {
-      // 더미 데이터 생성
-      const dummyResponse = {
-        memberId: 1,
-        specificAmount: 400000,
-        monthAmount: 300000,
-        totalAmount: 300000,
-        consumedList: [
-          { consumedDate: "2024.05.01", amount: 100000 },
-          { consumedDate: "2024.05.02", amount: 150000 },
-          { consumedDate: "2024.05.03", amount: 200000 },
-          { consumedDate: "2024.06.01", amount: 10000 },
-          { consumedDate: "2024.06.02", amount: 15000 },
-          { consumedDate: "2024.06.03", amount: 20000 },
-          { consumedDate: "2024.06.04", amount: 25000 },
-          { consumedDate: "2024.06.05", amount: 30000 },
-          { consumedDate: "2024.06.06", amount: 35000 },
-          { consumedDate: "2024.06.07", amount: 40000 },
-          { consumedDate: "2024.06.09", amount: 50000 },
-          { consumedDate: "2024.06.10", amount: 55000 },
-          { consumedDate: "2024.06.11", amount: 60000 },
-          { consumedDate: "2024.06.12", amount: 65000 },
-          { consumedDate: "2024.06.14", amount: 75000 },
-          { consumedDate: "2024.06.15", amount: 80000 },
-          { consumedDate: "2024.06.17", amount: 90000 },
-          { consumedDate: "2024.06.18", amount: 95000 },
-          { consumedDate: "2024.06.19", amount: 100000 },
-          { consumedDate: "2024.06.20", amount: 105000 },
-          { consumedDate: "2024.06.21", amount: 110000 },
-          { consumedDate: "2024.06.23", amount: 120000 },
-          { consumedDate: "2024.06.24", amount: 125000 },
-          { consumedDate: "2024.06.25", amount: 130000 },
-          { consumedDate: "2024.06.26", amount: 135000 },
-          { consumedDate: "2024.06.27", amount: 140000 },
-          { consumedDate: "2024.06.28", amount: 145000 },
-          { consumedDate: "2024.06.30", amount: 155000 },
-        ],
-      };
-
+      setIsLoading(true);
+      setErrorMessage(null);
       try {
         const response = await axios.get(
           "https://vision-necktitude.shop/posts/calender",
           {
             headers: {
-              Authorization:
-                "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjciLCJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTcxNzMyNDk0NCwiZXhwIjoxNzE3MzMyMTQ0fQ.cnnjC8J1OIA9y-19KMPVpDk-pG4VK3xosgcDhmRbPLk",
+              Authorization: `Bearer ${accessToken}`,
             },
             params: {
-              month: "2024.06", // 조회하고 싶은 월
-              specificDate: "2024.06.15", // 특정 날짜
+              month: month, // 조회하고 싶은 월
+              specificDate: endDate, // 특정 날짜
             },
           }
         );
 
-        const fetchedExpenses = response.data.consumedList.map((item: any) => ({
-          date: new Date(item.consumedDate),
-          amount: item.amount,
-        }));
-        setExpenses(fetchedExpenses);
+        if (Array.isArray(response.data.consumedList)) {
+          const fetchedExpenses = response.data.consumedList.map(
+            (item: any) => ({
+              date: new Date(item.consumedDate),
+              amount: item.amount,
+            })
+          );
+          setExpenses(fetchedExpenses);
+          console.log("데이터를 받아왔습니다.");
+        } else {
+          throw new Error("Invalid data format");
+        }
       } catch (error) {
+        console.log("데이터를 받아오지 못했습니다.");
         handleError(error);
-
-        // 더미 데이터를 사용하여 초기화
-        const dummyExpenses = dummyResponse.consumedList.map((item) => ({
-          date: new Date(item.consumedDate),
-          amount: item.amount,
-        }));
-        setExpenses(dummyExpenses);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchExpenses();
-  }, []);
+  }, [accessToken, month, endDate]);
 
   const handleError = (error: any) => {
     if (axios.isAxiosError(error)) {
@@ -105,9 +77,13 @@ const AccountBook = () => {
       if (error.response) {
         console.error("Error response data:", error.response.data);
         console.error("Error response status:", error.response.status);
+        setErrorMessage(
+          `Error: ${error.response.status} - ${error.response.data}`
+        );
       }
     } else {
       console.error("Unexpected error:", error);
+      setErrorMessage(`Unexpected error: ${error.message}`);
     }
   };
 
@@ -194,6 +170,8 @@ const AccountBook = () => {
   return (
     <S.AccountBookContainer>
       <S.Title>가계부보기</S.Title>
+      {isLoading && <p>Loading...</p>}
+      {errorMessage && <p>{errorMessage}</p>}
       <S.StyledCalendar
         calendarType="gregory"
         value={value}
@@ -202,7 +180,7 @@ const AccountBook = () => {
       <S.ExpenseCalculationContainer>
         <S.CalculationTitle>소비 금액 계산</S.CalculationTitle>
         <S.CalculationSubTitle>
-          직접 입력하여 기준일을 선택하세요
+          직접입력하여 기준일을 선택하세요
         </S.CalculationSubTitle>
         {renderDateRangeCalculation("총 소비 금액", startDate, endDate)}
         {renderMonthlyCalculation("소비 금액", month)}
