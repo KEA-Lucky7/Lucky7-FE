@@ -71,7 +71,7 @@ const InputComment = ({
       />
       <InputButtonWrapper>
         <InputButton className={className} onClick={handleCommentSubmit}>
-          댓글등록
+          등록
         </InputButton>
       </InputButtonWrapper>
     </InputWrapper>
@@ -86,11 +86,11 @@ const InputWrapper = styled.div`
   min-height: 110px;
   padding: 20px;
   border: grey;
-  border-radius: 8px;
   position: relative;
   box-sizing: border-box;
   border: 1px solid black;
-  margin-top: 10px;
+  margin: 0px 0px 30px 0px;
+  background-color: #fff;
 `;
 
 const InputArea = styled.textarea`
@@ -101,7 +101,7 @@ const InputArea = styled.textarea`
   outline: none;
   border: none;
   overflow-y: visible;
-  background-color: #fffef9;
+  background-color: #fff;
 `;
 
 const InputButtonWrapper = styled.div`
@@ -113,7 +113,7 @@ const InputButton = styled(CommonButton)`
   right: 20px;
   bottom: 20px;
   padding: 12px 16px;
-  background-color: #fffef9;
+  background-color: #fff;
   border: none;
   font-size: 18px;
   font-weight: bold;

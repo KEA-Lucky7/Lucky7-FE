@@ -18,7 +18,6 @@ import ConfirmModal from "./ConfirmModal";
 import EditPostForm from "./EditPostForm";
 import CommentComp from "./comment/CommentComp";
 
-
 interface Post {
   postId: number;
   memberId: number;

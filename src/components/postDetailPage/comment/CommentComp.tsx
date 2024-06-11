@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import InputComment from './InputComment';
+import replyLimg from '../../../assets/postDetail/reply.png';
+import defaultProfileImg from "../../../assets/profile/profile.png";
 
 interface Reply {
   content: string;
@@ -41,7 +43,7 @@ const CommentComp = ({ commentList }: CommentData) => {
     <Container>
       <InputComment
         className="custom-input"
-        placeholder={String(postId)}
+        placeholder={"댓글을 입력하세요"}
         onClick={handleCommentSubmit}
         postId={Number(postId)}
         commentId={0}
@@ -79,30 +81,26 @@ const CommentItem = ({ comment, postId, activeCommentId, setActiveCommentId, act
 
   return (
     <CommentContainer>
-      <CommentHeader>
-        <ProfileImg src={comment.profileImg} alt={`${comment.nickname}'s profile`} />
-        <Nickname>{comment.nickname}</Nickname>
-        <OptionsButton>⋮</OptionsButton>
-      </CommentHeader>
-      <CommentContent>{comment.content}</CommentContent>
-      <CommentFooter>
-        <CreatedAt>{comment.createdAt}</CreatedAt>
-        <ReplyButton onClick={() => {
-          setActiveCommentId(isActive ? null : comment.commentId);
-          setActiveParentCommentId(isActive ? null : comment.commentId);
-        }}>답글 달기</ReplyButton>
-      </CommentFooter>
-      <ReplyList>
-        {isActive && (
-          <InputComment
-            className="custom-input"
-            placeholder="댓글을 입력하세요"
-            onClick={() => {}}
-            postId={postId}
-            commentId={comment.commentId}
-            type="reply"
+      <CommentBox>
+        <CommentHeader>
+          <ProfileImg 
+            src={comment.profileImg || defaultProfileImg} 
+            alt={`profileImage`} 
+            onError={(e) => (e.currentTarget.src = defaultProfileImg)}
           />
-        )}
+          <Nickname>{comment.nickname}</Nickname>
+          <OptionsButton>⋮</OptionsButton>
+        </CommentHeader>
+        <CommentContent>{comment.content}</CommentContent>
+        <CommentFooter>
+          <CreatedAt>{comment.createdAt}</CreatedAt>
+          <ReplyButton onClick={() => {
+            setActiveCommentId(isActive ? null : comment.commentId);
+            setActiveParentCommentId(isActive ? null : comment.commentId);
+          }}>답글 달기</ReplyButton>
+        </CommentFooter>
+      </CommentBox>
+      <ReplyList>
         {comment.replyList.map((reply) => (
           <ReplyItem 
             key={reply.replyId} 
@@ -114,6 +112,19 @@ const CommentItem = ({ comment, postId, activeCommentId, setActiveCommentId, act
             setActiveParentCommentId={setActiveParentCommentId}
           />
         ))}
+        {isActive && (
+          <ReplyContainer>
+            <LShape><img src={replyLimg} style={{ scale: "30%", marginLeft: "-10px", marginRight: "-10px" }}/></LShape>
+            <InputComment
+              className="custom-input"
+              placeholder="댓글을 입력하세요"
+              onClick={() => {}}
+              postId={postId}
+              commentId={comment.commentId}
+              type="reply"
+            />
+          </ReplyContainer>
+        )}
       </ReplyList>
     </CommentContainer>
   );
@@ -134,13 +145,18 @@ const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId, activeP
 
   return (
     <ReplyContainer>
-      <LShape>ㄴ</LShape>
-      <div>
-        <ReplyHeader>
-          <ProfileImg src={reply.profileImg} alt={`${reply.nickname}'s profile`} />
+      <LShape><img src={replyLimg} style={{ scale: "30%", marginLeft: "-10px", marginRight: "-10px" }}/></LShape>
+      <CommentBox>
+        <CommentHeader>
+          <ProfileImg 
+            src={reply.profileImg || defaultProfileImg} 
+            alt={`profileImage`} 
+            onError={(e) => (e.currentTarget.src = defaultProfileImg)}
+          />
           <Nickname>{reply.nickname}</Nickname>
-        </ReplyHeader>
-        <ReplyContent>{reply.content}</ReplyContent>
+          <OptionsButton>⋮</OptionsButton>
+        </CommentHeader>
+        <CommentContent>{reply.content}</CommentContent>
         <CommentFooter>
           <CreatedAt>{reply.createdAt}</CreatedAt>
           <ReplyButton onClick={() => {
@@ -149,16 +165,19 @@ const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId, activeP
           }}>답글 달기</ReplyButton>
         </CommentFooter>
         {isActive && (
-          <InputComment
-            className="custom-input"
-            placeholder="답글을 입력하세요"
-            onClick={() => {}}
-            postId={postId}
-            commentId={activeParentCommentId!}
-            type="reply"
-          />
+          <ReplyContainer>
+            <LShape><img src={replyLimg} style={{ scale: "30%", marginLeft: "-10px", marginRight: "-10px" }}/></LShape>
+            <InputComment
+              className="custom-input"
+              placeholder="답글을 입력하세요"
+              onClick={() => {}}
+              postId={postId}
+              commentId={activeParentCommentId!}
+              type="reply"
+            />
+          </ReplyContainer>
         )}
-      </div>
+      </CommentBox>
     </ReplyContainer>
   );
 };
@@ -166,16 +185,20 @@ const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId, activeP
 export default CommentComp;
 
 const Container = styled.div`
+  margin-top: 30px;
   width: 100%;
 `;
 
 const CommentList = styled.div`
-  margin-top: 20px;
 `;
 
 const CommentContainer = styled.div`
-  margin-bottom: 20px;
   width: 100%;
+`;
+
+const CommentBox = styled.div`
+  width: 100%;
+  margin: 20px 0px 20px 0px;
 `;
 
 const CommentHeader = styled.div`
@@ -185,13 +208,13 @@ const CommentHeader = styled.div`
 `;
 
 const ReplyList = styled.div`
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 const ReplyContainer = styled.div`
   display: flex;
-  margin-bottom: 10px;
   width: 100%;
+  margin: 10px 0px 0px 10px;
 `;
 
 const LShape = styled.div`
@@ -224,14 +247,7 @@ const CommentContent = styled.div`
 const CommentFooter = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 40px;
-`;
-
-const ReplyHeader = styled(CommentHeader)``;
-
-const ReplyContent = styled.div`
-  margin-left: 40px;
-  margin-bottom: 5px;
+  margin: 10px 0px 0px 40px;
 `;
 
 const OptionsButton = styled.button`
@@ -243,8 +259,10 @@ const OptionsButton = styled.button`
 `;
 
 const ReplyButton = styled.button`
+  color: gray;
+  font-size: 0.9em;
+  margin: 0px 0px 0px 10px;
   background: none;
   border: none;
-  color: blue;
-  cursor: pointer;
+  padding: 2px;
 `;

@@ -57,10 +57,6 @@ const HomePostList: React.FC = () => {
     }
   };
 
-  const goPostPage = (id: number) => {
-    //navigate("/myblog/" + id)
-  }
-
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
       threshold: 0,
@@ -100,7 +96,7 @@ const HomePostList: React.FC = () => {
           );
           const gridColumn = index === longestTitleIndex ? "span 3" : "span 2";
           return (
-            <S.ListItemContainer key={post.postId} style={{ gridColumn }} onClick={goPostPage(post.postId)}>
+            <S.ListItemContainer key={post.postId} style={{ gridColumn }}>
               <S.ListItemBox
                 onMouseEnter={() => setHoveredItemId(post.postId)}
                 onMouseLeave={() => setHoveredItemId(0)}
