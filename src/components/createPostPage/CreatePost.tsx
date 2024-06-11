@@ -8,7 +8,7 @@ import Resizer from "react-image-file-resizer";
 import axios from "axios";
 
 import * as S from "./styles/CreatepostCss";
-import { useStore } from "../homePage/login/state";
+import { useStore, useBlogIdStore } from "../homePage/login/state";
 import { TemporarySaveModal } from "./createPostItems/TemporarySaveModal";
 import postDetailbackground from "../../assets/postDetail/postDetailbackground.jpeg";
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
@@ -51,6 +51,7 @@ export default function CreatePost() {
   const [posts, setPosts] = useState<any[]>([]);
   
   const { accessToken } = useStore();
+  const { myBlogId } = useBlogIdStore();
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -239,7 +240,7 @@ export default function CreatePost() {
       );
       console.log("Response:", response.data);
       alert("글 작성이 완료 되었습니다.");
-      navigate("/myblog");
+      navigate("/blog/" + myBlogId);
     } catch (error) {
       console.error("Error posting data:", error);
     }
