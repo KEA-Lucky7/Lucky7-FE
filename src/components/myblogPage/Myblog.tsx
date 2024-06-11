@@ -16,8 +16,6 @@ export default function Myblog() {
   const [blogAbout, setBlogAbout] = useState("");
   const [blogHeaderImg, setBlogHeaderImg] = useState("");
 
-
-
   useEffect(() => {
     if (blogInfo) {
       const storedBlogInfo = JSON.parse(blogInfo);

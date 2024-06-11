@@ -71,6 +71,8 @@ interface Post {
 export default function PostDetail() {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { postId } = useParams<{ postId: string }>();
+  const { blogId } = useParams<{ blogId: string }>();
+  const [writerBlogId, setWriterBlogId] = useState(0)
   const [post, setPost] = useState<Post>({} as Post);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isCommentVisible, setIsCommentVisible] = useState(false);
@@ -79,18 +81,13 @@ export default function PostDetail() {
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   const { accessToken } = useStore();
-  const { blogInfo } = useBlogStore();
-  const [blogName, setBlogName] = useState("");
-  const [blogAbout, setBlogAbout] = useState("");
-
+  // const { blogInfo } = useBlogStore();
 
   useEffect(() => {
-    if (blogInfo) {
-      const storedBlogInfo = JSON.parse(blogInfo);
-      setBlogName(storedBlogInfo.blogName);
-      setBlogAbout(storedBlogInfo.about);
+    if (blogId) {
+      setWriterBlogId(Number(blogId))
     }
-  }, [blogInfo]);
+  }, [blogId]);
 
   //글 상세조회 API
   useEffect(() => {
@@ -141,7 +138,7 @@ export default function PostDetail() {
       });
       if (response.ok) {
         alert("성공적으로 삭제되었습니다.");
-        navigate("/myblog");
+        navigate("/blog/" + {blogId});
       } else {
         alert("삭제에 실패하였습니다.");
       }
@@ -188,6 +185,10 @@ export default function PostDetail() {
       behavior: "smooth", // 부드럽게 스크롤
     });
   };
+
+  const otherBlog = (id: number) => {
+    navigate("/blog/" + id);
+  }
 
   return (
     <>
@@ -423,7 +424,7 @@ export default function PostDetail() {
           </S.PostContainer>
 
           {/* 마이프로필 내용 */}
-          <S.profileBox>
+          <S.ProfileBox onClick={() => otherBlog(writerBlogId)}>
             <S.PictureBox>
               <img
                 src={profileImage}
@@ -432,10 +433,10 @@ export default function PostDetail() {
               />
             </S.PictureBox>
             <S.ContentBox>
-              <div style={{ fontWeight: "bold" }}>{blogName}</div>
-              <div>{blogAbout}</div>
+              <div style={{ fontWeight: "bold" }}>{post.nickname}</div>
+              <div>{post.about}</div>
             </S.ContentBox>
-          </S.profileBox>
+          </S.ProfileBox>
 
           {/* 글 리스트 내용 */}
           {post.postList && post.postList.length > 0 && (
@@ -444,7 +445,7 @@ export default function PostDetail() {
               <S.postDetailListBox>
                 {post.postList.map((postItem, index) => (
                   <Link
-                    to={`/myblog/${postItem.postId}`}
+                    to={`/blog/${blogId}/${postItem.postId}`}
                     key={index}
                     style={{
                       textDecoration: "none",

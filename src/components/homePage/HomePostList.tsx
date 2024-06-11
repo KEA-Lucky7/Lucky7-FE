@@ -57,6 +57,10 @@ const HomePostList: React.FC = () => {
     }
   };
 
+  const movePost = (blogId: number, postId: number) => {
+    navigate(`/blog/${blogId}/${postId}`)
+  }
+
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
       threshold: 0,
@@ -96,7 +100,7 @@ const HomePostList: React.FC = () => {
           );
           const gridColumn = index === longestTitleIndex ? "span 3" : "span 2";
           return (
-            <S.ListItemContainer key={post.postId} style={{ gridColumn }}>
+            <S.ListItemContainer key={post.postId} style={{ gridColumn }} onClick={() => movePost(46, post.postId)}>
               <S.ListItemBox
                 onMouseEnter={() => setHoveredItemId(post.postId)}
                 onMouseLeave={() => setHoveredItemId(0)}
@@ -125,7 +129,7 @@ const HomePostList: React.FC = () => {
         })}
       </S.ListContainer>
       {hasMore ? (
-        <div>왜안되는데말좀해봐</div>
+        <div>로딩 중...</div>
       ) : (
         <div>인기글 목록을 전부 불러왔습니다.</div>
       )}

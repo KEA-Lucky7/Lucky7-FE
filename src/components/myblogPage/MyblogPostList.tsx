@@ -36,7 +36,7 @@ const MyblogPostList: React.FC = () => {
   const postsPerPage = 15;
 
   const { accessToken } = useStore();
-  const { myBlogId } = useBlogIdStore()
+  const { myBlogId } = useBlogIdStore();
   const { userInfo } = useUserStore();
   const storedUserInfo = JSON.parse(userInfo);
 
@@ -87,7 +87,7 @@ const MyblogPostList: React.FC = () => {
     <S.PostListContainer>
       {currentPosts.map((post) => (
         <Link
-          to={`/myblog/${post.postId}`}
+          to={`/blog/${myBlogId}/${post.postId}`}
           key={post.postId}
           style={{ textDecoration: "none", color: "black" }}
         >
@@ -163,7 +163,7 @@ const MyblogPostList: React.FC = () => {
       <div>
         {currentPosts.map((post) => (
           <Link
-            to={`/myblog/${post.postId}`}
+            to={`/blog/${myBlogId}/${post.postId}`}
             key={post.postId}
             style={{ textDecoration: "none", color: "black" }}
           >

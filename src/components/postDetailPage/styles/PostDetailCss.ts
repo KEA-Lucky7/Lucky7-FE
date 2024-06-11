@@ -176,7 +176,7 @@ export const CommentBox = styled.div`
   padding-top: 30px;
 `;
 
-export const profileBox = styled.div`
+export const ProfileBox = styled.div`
   width: 33%;
   height: 150px;
   margin: 0 auto;
