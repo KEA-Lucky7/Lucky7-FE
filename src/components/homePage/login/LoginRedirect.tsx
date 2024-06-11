@@ -20,6 +20,7 @@ const LoginRedirect = () => {
 
   useEffect(() => {
     if (isRegisteredIn) {
+      console.log("지금 받아온 토큰: "+ access_token)
       navigate("/login/info");
     }
   }, [isRegisteredIn]);

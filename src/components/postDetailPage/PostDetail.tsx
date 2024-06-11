@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useStore } from "../homePage/login/state";
+import { useStore, useBlogStore } from "../homePage/login/state";
 import { Link, useParams } from "react-router-dom";
 
 import * as S from "./styles/PostDetailCss";
@@ -10,7 +10,7 @@ import report from "../../assets/postDetail/report.png";
 import postComment from "../../assets/postDetail/postComment.png";
 import postHeart from "../../assets/postDetail/postHeart.png";
 import seeMoreComment from "../../assets/postDetail/seeMoreComment.png";
-import profileImage from "../../assets/postDetail/profileImage.png";
+import profileImage from "../../assets/profile/profile.png";
 import Top from "../../assets/postDetail/Top.png";
 import deletebutton from "../../assets/postDetail/deletebutton.png";
 import postEdit from "../../assets/postDetail/postEdit.png";
@@ -27,6 +27,7 @@ interface Post {
   about: string;
   title: string;
   content: string;
+  feedback: string;
   preview: string;
   thumbnail: string;
   postType: string;
@@ -51,7 +52,7 @@ interface Post {
     createdAt: string;
     replyList: {
       content: string;
-      memberId: string;
+      memberId: number;
       nickname: string;
       profileImg: string;
       createdAt: string;
@@ -79,6 +80,18 @@ export default function PostDetail() {
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   const { accessToken } = useStore();
+  const { blogInfo } = useBlogStore();
+  const [blogName, setBlogName] = useState("");
+  const [blogAbout, setBlogAbout] = useState("");
+
+
+  useEffect(() => {
+    if (blogInfo) {
+      const storedBlogInfo = JSON.parse(blogInfo);
+      setBlogName(storedBlogInfo.blogName);
+      setBlogAbout(storedBlogInfo.about);
+    }
+  }, [blogInfo]);
 
   //글 상세조회 API
   useEffect(() => {
@@ -186,7 +199,7 @@ export default function PostDetail() {
           onCancel={() => setIsEditing(false)}
         />
       ) : (
-        <>
+        <S.All>
           <S.Container>
             {/* 사진 & 사진 안 텍스트 */}
             <S.Picturecontainer imageUrl={post.thumbnail}>
@@ -311,6 +324,13 @@ export default function PostDetail() {
             {/* 본문 내용 */}
             <S.PostBox>
               <div>{post.content}</div>
+
+              <S.AIReporContainer>
+                <S.AILogo>AI</S.AILogo>
+                <S.AIContent>
+                  {post.feedback}
+                </S.AIContent>
+            </S.AIReporContainer>
             </S.PostBox>
 
             {/* Wallet List */}
@@ -402,8 +422,8 @@ export default function PostDetail() {
               />
             </S.PictureBox>
             <S.ContentBox>
-              <div style={{ fontWeight: "bold" }}>{post.nickname}'s Blog</div>
-              <div>{post.about}</div>
+              <div style={{ fontWeight: "bold" }}>{blogName}</div>
+              <div>{blogAbout}</div>
             </S.ContentBox>
           </S.profileBox>
 
@@ -441,7 +461,7 @@ export default function PostDetail() {
             />
             <div>Top</div>
           </S.TopBox>
-        </>
+        </S.All>
       )}
     </>
   );

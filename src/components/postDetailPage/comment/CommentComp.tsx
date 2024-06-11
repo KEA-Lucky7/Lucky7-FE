@@ -31,7 +31,7 @@ interface CommentData {
 const CommentComp = ({ commentList }: CommentData) => {
   const { postId } = useParams<{ postId: string }>();
   const [activeCommentId, setActiveCommentId] = useState<number | null>(null);
-  const [parentCommentId, setParentCommentId] = useState(0);
+  const [activeParentCommentId, setActiveParentCommentId] = useState<number | null>(null);
 
   const handleCommentSubmit = () => {
     // 댓글 제출 로직
@@ -44,7 +44,7 @@ const CommentComp = ({ commentList }: CommentData) => {
         placeholder={String(postId)}
         onClick={handleCommentSubmit}
         postId={Number(postId)}
-        commentId={parentCommentId}
+        commentId={0}
         type="comment"
       />
       <CommentList>
@@ -55,6 +55,8 @@ const CommentComp = ({ commentList }: CommentData) => {
             postId={Number(postId)}
             activeCommentId={activeCommentId}
             setActiveCommentId={setActiveCommentId}
+            activeParentCommentId={activeParentCommentId}
+            setActiveParentCommentId={setActiveParentCommentId}
           />
         ))}
       </CommentList>
@@ -66,9 +68,12 @@ interface CommentProps {
   comment: Comment,
   postId: number,
   activeCommentId: number | null,
-  setActiveCommentId: (id: number | null) => void 
+  setActiveCommentId: (id: number | null) => void,
+  activeParentCommentId: number | null,
+  setActiveParentCommentId: (id: number | null) => void
 }
-const CommentItem = ({ comment, postId, activeCommentId, setActiveCommentId 
+
+const CommentItem = ({ comment, postId, activeCommentId, setActiveCommentId, activeParentCommentId, setActiveParentCommentId 
 }: CommentProps) => {
   const isActive = activeCommentId === comment.commentId;
 
@@ -77,12 +82,15 @@ const CommentItem = ({ comment, postId, activeCommentId, setActiveCommentId
       <CommentHeader>
         <ProfileImg src={comment.profileImg} alt={`${comment.nickname}'s profile`} />
         <Nickname>{comment.nickname}</Nickname>
-        <OptionsButton >⋮</OptionsButton>
+        <OptionsButton>⋮</OptionsButton>
       </CommentHeader>
       <CommentContent>{comment.content}</CommentContent>
       <CommentFooter>
         <CreatedAt>{comment.createdAt}</CreatedAt>
-        <ReplyButton onClick={() => setActiveCommentId(isActive ? null : comment.commentId)}>답글 달기</ReplyButton>
+        <ReplyButton onClick={() => {
+          setActiveCommentId(isActive ? null : comment.commentId);
+          setActiveParentCommentId(isActive ? null : comment.commentId);
+        }}>답글 달기</ReplyButton>
       </CommentFooter>
       <ReplyList>
         {isActive && (
@@ -102,6 +110,8 @@ const CommentItem = ({ comment, postId, activeCommentId, setActiveCommentId
             postId={postId}
             activeCommentId={activeCommentId}
             setActiveCommentId={setActiveCommentId}
+            activeParentCommentId={activeParentCommentId}
+            setActiveParentCommentId={setActiveParentCommentId}
           />
         ))}
       </ReplyList>
@@ -113,10 +123,12 @@ interface ReplyProps {
   reply: Reply,
   postId: number,
   activeCommentId: number | null,
-  setActiveCommentId: (id: number | null) => void 
+  setActiveCommentId: (id: number | null) => void,
+  activeParentCommentId: number | null,
+  setActiveParentCommentId: (id: number | null) => void
 }
 
-const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId 
+const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId, activeParentCommentId, setActiveParentCommentId 
 }: ReplyProps) => {
   const isActive = activeCommentId === reply.replyId;
 
@@ -131,7 +143,10 @@ const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId
         <ReplyContent>{reply.content}</ReplyContent>
         <CommentFooter>
           <CreatedAt>{reply.createdAt}</CreatedAt>
-          <ReplyButton onClick={() => setActiveCommentId(isActive ? null : reply.replyId)}>답글 달기</ReplyButton>
+          <ReplyButton onClick={() => {
+            setActiveCommentId(isActive ? null : reply.replyId);
+            setActiveParentCommentId(isActive ? null : reply.commentId);
+          }}>답글 달기</ReplyButton>
         </CommentFooter>
         {isActive && (
           <InputComment
@@ -139,7 +154,7 @@ const ReplyItem = ({ reply, postId, activeCommentId, setActiveCommentId
             placeholder="답글을 입력하세요"
             onClick={() => {}}
             postId={postId}
-            commentId={activeCommentId}
+            commentId={activeParentCommentId!}
             type="reply"
           />
         )}

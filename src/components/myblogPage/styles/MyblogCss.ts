@@ -57,6 +57,7 @@ export const LeftSection = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
+  background: #fffef9;
 `;
 
 export const RightSection = styled.div`
@@ -65,4 +66,5 @@ export const RightSection = styled.div`
   // border: 1px solid blue;
   display: flex;
   flex-direction: row;
+  background: #fffef9;
 `;

@@ -50,6 +50,8 @@ const InputComment = ({
       console.log(url)
       console.log("댓글 제출 성공: ", response.data);
       setComment("");
+      window.alert("댓글을 작성하였습니다.")
+      location.reload()
       if (onClick) {
         onClick(); 
       }
@@ -99,6 +101,7 @@ const InputArea = styled.textarea`
   outline: none;
   border: none;
   overflow-y: visible;
+  background-color: #fffef9;
 `;
 
 const InputButtonWrapper = styled.div`
@@ -110,7 +113,7 @@ const InputButton = styled(CommonButton)`
   right: 20px;
   bottom: 20px;
   padding: 12px 16px;
-  background-color: #fff;
+  background-color: #fffef9;
   border: none;
   font-size: 18px;
   font-weight: bold;
