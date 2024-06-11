@@ -385,6 +385,7 @@ export default function PostDetail() {
                     gap: "5px",
                     alignItems: "center",
                   }}
+                  onClick={toggleCommentVisibility}
                 >
                   <img
                     src={postComment}
@@ -396,7 +397,6 @@ export default function PostDetail() {
                     src={seeMoreComment}
                     alt="더보기"
                     style={{ width: "16px", height: "7px" }}
-                    onClick={toggleCommentVisibility}
                   />
                 </div>
                 <div
