@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import * as S from "./styles/MyblogWidgetCss";
-import { useStore, useUserStore } from "../homePage/login/state";
+import { useStore, useBlogIdStore, useUserStore } from "../homePage/login/state";
 import { useEffect } from "react";
 import axios from "axios";
 
 export default function MyblogWidget() {
-  // 사용하지 않는 변수는 언더스코어로 무시합니다.
-  const { accessToken, setAccessToken: _ } = useStore();
-  const { userInfo, setUserInfo: _setUserInfo } = useUserStore();
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+  const { myBlogId } = useBlogIdStore();
+  const { accessToken } = useStore();
+  const { userInfo } = useUserStore();
 
   // userInfo를 파싱합니다.
   const storedUserInfo = JSON.parse(userInfo);
@@ -15,9 +16,7 @@ export default function MyblogWidget() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://vision-necktitude.shop/posts/${storedUserInfo.id}/post-list?postType=ALL&hashtag=ALL&page=0`,
-          {
+        const response = await axios.get( `${serverUrl}/posts/${myBlogId}/post-list?postType=ALL&hashtag=ALL&page=0`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
@@ -25,7 +24,7 @@ export default function MyblogWidget() {
         );
 
         // 객체 내용 출력
-        console.log("Stored User Info:", storedUserInfo);
+        console.log("블로그 아이디 :", myBlogId);
         console.log("Access Token:", accessToken);
         console.log("Response Data:", response.data);
       } catch (error) {
@@ -34,7 +33,7 @@ export default function MyblogWidget() {
     };
 
     fetchData();
-  }, [storedUserInfo.id, accessToken]);
+  }, [myBlogId, accessToken]);
 
   return (
     <S.MyblogWidgetContainer>

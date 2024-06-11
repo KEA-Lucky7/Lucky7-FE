@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 import * as S from "./style/HeaderStyled.ts";
 import moaboa from "../../src/assets/header/moaboa.png";
 import Menu from "../../src/assets/header/Menu.png";
 import Bell from "../../src/assets/header/Bell.png";
+import { useStore, useBlogIdStore, useUserStore, useBlogStore } from '../components/homePage/login/state';
 
 interface Props {
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,9 +16,25 @@ export default function Header({ setShowSideMenu }: Props) {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState("");
 
+  const { setAccessToken } = useStore();
+  const { setMyBlogId } = useBlogIdStore();
+  const { setUserInfo } = useUserStore();
+  const { setBlogInfo } = useBlogStore();
+
   const changeSideMenuState = () => {
     setShowSideMenu((prevState) => !prevState);
   };
+
+  const hiddenKeyInput = () => {
+    const strUserJson = JSON.stringify({id: 7, nickname: "다현", about: "나는 이다현"});
+    const strBlogJson = JSON.stringify({blogName: "다현" + "님의 블로그", about : "다현" + "님의 블로그입니다.", headerImage : ""});
+    setAccessToken("eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjciLCJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTcxNzkxODE3MywiZXhwIjoxNzIwNTk2NTczfQ.JqjNW7gXqhQK8LbEIKzzdlwSqC-SHQb1k5PFkrTCoa8")
+    setMyBlogId(46)
+    setUserInfo(strUserJson);
+    setBlogInfo(strBlogJson);
+    Cookies.set('login', 'true', { expires: 7 });
+    window.alert("로그인이 완료됐습니다.");
+  }
 
   function goHomePage() {
     navigate("/");
@@ -80,7 +98,7 @@ export default function Header({ setShowSideMenu }: Props) {
             alignItems: "center",
           }}
         >
-          <img src={Bell} alt="Bell" height={"22px"} />
+          <img src={Bell} alt="Bell" height={"22px"} onClick={hiddenKeyInput} />
         </div>
       </S.RightContainer>
     </S.Header>

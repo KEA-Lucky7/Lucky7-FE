@@ -26,8 +26,8 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/fortune" element={<FinancialLuckPage />} />
         <Route path="/like" element={<LikePage />} />
-        <Route path="/myblog" element={<MyblogPage />} />
-        <Route path="/myblog/:postId" element={<PostDetailPage />} />
+        <Route path="/blog/:blogId" element={<MyblogPage />} />
+        <Route path="/blog/:blogId/:postId" element={<PostDetailPage />} />
         <Route path="/write" element={<CreatePostPage />} />
         <Route path="/report/*" element={<ReportPage />} />
         <Route path="/setting" element={<SettingPage />} />

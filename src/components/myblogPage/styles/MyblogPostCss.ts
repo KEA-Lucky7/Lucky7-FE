@@ -1,16 +1,13 @@
 import styled from "styled-components";
 
 export const BlogContainer = styled.div`
-  // border: 1px solid blue;
   width: 100%;
   height: 1000px;
 `;
 
 export const MyblogPostContainer = styled.div`
   width: 100%;
-  // border: solid 1px red;
   margin-bottom: 20px;
-  // height: 1000px;
 `;
 
 export const Picturecontainer = styled.div`
@@ -35,7 +32,6 @@ export const PostContainer = styled.div`
 export const LeftSection = styled.div`
   width: 30%;
   height: 90%;
-
   display: flex;
   flex-direction: column;
 `;
@@ -61,8 +57,6 @@ export const TitleBox = styled.div`
 
 export const SubTitleBox = styled(TitleBox)`
   font-size: 14px;
-  // top: 90%;
-  // left: 8%;
 `;
 
 export const FixandDelete = styled.div`
@@ -124,7 +118,6 @@ export const PostDate = styled.div`
 export const SubTitleContainer = styled.div`
   width: 100%;
   height: 35px;
-  // margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -132,15 +125,12 @@ export const SubTitleContainer = styled.div`
 
 export const SubTitle = styled.div`
   width: 30%;
-  // height: 30px;
   color: #292929;
   font-size: 15px;
   margin-left: 5px;
 `;
 
 export const IconBox = styled.div`
-  // width: 20%;
-  // height: 30px;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -156,7 +146,6 @@ export const DropDownMenu = styled.div`
 export const PostListContainer = styled.div`
   width: 100%;
   height: 100%;
-  // display: flex;
   flex-direction: column;
   gap: 30px;
 `;
@@ -167,21 +156,17 @@ export const FieldBox = styled.div`
   border-top: 1px solid #bbbbbb;
   border-bottom: 1px solid #bbbbbb;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;  /* Changed to space-around for better alignment */
   align-items: center;
   text-align: center;
 `;
 
 export const ListBox = styled.div`
   width: 100%;
-  // height: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  // text-decoration: none;
-  // border: 1px solid red;
+  justify-content: space-around;  /* Changed to space-around for better alignment */
   border-radius: 5px;
-
   transition: background-color 0.3s ease;
   &:hover {
     background-color: #f0f0f0;
@@ -194,23 +179,17 @@ export const PictureListBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // border: 1px solid red;
-  margin: 20px 0px 4px; 0px;
+  margin: 20px 0px 4px 0px;
 `;
 
 export const PictureList = styled.div`
-  // width: 100%;
   height: 140px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  // align-items: center;
-  // border: 1px solid red;
 `;
 
-export const PictureBox = styled.div`
-  // width: 30%;
-`;
+export const PictureBox = styled.div``;
 
 export const Dropdown = styled.div`
   background-color: #fffef9;
@@ -228,35 +207,42 @@ export const DropdownItem = styled.div`
 `;
 
 export const FirstLine = styled.div`
-  // width: 30%;
-  // height: 50px;
   display: flex;
   flex-direction: row;
-  // border: 1px solid blue;
   margin-bottom: 5px;
 `;
 
 export const TitleField = styled.div`
-  width: 100%;
-  // height: 30px;
-  // margin-top: 10px;
-  // margin-bottom: 10px;
-  // vertical-align: middle;
+  width: 50%;
   font-size: 18px;
   font-weight: 400;
+  text-align: center;
 `;
 
-export const ListCategory = styled.div`
-  width: 20%;
+export const ItemField = styled.div`
+  width: 10%;
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
   vertical-align: middle;
   font-size: 18px;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+`;
+
+export const ListCategory = styled.div`
+  width: 10%;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 export const PageNumber = styled.li`
@@ -278,25 +264,24 @@ export const PageNumber = styled.li`
 `;
 
 export const ListTitle = styled.div`
-  width: 70%;
+  width: 50%;
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-  text-align: left;
+  text-align: center;  /* Added text-align for center alignment */
   font-size: 18px;
   display: flex;
   align-items: center;
-  margin-left: 40px;
+  justify-content: center;  /* Added justify-content for center alignment */
 `;
 
 export const ListTag = styled.div`
-  width: 20%;
+  width: 10%;
   height: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 7px;
-
-  text-align: left;
+  text-align: center;
   font-size: 14px;
   display: flex;
   justify-content: center;
@@ -304,32 +289,7 @@ export const ListTag = styled.div`
   color: #49519e;
 `;
 
-export const DateField = styled.div`
-  width: 20%;
-  height: 30px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  vertical-align: middle;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const CheckField = styled.div`
-  width: 10%;
-  height: 30px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  vertical-align: middle;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const PictureListCategory = styled.div`
-  // width: 50%;
   font-size: 16px;
   font-weight: 300;
   display: flex;
@@ -338,9 +298,6 @@ export const PictureListCategory = styled.div`
 `;
 
 export const PictureListTag = styled.div`
-  // width: 50%;
-  // height: 30px;
-  // text-align: left;
   font-size: 18px;
   font-weight: 300;
   display: flex;
@@ -351,7 +308,6 @@ export const PictureListTag = styled.div`
 
 export const PictureListTitle = styled.div`
   width: 80%;
-  // height: 25px;
   margin-bottom: 5px;
   font-size: 18px;
   font-weight: 500;
@@ -373,3 +329,4 @@ export const NoPostsMessage = styled.div`
   font-size: 18px;
   color: #999;
 `;
+

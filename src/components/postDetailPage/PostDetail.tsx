@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useStore, useBlogStore } from "../homePage/login/state";
+import { Link, useParams } from "react-router-dom";
+
 import * as S from "./styles/PostDetailCss";
 import seeMore from "../../assets/postDetail/seeMore.png";
 import report from "../../assets/postDetail/report.png";
 import postComment from "../../assets/postDetail/postComment.png";
 import postHeart from "../../assets/postDetail/postHeart.png";
 import seeMoreComment from "../../assets/postDetail/seeMoreComment.png";
-import profileImage from "../../assets/postDetail/profileImage.png";
-import { Link, useParams } from "react-router-dom";
+import profileImage from "../../assets/profile/profile.png";
 import Top from "../../assets/postDetail/Top.png";
-import InputComment from "./comment/InputComment";
-import axios from "axios";
 import deletebutton from "../../assets/postDetail/deletebutton.png";
 import postEdit from "../../assets/postDetail/postEdit.png";
 import ConfirmModal from "./ConfirmModal";
-import { useNavigate } from "react-router-dom";
 import EditPostForm from "./EditPostForm";
-import { useStore } from "../homePage/login/state";
+import CommentComp from "./comment/CommentComp";
 
 interface Post {
   postId: number;
@@ -25,6 +26,7 @@ interface Post {
   about: string;
   title: string;
   content: string;
+  feedback: string;
   preview: string;
   thumbnail: string;
   postType: string;
@@ -49,7 +51,7 @@ interface Post {
     createdAt: string;
     replyList: {
       content: string;
-      memberId: string;
+      memberId: number;
       nickname: string;
       profileImg: string;
       createdAt: string;
@@ -67,7 +69,10 @@ interface Post {
 }
 
 export default function PostDetail() {
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { postId } = useParams<{ postId: string }>();
+  const { blogId } = useParams<{ blogId: string }>();
+  const [writerBlogId, setWriterBlogId] = useState(0)
   const [post, setPost] = useState<Post>({} as Post);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isCommentVisible, setIsCommentVisible] = useState(false);
@@ -75,27 +80,31 @@ export default function PostDetail() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-  // const { accessToken, setAccessToken } = useStore();
   const { accessToken } = useStore();
+  // const { blogInfo } = useBlogStore();
+
+  useEffect(() => {
+    if (blogId) {
+      setWriterBlogId(Number(blogId))
+    }
+  }, [blogId]);
 
   //글 상세조회 API
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(
-          `https://vision-necktitude.shop/posts/${postId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+        const response = await fetch(`${serverUrl}/posts/${postId}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
           }
-        );
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
         const data: Post = await response.json();
         setPost(data);
         console.log(accessToken);
+        console.log(data.commentList)
       } catch (error) {
         console.log(error);
       }
@@ -106,16 +115,11 @@ export default function PostDetail() {
   //좋아요 누르는 API
   const handleLikeClick = async () => {
     try {
-      await axios.post(
-        `https://vision-necktitude.shop/posts/${postId}/like`,
-        null,
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc",
-          },
+      await axios.post(`${serverUrl}/posts/${postId}/like`, null, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
         }
-      );
+      });
       setLikeCount(likeCount + 1); // 좋아요 증가
       alert("좋아요를 눌렀습니다.");
     } catch (error) {
@@ -126,19 +130,15 @@ export default function PostDetail() {
   //글 삭제 API
   const handleDelete = async () => {
     try {
-      const response = await fetch(
-        `https://vision-necktitude.shop/posts/${postId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization:
-              "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjE1Iiwic3ViIjoiQWNjZXNzVG9rZW4iLCJpYXQiOjE3MTc1ODU5NTQsImV4cCI6MTcxNzU5MzE1NH0.lR83fxGElDnFP_CDkrcgOwz1WhM76ots-nVtCGo3Aoc",
-          },
+      const response = await fetch(`${serverUrl}/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
         }
-      );
+      });
       if (response.ok) {
         alert("성공적으로 삭제되었습니다.");
-        navigate("/myblog");
+        navigate("/blog/" + {blogId});
       } else {
         alert("삭제에 실패하였습니다.");
       }
@@ -161,7 +161,7 @@ export default function PostDetail() {
   };
 
   const toggleCommentVisibility = () => {
-    setIsCommentVisible(!isCommentVisible); // 상태를 반전시켜 댓글 보이기 여부를 토글합니다.
+    setIsCommentVisible(!isCommentVisible);
   };
 
   const toggleDropdown = () => {
@@ -169,7 +169,6 @@ export default function PostDetail() {
   };
 
   const handleCopyURL = () => {
-    // 페이지 URL을 클립보드에 복사하는 코드
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
@@ -187,7 +186,9 @@ export default function PostDetail() {
     });
   };
 
-  const handleCommentSubmit = () => {};
+  const otherBlog = (id: number) => {
+    navigate("/blog/" + id);
+  }
 
   return (
     <>
@@ -198,7 +199,7 @@ export default function PostDetail() {
           onCancel={() => setIsEditing(false)}
         />
       ) : (
-        <>
+        <S.All>
           <S.Container>
             {/* 사진 & 사진 안 텍스트 */}
             <S.Picturecontainer imageUrl={post.thumbnail}>
@@ -323,24 +324,42 @@ export default function PostDetail() {
             {/* 본문 내용 */}
             <S.PostBox>
               <div>{post.content}</div>
+
+              <S.AIReporContainer>
+                <S.AILogo>AI</S.AILogo>
+                <S.AIContent>
+                  {post.feedback}
+                </S.AIContent>
+            </S.AIReporContainer>
             </S.PostBox>
 
             {/* Wallet List */}
             <div>
-              <S.WalletListBox>
-                {post.walletList && post.walletList.length > 0 && (
-                  <div>
+            <S.WalletListBox>
+              <div>{"이 글의 소비 내역: "}</div>
+              {post.walletList && post.walletList.length > 0 && (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>날짜</th>
+                      <th>메모</th>
+                      <th>금액</th>
+                      <th>타입</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                     {post.walletList.map((walletItem, index) => (
-                      <S.WalletItem key={index}>
-                        <div>날짜: {walletItem.consumedDate}</div>
-                        <div>메모: {walletItem.memo}</div>
-                        <div>금액: {walletItem.amount}</div>
-                        <div>타입: {walletItem.walletType}</div>
-                      </S.WalletItem>
+                      <tr key={index}>
+                        <td>{walletItem.consumedDate}</td>
+                        <td>{walletItem.memo}</td>
+                        <td>{walletItem.amount}</td>
+                        <td>{walletItem.walletType}</td>
+                      </tr>
                     ))}
-                  </div>
-                )}
-              </S.WalletListBox>
+                  </tbody>
+                </table>
+              )}
+            </S.WalletListBox>
             </div>
 
             {/* 태그 내용 */}
@@ -367,6 +386,7 @@ export default function PostDetail() {
                     gap: "5px",
                     alignItems: "center",
                   }}
+                  onClick={toggleCommentVisibility}
                 >
                   <img
                     src={postComment}
@@ -378,7 +398,6 @@ export default function PostDetail() {
                     src={seeMoreComment}
                     alt="더보기"
                     style={{ width: "16px", height: "7px" }}
-                    onClick={toggleCommentVisibility}
                   />
                 </div>
                 <div
@@ -399,18 +418,13 @@ export default function PostDetail() {
                 </div>
               </S.Commment>
               {isCommentVisible && (
-                <InputComment
-                  className="custom-input"
-                  placeholder="댓글을 입력하세요..."
-                  onClick={handleCommentSubmit}
-                  postId={Number(postId)}
-                />
+                <CommentComp commentList={post.commentList}/>
               )}
             </S.CommentBox>
           </S.PostContainer>
 
           {/* 마이프로필 내용 */}
-          <S.profileBox>
+          <S.ProfileBox onClick={() => otherBlog(writerBlogId)}>
             <S.PictureBox>
               <img
                 src={profileImage}
@@ -419,10 +433,10 @@ export default function PostDetail() {
               />
             </S.PictureBox>
             <S.ContentBox>
-              <div style={{ fontWeight: "bold" }}>{post.nickname}'s Blog</div>
+              <div style={{ fontWeight: "bold" }}>{post.nickname}</div>
               <div>{post.about}</div>
             </S.ContentBox>
-          </S.profileBox>
+          </S.ProfileBox>
 
           {/* 글 리스트 내용 */}
           {post.postList && post.postList.length > 0 && (
@@ -431,7 +445,7 @@ export default function PostDetail() {
               <S.postDetailListBox>
                 {post.postList.map((postItem, index) => (
                   <Link
-                    to={`/myblog/${postItem.postId}`}
+                    to={`/blog/${blogId}/${postItem.postId}`}
                     key={index}
                     style={{
                       textDecoration: "none",
@@ -458,7 +472,7 @@ export default function PostDetail() {
             />
             <div>Top</div>
           </S.TopBox>
-        </>
+        </S.All>
       )}
     </>
   );

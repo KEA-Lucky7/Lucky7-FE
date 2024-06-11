@@ -4,6 +4,10 @@ interface PictureContainerProps {
   imageUrl: string;
 }
 
+export const All = styled.div`
+    background-color: #fffef9;;
+`;
+
 export const Container = styled.div`
   width: 100%;
   // height: 100%;
@@ -11,6 +15,7 @@ export const Container = styled.div`
   //   border: 1px solid red;
   display: flex;
   flex-direction: column;
+    background-color: #fffef9;
 `;
 
 export const Picturecontainer = styled.div<PictureContainerProps>`
@@ -72,6 +77,7 @@ export const ThirdLine = styled.div`
 export const PostContainer = styled.div`
   width: 100%;
   //   border: 1px solid blue;
+    background-color: #fffef9;
 `;
 
 export const PostIntro = styled.div`
@@ -170,7 +176,7 @@ export const CommentBox = styled.div`
   padding-top: 30px;
 `;
 
-export const profileBox = styled.div`
+export const ProfileBox = styled.div`
   width: 33%;
   height: 150px;
   margin: 0 auto;
@@ -306,6 +312,36 @@ export const WalletListBox = styled.div`
   border-radius: 4px;
   margin: 0 auto;
   margin-top: 30px;
+
+  div {
+    font-size: 18px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 16px;
+    text-align: left;
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  }
 `;
 
 export const WalletItem = styled.div`
@@ -321,4 +357,47 @@ export const WalletItem = styled.div`
   div {
     margin: 5px 0;
   }
+`;
+
+export const AIBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // border: 1px solid red;
+`;
+
+export const AIReporContainer = styled.div`
+  margin: 0 auto;
+  width: 100%;
+  font-size: 16px;
+  margin: 25px 0 20px 0;
+  padding: 12px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  background: #ececec;
+  border: 1px solid #d4d4d4;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+export const AILogo = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #4566e3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+`;
+
+export const AIContent = styled.div`
+  width: 90%;
+  // border: 1px solid red;
+  color: #393939;
+  align-items: center;
+  width: 90%;
+  color: #393939;
+  display: flex;
 `;
