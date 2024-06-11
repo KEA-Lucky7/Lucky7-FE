@@ -112,9 +112,6 @@ export default function MyblogPostCategory({
   const setContentsAccountBook = () => {
     setContents("accountBook");
   };
-  const setContentsReport = () => {
-    setContents("report");
-  };
 
   return (
     <S.MyblogCategoryWidgetContainer>
