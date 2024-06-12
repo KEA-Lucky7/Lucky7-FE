@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import CommonButton from "./CommomButton";
+import CommonButton from "./CommonButton";
 import { useStore } from "../../homePage/login/state";
 
 type InputProps = {
@@ -26,39 +26,44 @@ const InputComment = ({
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { accessToken } = useStore();
   const [comment, setComment] = useState("");
-  const [commentType] = useState(type)
+  const [commentType] = useState(type);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  const handleCommentSubmit = () => { 
+  const handleCommentSubmit = () => {
     var url = "";
     if (commentType == "comment") {
-      url = `${serverUrl}/posts/${postId}/comment`
+      url = `${serverUrl}/posts/${postId}/comment`;
+    } else {
+      url = `${serverUrl}/posts/${postId}/comment/${commentId}/reply`;
     }
-    else {
-      url = `${serverUrl}/posts/${postId}/comment/${commentId}/reply`
-    }
-    axios.post( url,  
-    {
-      content: comment, 
-    }, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    }}).then((response) => {
-      console.log(url)
-      console.log("댓글 제출 성공: ", response.data);
-      setComment("");
-      window.alert("댓글을 작성하였습니다.")
-      location.reload()
-      if (onClick) {
-        onClick(); 
-      }
-    })
-    .catch((error) => {
-      console.error("댓글 제출 실패: ", error);
-    });
+    axios
+      .post(
+        url,
+        {
+          content: comment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(url);
+        console.log("댓글 제출 성공: ", response.data);
+        setComment("");
+        window.alert("댓글을 작성하였습니다.");
+        location.reload();
+        if (onClick) {
+          onClick();
+        }
+      })
+      .catch((error) => {
+        console.error("댓글 제출 실패: ", error);
+      });
   };
 
   return (

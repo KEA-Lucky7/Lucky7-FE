@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import InputComment from "./InputComment";
-import CommonButton from "./CommomButton";
+import CommonButton from "./CommonButton"; // 오타 수정: CommomButton -> CommonButton
 
 type InputCommentProps = {
   className: string;
   onClick: () => void;
   placeholder: string;
-  postId: number; // 추가된 부분
+  postId: number;
+  commentId: number; // 추가된 부분
+  type: string; // 추가된 부분
 };
 
 const InputCommentWithPage = ({
@@ -14,17 +16,18 @@ const InputCommentWithPage = ({
   onClick,
   placeholder,
   postId,
+  commentId,
+  type,
 }: InputCommentProps) => {
-  // postId 추가
   return (
     <InputCommentWrapper
       className={className}
       placeholder={placeholder}
       onClick={onClick}
       postId={postId}
+      commentId={commentId} // 추가된 부분
+      type={type} // 추가된 부분
     >
-      {" "}
-      {/* postId 추가 */}
       <InputPageWrapper>
         <span>책 페이지</span>
         <InputPage className="pageInput">

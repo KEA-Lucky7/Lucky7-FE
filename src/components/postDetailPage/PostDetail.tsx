@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useStore, useBlogStore } from "../homePage/login/state";
+import { useStore } from "../homePage/login/state";
 import { Link, useParams } from "react-router-dom";
 
 import * as S from "./styles/PostDetailCss";
@@ -72,7 +72,7 @@ export default function PostDetail() {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { postId } = useParams<{ postId: string }>();
   const { blogId } = useParams<{ blogId: string }>();
-  const [writerBlogId, setWriterBlogId] = useState(0)
+  const [writerBlogId, setWriterBlogId] = useState(0);
   const [post, setPost] = useState<Post>({} as Post);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isCommentVisible, setIsCommentVisible] = useState(false);
@@ -85,7 +85,7 @@ export default function PostDetail() {
 
   useEffect(() => {
     if (blogId) {
-      setWriterBlogId(Number(blogId))
+      setWriterBlogId(Number(blogId));
     }
   }, [blogId]);
 
@@ -95,8 +95,8 @@ export default function PostDetail() {
       try {
         const response = await fetch(`${serverUrl}/posts/${postId}`, {
           headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
+            Authorization: `Bearer ${accessToken}`,
+          },
         });
         if (!response.ok) {
           throw new Error("Failed to fetch post");
@@ -104,7 +104,7 @@ export default function PostDetail() {
         const data: Post = await response.json();
         setPost(data);
         console.log(accessToken);
-        console.log(data.commentList)
+        console.log(data.commentList);
       } catch (error) {
         console.log(error);
       }
@@ -117,8 +117,8 @@ export default function PostDetail() {
     try {
       await axios.post(`${serverUrl}/posts/${postId}/like`, null, {
         headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       setLikeCount(likeCount + 1); // 좋아요 증가
       alert("좋아요를 눌렀습니다.");
@@ -131,14 +131,14 @@ export default function PostDetail() {
   const handleDelete = async () => {
     try {
       const response = await fetch(`${serverUrl}/posts/${postId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       if (response.ok) {
         alert("성공적으로 삭제되었습니다.");
-        navigate("/blog/" + {blogId});
+        navigate("/blog/" + { blogId });
       } else {
         alert("삭제에 실패하였습니다.");
       }
@@ -188,7 +188,7 @@ export default function PostDetail() {
 
   const otherBlog = (id: number) => {
     navigate("/blog/" + id);
-  }
+  };
 
   return (
     <>
@@ -327,39 +327,37 @@ export default function PostDetail() {
 
               <S.AIReporContainer>
                 <S.AILogo>AI</S.AILogo>
-                <S.AIContent>
-                  {post.feedback}
-                </S.AIContent>
-            </S.AIReporContainer>
+                <S.AIContent>{post.feedback}</S.AIContent>
+              </S.AIReporContainer>
             </S.PostBox>
 
             {/* Wallet List */}
             <div>
-            <S.WalletListBox>
-              <div>{"이 글의 소비 내역: "}</div>
-              {post.walletList && post.walletList.length > 0 && (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>날짜</th>
-                      <th>메모</th>
-                      <th>금액</th>
-                      <th>타입</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {post.walletList.map((walletItem, index) => (
-                      <tr key={index}>
-                        <td>{walletItem.consumedDate}</td>
-                        <td>{walletItem.memo}</td>
-                        <td>{walletItem.amount}</td>
-                        <td>{walletItem.walletType}</td>
+              <S.WalletListBox>
+                <div>{"이 글의 소비 내역: "}</div>
+                {post.walletList && post.walletList.length > 0 && (
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>날짜</th>
+                        <th>메모</th>
+                        <th>금액</th>
+                        <th>타입</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </S.WalletListBox>
+                    </thead>
+                    <tbody>
+                      {post.walletList.map((walletItem, index) => (
+                        <tr key={index}>
+                          <td>{walletItem.consumedDate}</td>
+                          <td>{walletItem.memo}</td>
+                          <td>{walletItem.amount}</td>
+                          <td>{walletItem.walletType}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </S.WalletListBox>
             </div>
 
             {/* 태그 내용 */}
@@ -418,7 +416,7 @@ export default function PostDetail() {
                 </div>
               </S.Commment>
               {isCommentVisible && (
-                <CommentComp commentList={post.commentList}/>
+                <CommentComp commentList={post.commentList} />
               )}
             </S.CommentBox>
           </S.PostContainer>

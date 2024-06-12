@@ -7,26 +7,22 @@ import MyblogPostList from "./MyblogPostList";
 import MyblogCategoryWidget from "./MyblogCategoryWidget";
 import Report from "../reportPage/Report";
 import { useBlogStore } from "../homePage/login/state";
-import { useParams } from "react-router-dom";
 
 export default function Myblog() {
   const [contents, setContents] = useState<string>("postList");
-  let backgroundImageUrl = Titlebackground;
   const { blogInfo } = useBlogStore();
-  const { blogId } = useParams<{ blogId: string }>();
   const [blogName, setBlogName] = useState("");
   const [blogAbout, setBlogAbout] = useState("");
-  const [blogHeaderImg, setBlogHeaderImg] = useState("");
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState(Titlebackground);
 
   useEffect(() => {
     if (blogInfo) {
       const storedBlogInfo = JSON.parse(blogInfo);
       setBlogName(storedBlogInfo.blogName);
       setBlogAbout(storedBlogInfo.about);
-      setBlogHeaderImg(storedBlogInfo.headerImage);
 
       if (storedBlogInfo.headerImage) {
-        backgroundImageUrl = storedBlogInfo.headerImage;
+        setBackgroundImageUrl(storedBlogInfo.headerImage);
       }
     }
   }, [blogInfo]);
