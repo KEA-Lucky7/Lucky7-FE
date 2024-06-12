@@ -14,6 +14,7 @@ import postDetailbackground from "../../assets/postDetail/postDetailbackground.j
 import changebackgrounimage from "../../assets/createPost/changebackgrounimage.png";
 import down from "../../assets/createPost/down.png";
 import moaboa from "../../assets/header/moaboa.png";
+import consumtion from "../../assets/createPost/consumtion.png";
 
 interface Tag {
   id: number;
@@ -49,7 +50,7 @@ export default function CreatePost() {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [posts, setPosts] = useState<any[]>([]);
-  
+
   const { accessToken } = useStore();
   const { myBlogId } = useBlogIdStore();
 
@@ -229,15 +230,11 @@ export default function CreatePost() {
     console.log(accountBookInputs);
 
     try {
-      const response = await axios.post(
-        `${serverUrl}/posts/0`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await axios.post(`${serverUrl}/posts/0`, payload, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       console.log("Response:", response.data);
       alert("글 작성이 완료 되었습니다.");
       navigate("/blog/" + myBlogId);
@@ -276,11 +273,10 @@ export default function CreatePost() {
 
     try {
       const response = await axios.post(`${serverUrl}/posts/temp/0`, payload, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       console.log("Response:", response.data);
       const { postId } = response.data; // Get postId from response
       // Fetch the temporary post after saving it
@@ -296,11 +292,10 @@ export default function CreatePost() {
   const handlePostSelect = async (postId: number) => {
     try {
       const response = await fetch(`${serverUrl}/posts/temp/${postId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       const data = await response.json();
       setTitle(data.title);
       setEditorState(
@@ -332,10 +327,9 @@ export default function CreatePost() {
       try {
         const response = await fetch(`${serverUrl}/posts/temp-list`, {
           headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         const data = await response.json();
         setPosts(data);
       } catch (error) {
@@ -406,7 +400,12 @@ export default function CreatePost() {
           <img
             src={changebackgrounimage}
             alt="배경화면"
-            style={{ width: "20px", height: "16px" }}
+            style={{
+              width: "20px",
+              // height: "20px",
+              objectFit: "cover",
+              scale: "80%",
+            }}
             onClick={handleClickImageIcon}
           />
         </S.ChangeImageBox>
@@ -505,7 +504,16 @@ export default function CreatePost() {
       </S.NewPostInputContainer>
 
       <S.AccountBookContainer onClick={handleAddAccountBookInput}>
-        가계부 생성하기
+        <img
+          src={consumtion}
+          style={{
+            width: "25px",
+            height: "25px",
+            background: "#4566e3",
+            padding: "10px",
+            borderRadius: "50%",
+          }}
+        />
       </S.AccountBookContainer>
       <S.TagBox>
         <S.RepresentativeTagBox>

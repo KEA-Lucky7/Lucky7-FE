@@ -12,7 +12,7 @@ interface Props {
 export default function MainLayout({ children }: Props) {
   const [showSideMenu, setShowSideMenu] = useState(false);
   // const location = useLocation();
-  // const isWritePage = location.pathname.includes("write");
+  const isWritePage = location.pathname.includes("write");
   // const isSettingPage = location.pathname.includes("setting");
   // useEffect(() => {
   //   // 페이지 이동이 감지되면 setShowSideMenu를 사용하여 SideMenu를 숨김
@@ -21,12 +21,7 @@ export default function MainLayout({ children }: Props) {
 
   return (
     <>
-      {/* {isSettingPage ? (
-        <SettingHeader setShowSideMenu={setShowSideMenu} />
-      ) : !isWritePage ? (
-        <Header setShowSideMenu={setShowSideMenu} />
-      ) : null} */}
-      <Header setShowSideMenu={setShowSideMenu} />
+      {!isWritePage && <Header setShowSideMenu={setShowSideMenu} />}
       <main>{children}</main>
       {showSideMenu && <SideMenu setShowSideMenu={setShowSideMenu} />}
     </>

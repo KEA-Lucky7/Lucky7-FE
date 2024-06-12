@@ -214,25 +214,29 @@ export const TitleContainer = styled.div`
   position: absolute;
   text-align: left;
   bottom: 80px;
-  left: 350px;
+  left: 20%;
 `;
 
 export const ChangeImageBox = styled.div`
-  width: 300px;
+  width: 25px;
+  height: 25px;
   position: absolute;
-  text-align: left;
-  bottom: 10px;
-  right: 0px;
+  // text-align: left;
+  bottom: 25px;
+  right: 30px;
   cursor: pointer;
+  background: white;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const AccountBookContainer = styled.div`
-  width: 120px;
-  height: 30px;
-  position: absolute;
-  bottom: 0px;
-  top: 500px;
-  right: 300px;
+  position: fixed;
+  top: 90vh;
+  left: 80vw;
   cursor: pointer;
   display: flex;
   justify-content: center;
