@@ -43,6 +43,7 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
   const { blogId } = useParams<{ blogId: string }>();
   const [accountbookCategoryOpen, setAccountbookCategoryOpen] = useState(false);
   const [freetextCategoryOpen, setFreetextCategoryOpen] = useState(false);
+  // const [reportCategoryOpen, setReportCategoryOpen] = useState(false); // 추가된 부분
   const [freeList, setFreeList] = useState<string[]>([]);
   const [walletList, setWalletList] = useState<string[]>([]);
   const [blogData, setBlogData] = useState<BlogData>({
@@ -187,7 +188,7 @@ const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
 
         <S.Section>
           <S.ListItemButton
-          // onClick={() => handleCategoryClick(setReportCategoryOpen, "report")}
+            onClick={() => setContents("report")} // 레포트 클릭 시 setContents 호출
           >
             <S.ListItemText>레포트</S.ListItemText>
           </S.ListItemButton>
