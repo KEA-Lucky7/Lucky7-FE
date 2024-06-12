@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import axios from 'axios';
-
+import axios from "axios";
 import * as S from "./styles/MyblogWidgetCss";
-import { useStore, useBlogIdStore } from "../homePage/login/state";
-import { Dispatch } from "react";
+import { useStore } from "../homePage/login/state";
 import { useParams } from "react-router-dom";
+import category from "../../assets/myblog/category.png";
+import up from "../../assets/myblog/up.png";
+import down from "../../assets/myblog/down.png";
 
 interface MyblogCategoryWidgetProps {
-  setContents: Dispatch<React.SetStateAction<string>>;
-  // ... 기타 props
+  setContents: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface Post {
@@ -37,149 +30,171 @@ interface Post {
   postCnt: number;
 }
 
-
 interface BlogData {
   postCnt: number;
   postList: Post[];
 }
 
-export default function MyblogPostCategory({
+const MyblogPostCategory: React.FC<MyblogCategoryWidgetProps> = ({
   setContents,
-}: MyblogCategoryWidgetProps) {
+}) => {
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const { accessToken } = useStore();
   const { blogId } = useParams<{ blogId: string }>();
-  const [reportCategory, setReportCategory] = React.useState(true);
-  const [accountbookCategory, setAccountbookCategory] = React.useState(true); //가계부 카테고리
-  const [freetextCategory, setFreetextCategory] = React.useState(true); //자유글 카테고리
-  const [freeList, setFreeList] = React.useState<string[]>([]);
-  const [walletList, setWalletList] = React.useState<string[]>([]);
-  const [blogData, setBlogData] = useState<BlogData>({ postCnt: 0, postList: [] });
+  const [accountbookCategoryOpen, setAccountbookCategoryOpen] = useState(false);
+  const [freetextCategoryOpen, setFreetextCategoryOpen] = useState(false);
+  const [freeList, setFreeList] = useState<string[]>([]);
+  const [walletList, setWalletList] = useState<string[]>([]);
+  const [blogData, setBlogData] = useState<BlogData>({
+    postCnt: 0,
+    postList: [],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/posts/${blogId}/hashtag-list`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
+        const response = await axios.get(
+          `${serverUrl}/posts/${blogId}/hashtag-list`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
-        });
+        );
         const { freeList, walletList } = response.data;
         setFreeList(freeList);
         setWalletList(walletList);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [serverUrl, blogId, accessToken]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/posts/${blogId}/post-list?postType=ALL&hashtag=ALL&page=0`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
+        const response = await axios.get(
+          `${serverUrl}/posts/${blogId}/post-list?postType=ALL&hashtag=ALL&page=0`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
-        });
+        );
         setBlogData(response.data || { postCnt: 0, postList: [] });
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [serverUrl, blogId, accessToken]);
 
-
-  const reportCategoryClick = () => {
-    setReportCategory(!reportCategory);
+  const handleCategoryClick = (
+    setCategoryOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    contentName: string
+  ) => {
+    setCategoryOpen((prev) => !prev);
+    setContents(contentName);
   };
 
-  //가계부 카테고리 눌렀을때 나오는 함수
-  const accountbookCategoryClick = () => {
-    setAccountbookCategory(!accountbookCategory);
-  };
-
-  //자유글 카테고리 눌렀을때 나오는 함수
-  const freetextCategoryClick = () => {
-    setFreetextCategory(!freetextCategory);
-  };
-
-  const setContentsPostList = () => {
-    setContents("postList");
-  };
-  const setContentsAccountBook = () => {
-    setContents("accountBook");
-  };
+  const renderDropdownItems = (items: string[]) => (
+    <S.Dropdown>
+      {items.map((item, index) => (
+        <S.DropdownItem key={index}>{`ㄴ ${item}`}</S.DropdownItem>
+      ))}
+    </S.Dropdown>
+  );
 
   return (
     <S.MyblogCategoryWidgetContainer>
-      <S.Title>Category</S.Title>
-      <S.ContentTitle>
-        <S.Circle />
-        전체({blogData.postCnt})
-      </S.ContentTitle>
-      <List
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-      >
-        {/* 첫 번째 메뉴 */}
-        <S.Section onClick={setContentsPostList}>
-          <ListItemButton onClick={freetextCategoryClick}>
-            <ListItemIcon></ListItemIcon>
-            <S.SubCircle />
-            <ListItemText primary="자유글" />
-            {freetextCategory ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+      <img
+        src={category}
+        alt="category"
+        style={{ marginLeft: "-5px", transform: "scale(0.75)" }}
+      />
+      <div>
+        <S.ContentTitle>
+          <S.Circle />
+          전체({blogData.postCnt})
+        </S.ContentTitle>
+        <S.Section>
+          <S.ListItemButton
+            onClick={() =>
+              handleCategoryClick(setFreetextCategoryOpen, "postList")
+            }
+          >
+            <S.ListItemText>자유글</S.ListItemText>
 
-          {/* 눌렀을 때 나오는 하위 메뉴 */}
-          <Collapse in={freetextCategory} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon></ListItemIcon>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  {freeList.map((item, index) => (
-                    <ListItemText key={index} primary={`ㄴ #${item}`} />
-                  ))}
-                </div>
-              </ListItemButton>
-            </List>
-          </Collapse>
-        </S.Section>
-
-        {/* 두 번째 메뉴 */}
-        <S.Section onClick={setContentsAccountBook}>
-          <ListItemButton onClick={accountbookCategoryClick}>
-            <ListItemIcon></ListItemIcon>
-            <S.SubCircle />
-            <ListItemText primary="소비일기" />
-            {accountbookCategory ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-
-          {/* 눌렀을 때 나오는 하위 메뉴 */}
-          <Collapse in={accountbookCategory} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon></ListItemIcon>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  {walletList.map((item, index) => (
-                    <ListItemText key={index} primary={`ㄴ #${item}`} />
-                  ))}
-                </div>
-              </ListItemButton>
-            </List>
-          </Collapse>
+            {freetextCategoryOpen ? (
+              <img
+                src={up}
+                style={{
+                  height: "30px",
+                  width: "50px",
+                  scale: "25%",
+                  objectFit: "cover",
+                }}
+              />
+            ) : (
+              <img
+                src={down}
+                style={{
+                  height: "30px",
+                  width: "50px",
+                  scale: "25%",
+                  objectFit: "cover",
+                }}
+              />
+            )}
+          </S.ListItemButton>
+          {freetextCategoryOpen && renderDropdownItems(freeList)}
         </S.Section>
 
         <S.Section>
-          <S.ListItemButton onClick={() => setContents("report")}>
+          <S.ListItemButton
+            onClick={() =>
+              handleCategoryClick(setAccountbookCategoryOpen, "accountBook")
+            }
+          >
+            <S.ListItemText>소비일기</S.ListItemText>
+            {accountbookCategoryOpen ? (
+              <img
+                src={up}
+                style={{
+                  height: "30px",
+                  width: "50px",
+                  scale: "25%",
+                  objectFit: "cover",
+                }}
+              />
+            ) : (
+              <img
+                src={down}
+                style={{
+                  height: "30px",
+                  width: "50px",
+                  scale: "25%",
+                  objectFit: "cover",
+                }}
+              />
+            )}
+          </S.ListItemButton>
+          {accountbookCategoryOpen && renderDropdownItems(walletList)}
+        </S.Section>
+
+        <S.Section>
+          <S.ListItemButton
+          // onClick={() => handleCategoryClick(setReportCategoryOpen, "report")}
+          >
             <S.ListItemText>레포트</S.ListItemText>
           </S.ListItemButton>
         </S.Section>
-      </List>
+      </div>
     </S.MyblogCategoryWidgetContainer>
   );
-}
+};
+
+export default MyblogPostCategory;
