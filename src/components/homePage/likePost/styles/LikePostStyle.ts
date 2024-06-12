@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const All = styled.div`
+    background-color: #fffef9;
+`;
+
 export const Container = styled.div`
   width: 67vw;
   height: 100%;
@@ -9,16 +13,17 @@ export const Container = styled.div`
 
 export const LikeTitle = styled.div`
   font-size: 32px;
-  margin: 20px 0px 20px 0px;
-  padding: 0px 0px 10px 0px;
-  background-color: #ffffff;
+  margin: 0px 0px 20px 0px;
+  padding: 20px 0px 0px 0px;
+  background-color: #fffef9;
   position: sticky;
   top: 80px;
 `;
 
 export const LikeCount = styled.div`
   font-size: 13px;
-  margin: 20px 0px 10px 0px;
+  margin: 0px 0px 10px 0px;
+  padding: 20px 0px 0px 0px;
 `;
 
 export const Pagination = styled.div`

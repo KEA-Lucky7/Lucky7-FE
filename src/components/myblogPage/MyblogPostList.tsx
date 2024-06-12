@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as S from "./styles/MyblogPostCss";
 import articleList from "../../assets/myblog/articleList.png";
 import pictureList from "../../assets/myblog/pictureList.png";
@@ -38,12 +38,13 @@ const MyblogPostList: React.FC = () => {
   const { accessToken } = useStore();
   const { myBlogId } = useBlogIdStore();
   const { userInfo } = useUserStore();
+  const { blogId } = useParams<{ blogId: string }>();
   const storedUserInfo = JSON.parse(userInfo);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/posts/${myBlogId}/post-list?postType=ALL&hashtag=ALL&page=0`, {
+        const response = await axios.get(`${serverUrl}/posts/${blogId}/post-list?postType=ALL&hashtag=ALL&page=0`, {
           headers: {
               Authorization: `Bearer ${accessToken}`,
             },

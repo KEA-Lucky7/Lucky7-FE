@@ -28,7 +28,7 @@ export default function Header({ setShowSideMenu }: Props) {
   const hiddenKeyInput = () => {
     const strUserJson = JSON.stringify({id: 7, nickname: "다현", about: "나는 이다현"});
     const strBlogJson = JSON.stringify({blogName: "다현" + "님의 블로그", about : "다현" + "님의 블로그입니다.", headerImage : ""});
-    setAccessToken("eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjciLCJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTcxNzkxODE3MywiZXhwIjoxNzIwNTk2NTczfQ.JqjNW7gXqhQK8LbEIKzzdlwSqC-SHQb1k5PFkrTCoa8")
+    setAccessToken("eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpZCI6IjciLCJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTcxODExMzEwMCwiZXhwIjoxNzIwNzkxNTAwfQ.TpV3OQ7evKoGNnzmsqsEN-BRk0Z2Jq5HVYz0of1vyLc")
     setMyBlogId(46)
     setUserInfo(strUserJson);
     setBlogInfo(strBlogJson);

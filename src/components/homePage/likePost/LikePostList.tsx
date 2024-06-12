@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 import * as S from './styles/LikePostListStyle';
+import { useStore } from '../login/state';
 
 interface LikePost {
-  title: string;
-  likeCnt: number;
-  memberId: number;
-  postId: number;
-  nickname: string;
-  createdAt: string;
   blogId: number;
-  thumbnail: string;
+  commentCnt: number;
+  createdAt: string;
+  likeCnt: number;
   mainHashtag: string;
+  memberId: number;
+  nickname: string;
+  postId: number;
+  thumbnail: string;
+  title: string;
 }
 
 interface LikeResponse {
@@ -26,12 +28,14 @@ function getQuery() {
 
 export default function LikePostList() {
   const query = getQuery();
+  const navigate = useNavigate();
   const page: number = Number(query.get('page'));
   const serverUrl = import.meta.env.VITE_SERVER_URL;
   const [loading, setLoading] = useState(false);
   const [likeList, setLikeList] = useState<LikePost[]>([]);
   const [selectedPosts, setSelectedPosts] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
+  const { accessToken } = useStore();
 
   useEffect(() => {
     fetchLike();
@@ -41,9 +45,13 @@ export default function LikePostList() {
     setLoading(true);
     try {
       const response = await axios.get<LikeResponse>(`${serverUrl}/posts/like-list`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
         params: { page: page - 1 }
       });
       setLikeList(response.data.postList);
+      console.log(response)
       setSelectedPosts([]);
       setSelectAll(false);
     } catch (error) {
@@ -56,6 +64,9 @@ export default function LikePostList() {
     setLoading(true);
     try {
       const response = await axios.patch<LikeResponse>(`${serverUrl}/posts/like-list`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
         postIdList: selectedPosts
       });
       window.alert(response.data);
@@ -93,10 +104,12 @@ export default function LikePostList() {
     }
   }
 
+  const handleClickItem = (blogId: number, postId: number) =>{
+    navigate(`/blog/${blogId}/${postId}`)
+  }
 
   return (
     <S.PostContainer>
-      {likeList.length > 0 && (
         <S.ListContainer>
           <S.ListHeader>
             <div style={{ width: '47px' }}></div>
@@ -106,22 +119,26 @@ export default function LikePostList() {
             <S.Item>작성일</S.Item>
             <S.Item>좋아요</S.Item>
           </S.ListHeader>
-          {likeList.map((post, index) => (
-            <S.ListItem key={index}>
-              <S.CheckBox
-                type='checkbox' 
-                checked={selectedPosts.includes(post.postId)} 
-                onChange={() => handleCheckboxChange(post.postId)}
-              />
-              <S.Title>{post.title}</S.Title>
-              <S.Item>{post.mainHashtag}</S.Item>
-              <S.Item>{post.nickname}</S.Item>
-              <S.Item>{post.createdAt}</S.Item>
-              <S.Item>{post.likeCnt}</S.Item>
-            </S.ListItem>
-          ))}
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            likeList.map((post, index) => (
+              <S.ListItem key={index} onClick={() => handleClickItem(post.blogId, post.postId)}>
+                <S.CheckBox
+                  type='checkbox' 
+                  checked={selectedPosts.includes(post.postId)} 
+                  onChange={() => handleCheckboxChange(post.postId)}
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <S.Title>{post.title}</S.Title>
+                <S.Item>{post.mainHashtag}</S.Item>
+                <S.Item>{post.nickname}</S.Item>
+                <S.Item>{post.createdAt}</S.Item>
+                <S.Item>{post.likeCnt}</S.Item>
+              </S.ListItem>
+            ))
+          )}
         </S.ListContainer>
-      )}
       <S.ButtonContainer>
         <S.CheckBox
           type='checkbox'
@@ -130,7 +147,7 @@ export default function LikePostList() {
           onChange={handleSelectAllCheckboxChange}
         />
         <label htmlFor="selectall">전체 선택</label>
-        <S.DeleteLikeBtn onClick={handleDeleteLike}>삭제깅</S.DeleteLikeBtn>
+        <S.DeleteLikeBtn onClick={handleDeleteLike}>삭제하기</S.DeleteLikeBtn>
       </S.ButtonContainer>  
       {loading && <p>Loading...</p>}
     </S.PostContainer>
