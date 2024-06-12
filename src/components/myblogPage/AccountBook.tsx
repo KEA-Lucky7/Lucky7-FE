@@ -68,7 +68,36 @@ const AccountBook = () => {
       }
     };
 
-    fetchExpenses();
+    // 더미 데이터로 교체
+    const dummyData = {
+      memberId: 1,
+      specificAmount: 400000,
+      monthAmount: 300000,
+      totalAmount: 300000,
+      consumedList: [
+        { consumedDate: "2024.06.01", amount: 15000 },
+        { consumedDate: "2024.06.02", amount: 20000 },
+        { consumedDate: "2024.06.03", amount: 10000 },
+        { consumedDate: "2024.06.04", amount: 30000 },
+        { consumedDate: "2024.06.05", amount: 25000 },
+        { consumedDate: "2024.06.06", amount: 18000 },
+        { consumedDate: "2024.06.07", amount: 22000 },
+        { consumedDate: "2024.06.08", amount: 17000 },
+        { consumedDate: "2024.06.09", amount: 13000 },
+        { consumedDate: "2024.06.10", amount: 19000 },
+        { consumedDate: "2024.06.11", amount: 21000 },
+        { consumedDate: "2024.06.12", amount: 16000 },
+      ],
+    };
+
+    const fetchedExpenses = dummyData.consumedList.map((item) => ({
+      date: new Date(item.consumedDate),
+      amount: item.amount,
+    }));
+    setExpenses(fetchedExpenses);
+    console.log("더미 데이터를 사용합니다.");
+
+    // fetchExpenses();
   }, [accessToken, month, endDate]);
 
   const handleError = (error: any) => {

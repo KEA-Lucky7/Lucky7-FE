@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+    environment {
+        REGISTRY_URL = 'gcu-lucky7-dev.kr-central-2.kcr.dev'
+        REGISTRY_CREDENTIALS_ID = 'kakao-cloud-credentials'
+        IMAGE_NAME = 'lucky7-cr/frontend-service'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'develop', credentialsId: 'github-signin', url: 'https://github.com/KEA-Lucky7/Lucky7-FE.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+        stage('Build Docker Image and Push') {
+            steps {
+                script {
+                    docker.withRegistry("http://${env.REGISTRY_URL}", "${env.REGISTRY_CREDENTIALS_ID}") {
+                        def app = docker.build("${env.REGISTRY_URL}/${env.IMAGE_NAME}")
+                        app.push("${env.BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Update Helm Values YAML') {
+            steps {
+                script {
+                    git branch: 'main', credentialsId: 'github-signin', url: 'https://github.com/KEA-Lucky7/MOABOA-GitOps.git'
+                    sh """
+                    sed -i 's|tag: .*|tag: ${env.BUILD_ID}|' charts/frontend-service/values.yaml
+                    """
+                    withCredentials([usernamePassword(credentialsId: 'github-signin', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh """
+                        git config user.email "dsk08208@gmail.com"
+                        git config user.name "wcorn"
+                        git add charts/frontend-service/values.yaml
+                        git commit -m "[UPDATE] frontend service image tag ${env.BUILD_ID}"
+                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/KEA-Lucky7/MOABOA-GitOps.git main
+                        """
+                    }
+                }
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                sh 'rm -rf *'
+            }
+        }
+    }
+}
+

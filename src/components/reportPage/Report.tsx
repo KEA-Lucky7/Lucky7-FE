@@ -66,7 +66,34 @@ export default function Report() {
       }
     };
 
-    fetchData();
+    // 더미 데이터로 교체
+    const dummyData = {
+      sameDayLastMonthReportList: [
+        { amount: 150000, type: "식비" },
+        { amount: 200000, type: "교통" },
+        { amount: 120000, type: "여가" },
+        { amount: 300000, type: "교육" },
+        { amount: 250000, type: "생활" },
+        { amount: 180000, type: "금융" },
+      ],
+      sameDayThisMonthReportList: [
+        { amount: 170000, type: "식비" },
+        { amount: 210000, type: "교통" },
+        { amount: 130000, type: "여가" },
+        { amount: 310000, type: "교육" },
+        { amount: 260000, type: "생활" },
+        { amount: 190000, type: "금융" },
+      ],
+      sameDayLastMonthAmount: 1200000,
+      sameDayThisMonthAmount: 1270000,
+    };
+
+    setLastMonthData(dummyData.sameDayLastMonthReportList);
+    setThisMonthData(dummyData.sameDayThisMonthReportList);
+    setLastMonthTotal(dummyData.sameDayLastMonthAmount);
+    setThisMonthTotal(dummyData.sameDayThisMonthAmount);
+
+    // fetchData();
   }, [accessToken]);
 
   return (
