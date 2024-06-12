@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import LikePostList from './LikePostList';
 import * as S from './styles/LikePostStyle';
+import { useStore } from '../login/state';
 
 
 interface LikeResponse {
@@ -15,6 +16,7 @@ export default function LikePost() {
   const [likeCount, setLikeCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const { accessToken } = useStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +26,9 @@ export default function LikePost() {
   const fetchTotalPages = async () => {
     try {
       const response = await axios.get<LikeResponse>(`${serverUrl}/posts/like-list`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
         params: { page: 0 }
       });
       setLikeCount(response.data.postCnt)
@@ -39,6 +44,7 @@ export default function LikePost() {
   };
 
   return (
+    <S.All>
     <S.Container>
       <S.LikeTitle>좋아요한 글</S.LikeTitle>
       <S.LikeCount>{likeCount}개의 글</S.LikeCount>
@@ -55,5 +61,6 @@ export default function LikePost() {
         <button onClick={() => goToPage(totalPages)} disabled={currentPage === totalPages}>마지막</button>
       </S.Pagination>
     </S.Container>
+    </S.All>
   );
 }
