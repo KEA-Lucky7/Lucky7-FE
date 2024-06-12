@@ -82,7 +82,7 @@ export default function Report() {
           thisMonthData={thisMonthData}
         />
       </S.ReportContent>
-      <S.AIBox>
+      {/* <S.AIBox>
         <S.AIReporContainer>
           <S.AILogo>AI</S.AILogo>
           <S.AIContent>
@@ -91,7 +91,7 @@ export default function Report() {
             경제적으로 여유를 가질 수 있을 거예요.
           </S.AIContent>
         </S.AIReporContainer>
-      </S.AIBox>
+      </S.AIBox> */}
     </S.Container>
   );
 }
